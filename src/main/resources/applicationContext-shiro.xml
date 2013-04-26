@@ -12,13 +12,15 @@
 	</bean>
 
 	<!-- 項目自定义的Realm -->
-	<bean id="shiroDbRealm" class="com.ketayao.security.shiro.ShiroDbRealm" depends-on="userDao, userRoleDao, moduleDao, organizationRoleDao, captchaService">
+	<bean id="shiroDbRealm" class="com.ketayao.ketacustom.shiro.ShiroDbRealm" depends-on="userDao, userRoleDao, moduleDao, organizationRoleDao, captchaService">
 		<property name="userService" ref="userServiceImpl"/>
 		<property name="userRoleService" ref="userRoleServiceImpl"/>
 		<property name="moduleService" ref="moduleServiceImpl"/>
 		<property name="organizationRoleService" ref="organizationRoleServiceImpl"/>
 		<property name="imageCaptchaService" ref="captchaService"/>
+		<!-- 是否使用验证码 -->
 		<property name="useCaptcha" value="true"/>
+		<!-- 是否激活超级用户，生成环境建议关闭该功能 -->
 		<property name="activeRoot" value="true"/>
 	</bean>
 
@@ -54,7 +56,7 @@
 		<property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache-shiro.xml"/>
 	</bean>
 	
-	<bean id="captchaFormAuthenticationFilter" class="com.ketayao.security.shiro.filter.CaptchaFormAuthenticationFilter"/>
+	<bean id="captchaFormAuthenticationFilter" class="com.ketayao.ketacustom.shiro.CaptchaFormAuthenticationFilter"/>
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>

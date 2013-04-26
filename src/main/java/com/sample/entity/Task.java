@@ -4,15 +4,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.ketayao.security.entity.IdEntity;
+import com.ketayao.ketacustom.entity.IdEntity;
 
 
 //JPA标识
 @Entity
 @Table(name = "ss_task")
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Task extends IdEntity {
 	/** 描述  */
 	private static final long serialVersionUID = -2677876323206901899L;

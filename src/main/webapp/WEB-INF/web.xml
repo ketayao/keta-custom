@@ -77,7 +77,7 @@
 	<!-- Jcaptcha -->
 	<servlet>
 		<servlet-name>Captcha</servlet-name>
-		<servlet-class>com.ketayao.security.captcha.JcaptchaServlet</servlet-class>
+		<servlet-class>com.ketayao.ketacustom.shiro.JcaptchaServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Captcha</servlet-name>

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ketayao.util.dwz.Page;
-import com.ketayao.util.dwz.springdata.PageUtils;
+import com.ketayao.util.dwz.PageUtils;
 import com.sample.dao.TaskDAO;
 import com.sample.entity.Task;
 import com.sample.service.TaskService;
@@ -46,10 +46,10 @@ public class TaskServiceImpl implements TaskService {
 	 */
 	@Override
 	public List<Task> find(Page page, String title) {
-		org.springframework.data.domain.Page<Task> tasks = 
+		org.springframework.data.domain.Page<Task> springDataPage = 
 				(org.springframework.data.domain.Page<Task>)taskDAO.findByTitleContaining(title, PageUtils.createPageable(page));
-		PageUtils.injectPageProperties(page, tasks);
-		return tasks.getContent();
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
 	}
 
 	/**   
@@ -100,7 +100,7 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public List<Task> findAll(Page page) {
 		org.springframework.data.domain.Page<Task> springDataPage = taskDAO.findAll(PageUtils.createPageable(page));
-		PageUtils.injectPageProperties(page, springDataPage);
+		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 

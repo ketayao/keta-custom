@@ -2,7 +2,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false">
 
-	<diskStore path="java.io.tmpdir/hibernate/electric-charge" />
+	<diskStore path="java.io.tmpdir/hibernate/keta-custom" />
 
 	<!-- DefaultCache setting. -->
 	<defaultCache 
@@ -16,9 +16,9 @@
 		
 	<!-- security entity-->		
 	<cache 
-		name="com.ketayao.security.entity.main"
-		maxEntriesLocalHeap="1000" 
+		name="com.ketayao.ketacustom.entity.main"
+		maxEntriesLocalHeap="10000" 
 		eternal="true" 
 		overflowToDisk="true"
-		maxEntriesLocalDisk="10000" />
+		maxEntriesLocalDisk="1000000" />
 </ehcache>
