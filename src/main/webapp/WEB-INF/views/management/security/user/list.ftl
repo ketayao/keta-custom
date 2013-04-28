@@ -49,8 +49,8 @@
 			<tr target="slt_uid" rel="${item.id}">
 				<td>${item.username}</td>
 				<td>${item.realname}</td>
-				<td>${item.email}</td>
-				<td>${item.phone}</td>
+				<td>${item.email!''}</td>
+				<td>${item.phone!''}</td>
 				<td>${item.organization.name}</td>
 				<td>
 					<#list item.userRoles as ur>

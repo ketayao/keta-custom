@@ -35,7 +35,7 @@
 			<#list tasks as item>
 			<tr target="slt_uid" rel="${item.id}">
 				<td>${item.title}</td>
-				<td>${item.description}</td>
+				<td>${item.description!''}</td>
 			</tr>
 			</#list>
 		</tbody>

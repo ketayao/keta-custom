@@ -44,7 +44,7 @@
 						${or.role.name}&nbsp;&nbsp;
 					</#list>
 				</td>
-				<td>${item.description}</td>
+				<td>${item.description!''}</td>
 				<td>${item.parent.name}</td>
 			</tr>			
 			</#list>
