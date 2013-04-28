@@ -16,7 +16,7 @@ package com.ketayao.ketacustom.service;
 import java.util.List;
 
 import com.ketayao.ketacustom.entity.main.Role;
-import com.ketayao.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.Page;
 
 /** 
  * 	

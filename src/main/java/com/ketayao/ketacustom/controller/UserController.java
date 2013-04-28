@@ -43,8 +43,8 @@ import com.ketayao.ketacustom.service.OrganizationService;
 import com.ketayao.ketacustom.service.RoleService;
 import com.ketayao.ketacustom.service.UserRoleService;
 import com.ketayao.ketacustom.service.UserService;
-import com.ketayao.util.dwz.AjaxObject;
-import com.ketayao.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.AjaxObject;
+import com.ketayao.ketacustom.util.dwz.Page;
 
 /** 
  * 	

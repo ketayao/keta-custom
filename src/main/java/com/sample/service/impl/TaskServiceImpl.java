@@ -19,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ketayao.util.dwz.Page;
-import com.ketayao.util.dwz.PageUtils;
+import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.PageUtils;
 import com.sample.dao.TaskDAO;
 import com.sample.entity.Task;
 import com.sample.service.TaskService;
@@ -42,7 +42,7 @@ public class TaskServiceImpl implements TaskService {
 	 * @param page
 	 * @param name
 	 * @return  
-	 * @see com.sample.service.TaskService#find(com.ketayao.util.dwz.Page, java.lang.String)  
+	 * @see com.sample.service.TaskService#find(com.ketayao.ketacustom.util.dwz.Page, java.lang.String)  
 	 */
 	@Override
 	public List<Task> find(Page page, String title) {
@@ -95,7 +95,7 @@ public class TaskServiceImpl implements TaskService {
 	/**   
 	 * @param page
 	 * @return  
-	 * @see com.sample.service.TaskService#findAll(com.ketayao.util.dwz.Page)  
+	 * @see com.sample.service.TaskService#findAll(com.ketayao.ketacustom.util.dwz.Page)  
 	 */
 	@Override
 	public List<Task> findAll(Page page) {

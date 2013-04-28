@@ -25,8 +25,8 @@ import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.exception.ExistedException;
 import com.ketayao.ketacustom.exception.ServiceException;
 import com.ketayao.ketacustom.service.ModuleService;
-import com.ketayao.util.dwz.Page;
-import com.ketayao.util.dwz.PageUtils;
+import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.PageUtils;
 
 /** 
  * 	
@@ -85,7 +85,7 @@ public class ModuleServiceImpl implements ModuleService {
 	 * @param parentId
 	 * @param page
 	 * @return  
-	 * @see com.ketayao.ketacustom.service.ModuleService#find(java.lang.Long, com.ketayao.util.dwz.Page)  
+	 * @see com.ketayao.ketacustom.service.ModuleService#find(java.lang.Long, com.ketayao.ketacustom.util.dwz.Page)  
 	 */
 	public List<Module> find(Long parentId, Page page) {
 		org.springframework.data.domain.Page<Module> springDataPage = 
@@ -99,7 +99,7 @@ public class ModuleServiceImpl implements ModuleService {
 	 * @param name
 	 * @param page
 	 * @return  
-	 * @see com.ketayao.ketacustom.service.ModuleService#find(java.lang.Long, java.lang.String, com.ketayao.util.dwz.Page)  
+	 * @see com.ketayao.ketacustom.service.ModuleService#find(java.lang.Long, java.lang.String, com.ketayao.ketacustom.util.dwz.Page)  
 	 */
 	public List<Module> find(Long parentId, String name, Page page) {
 		org.springframework.data.domain.Page<Module> springDataPage = 

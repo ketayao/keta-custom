@@ -23,8 +23,8 @@ import com.ketayao.ketacustom.dao.RoleDao;
 import com.ketayao.ketacustom.entity.main.Role;
 import com.ketayao.ketacustom.service.RoleService;
 import com.ketayao.ketacustom.shiro.ShiroDbRealm;
-import com.ketayao.util.dwz.Page;
-import com.ketayao.util.dwz.PageUtils;
+import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.PageUtils;
 
 /** 
  * 	
@@ -83,7 +83,7 @@ public class RoleServiceImpl implements RoleService {
 	 * @param page
 	 * @param name
 	 * @return  
-	 * @see com.ketayao.ketacustom.service.RoleService#find(com.ketayao.util.dwz.Page, java.lang.String)  
+	 * @see com.ketayao.ketacustom.service.RoleService#find(com.ketayao.ketacustom.util.dwz.Page, java.lang.String)  
 	 */
 	public List<Role> find(Page page, String name) {
 		org.springframework.data.domain.Page<Role> springDataPage = 

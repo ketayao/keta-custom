@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.beanvalidator.BeanValidators;
 
-import com.ketayao.util.dwz.AjaxObject;
-import com.ketayao.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.AjaxObject;
+import com.ketayao.ketacustom.util.dwz.Page;
 import com.sample.entity.Task;
 import com.sample.service.TaskService;
 

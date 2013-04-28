@@ -11,7 +11,7 @@
  * </pre>
  **/
 
-package com.ketayao.util.dwz;
+package com.ketayao.ketacustom.util.dwz;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;

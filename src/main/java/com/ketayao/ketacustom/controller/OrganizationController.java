@@ -36,8 +36,8 @@ import com.ketayao.ketacustom.exception.ServiceException;
 import com.ketayao.ketacustom.service.OrganizationRoleService;
 import com.ketayao.ketacustom.service.OrganizationService;
 import com.ketayao.ketacustom.service.RoleService;
-import com.ketayao.util.dwz.AjaxObject;
-import com.ketayao.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.AjaxObject;
+import com.ketayao.ketacustom.util.dwz.Page;
 
 /** 
  * 	

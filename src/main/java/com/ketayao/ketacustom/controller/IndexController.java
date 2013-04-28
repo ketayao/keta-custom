@@ -35,7 +35,7 @@ import com.ketayao.ketacustom.service.ModuleService;
 import com.ketayao.ketacustom.service.UserRoleService;
 import com.ketayao.ketacustom.service.UserService;
 import com.ketayao.ketacustom.shiro.ShiroDbRealm;
-import com.ketayao.util.dwz.AjaxObject;
+import com.ketayao.ketacustom.util.dwz.AjaxObject;
 
 /** 
  * 	

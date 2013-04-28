@@ -114,8 +114,8 @@ $(function(){
 						<@dwz.fieldset title="基本信息">
 							<@dwz.dl_fieldset title="登录名称：" content="${login_user.username }"/>
 							<@dwz.dl_fieldset title="真实名字：" content="${login_user.realname }"/>
-							<@dwz.dl_fieldset title="电话：" content="${login_user.phone }"/>
-							<@dwz.dl_fieldset title="E-Mail：" content="${login_user.email }"/>
+							<@dwz.dl_fieldset title="电话：" content="${login_user.phone!'' }"/>
+							<@dwz.dl_fieldset title="E-Mail：" content="${login_user.email!'' }"/>
 							<@dwz.dl_fieldset title="创建时间：" content="${login_user.createTime }"/>
 							<@dwz.dl_fieldset title="可用状态：" content='${(login_user.status == "enabled")?string("可用","不可用")}'/>
 							<@dwz.dl_fieldset title="所属机构：" content="${login_user.organization.name }"/>																														

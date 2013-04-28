@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ketayao.ketacustom.service.CacheService;
-import com.ketayao.util.dwz.AjaxObject;
+import com.ketayao.ketacustom.util.dwz.AjaxObject;
 
 /** 
  * 	

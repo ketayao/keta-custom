@@ -37,7 +37,7 @@ import org.springside.modules.utils.Exceptions;
 import com.ketayao.ketacustom.SecurityConstants;
 import com.ketayao.ketacustom.shiro.IncorrectCaptchaException;
 import com.ketayao.ketacustom.shiro.ShiroDbRealm;
-import com.ketayao.util.dwz.AjaxObject;
+import com.ketayao.ketacustom.util.dwz.AjaxObject;
 
 /**
  * 

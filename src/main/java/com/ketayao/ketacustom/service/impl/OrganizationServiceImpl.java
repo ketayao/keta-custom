@@ -25,8 +25,8 @@ import com.ketayao.ketacustom.dao.UserDao;
 import com.ketayao.ketacustom.entity.main.Organization;
 import com.ketayao.ketacustom.exception.ServiceException;
 import com.ketayao.ketacustom.service.OrganizationService;
-import com.ketayao.util.dwz.Page;
-import com.ketayao.util.dwz.PageUtils;
+import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.PageUtils;
 
 /** 
  * 	
@@ -90,7 +90,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * @param parentId
 	 * @param page
 	 * @return  
-	 * @see com.ketayao.ketacustom.service.OrganizationService#find(java.lang.Long, com.ketayao.util.dwz.Page)  
+	 * @see com.ketayao.ketacustom.service.OrganizationService#find(java.lang.Long, com.ketayao.ketacustom.util.dwz.Page)  
 	 */
 	public List<Organization> find(Long parentId, Page page) {
 		org.springframework.data.domain.Page<Organization> springDataPage = 
@@ -104,7 +104,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * @param name
 	 * @param page
 	 * @return  
-	 * @see com.ketayao.ketacustom.service.OrganizationService#find(java.lang.Long, java.lang.String, com.ketayao.util.dwz.Page)  
+	 * @see com.ketayao.ketacustom.service.OrganizationService#find(java.lang.Long, java.lang.String, com.ketayao.ketacustom.util.dwz.Page)  
 	 */
 	public List<Organization> find(Long parentId, String name, Page page) {
 		org.springframework.data.domain.Page<Organization> springDataPage = 

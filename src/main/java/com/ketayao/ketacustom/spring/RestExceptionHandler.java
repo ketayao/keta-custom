@@ -12,7 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springside.modules.beanvalidator.BeanValidators;
 
-import com.ketayao.util.dwz.AjaxObject;
+import com.ketayao.ketacustom.util.dwz.AjaxObject;
 /**
  * 处理Hibernate Validator验证出错的类。返回带错误信息和状态码的ajaxobject字符串。
  * 	

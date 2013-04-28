@@ -30,8 +30,8 @@ import com.ketayao.ketacustom.exception.ServiceException;
 import com.ketayao.ketacustom.service.UserService;
 import com.ketayao.ketacustom.shiro.ShiroDbRealm;
 import com.ketayao.ketacustom.shiro.ShiroDbRealm.HashPassword;
-import com.ketayao.util.dwz.Page;
-import com.ketayao.util.dwz.PageUtils;
+import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.PageUtils;
 
 /** 
  * 	
@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
 	 * @param page
 	 * @param name
 	 * @return  
-	 * @see com.ketayao.ketacustom.service.UserService#find(com.ketayao.util.dwz.Page, java.lang.String)  
+	 * @see com.ketayao.ketacustom.service.UserService#find(com.ketayao.ketacustom.util.dwz.Page, java.lang.String)  
 	 */
 	public List<User> find(Page page, String name) {
 		org.springframework.data.domain.Page<User> springDataPage = 

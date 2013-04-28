@@ -33,8 +33,8 @@ import com.ketayao.ketacustom.entity.main.Role;
 import com.ketayao.ketacustom.entity.main.RolePermission;
 import com.ketayao.ketacustom.service.ModuleService;
 import com.ketayao.ketacustom.service.RoleService;
-import com.ketayao.util.dwz.AjaxObject;
-import com.ketayao.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.AjaxObject;
+import com.ketayao.ketacustom.util.dwz.Page;
 
 /** 
  * 	
