@@ -117,7 +117,7 @@ public class RoleController {
 				}
 			} else {
 				if (rolePermission.getId() != null) {
-					for (RolePermission oldRolePermission : role.getRolePermissions()) {
+					for (RolePermission oldRolePermission : oldRole.getRolePermissions()) {
 						if (oldRolePermission.getId().equals(rolePermission.getId())) {
 							oldRolePermission.setRole(null);
 							rolePermission = oldRolePermission;
