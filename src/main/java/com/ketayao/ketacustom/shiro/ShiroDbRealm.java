@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.shiro.ShiroDbRealm.java
+ * Filename:		com.ketayao.ketacustom.shiro.ShiroDbRealm.java
  * Class:			ShiroDbRealm
  * Date:			2012-8-2
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -297,6 +297,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		private static final long serialVersionUID = -1748602382963711884L;
 		private Long id;
 		private String loginName;
+		private String ipAddress;
 		private User user;
 		
 		public ShiroUser() {
@@ -331,6 +332,14 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		 */
 		public String getLoginName() {
 			return loginName;
+		}
+		
+		public String getIpAddress() {
+			return ipAddress;
+		}
+
+		public void setIpAddress(String ipAddress) {
+			this.ipAddress = ipAddress;
 		}
 
 		/**  

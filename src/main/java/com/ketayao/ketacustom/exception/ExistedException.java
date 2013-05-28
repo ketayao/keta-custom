@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.exception.ExistedException.java
+ * Filename:		com.ketayao.ketacustom.exception.ExistedException.java
  * Class:			ExistedException
  * Date:			2012-8-13
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

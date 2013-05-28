@@ -29,7 +29,7 @@
 </@form>
 </#macro>
 
-<#macro pagerBar page pageNumShown=10 begin=1 end=10 step=1 target="navTab" onchange="navTabPageBreak({numPerPage:this.value})" rel="">
+<#macro pagerBar page pageNumShown=10 begin=10 end=50 step=5 target="navTab" onchange="navTabPageBreak({numPerPage:this.value})" rel="">
 <div class="panelBar">
 	<div class="pages">
 		<span>每页显示</span>

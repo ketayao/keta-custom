@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.controller.OrganizationController.java
+ * Filename:		com.ketayao.ketacustom.controller.OrganizationController.java
  * Class:			OrganizationController
  * Date:			2012-8-27
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -33,6 +33,9 @@ import com.ketayao.ketacustom.entity.main.Organization;
 import com.ketayao.ketacustom.entity.main.OrganizationRole;
 import com.ketayao.ketacustom.entity.main.Role;
 import com.ketayao.ketacustom.exception.ServiceException;
+import com.ketayao.ketacustom.log.Log;
+import com.ketayao.ketacustom.log.LogMessageObject;
+import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.OrganizationRoleService;
 import com.ketayao.ketacustom.service.OrganizationService;
 import com.ketayao.ketacustom.service.RoleService;
@@ -64,6 +67,7 @@ public class OrganizationController {
 	private static final String UPDATE = "management/security/organization/update";
 	private static final String LIST = "management/security/organization/list";
 	private static final String TREE = "management/security/organization/tree";
+	private static final String TREE_LIST = "management/security/organization/tree_list";
 	
 	private static final String LOOK_UP_ROLE = "management/security/organization/assign_organization_role";
 	private static final String LOOK_ORGANIZATION_ROLE = "management/security/organization/delete_organization_role";
@@ -75,6 +79,7 @@ public class OrganizationController {
 		return CREATE;
 	}
 	
+	@Log(message="添加了{0}组织。")
 	@RequiresPermissions("Organization:save")
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public @ResponseBody String create(Organization organization) {
@@ -82,10 +87,11 @@ public class OrganizationController {
 		
 		Organization parentOrganization = organizationService.get(organization.getParent().getId());
 		if (parentOrganization == null) {
-			return AjaxObject.newError("模块组织失败：id=" + organization.getParent().getId() + "的父组织不存在！").toString();
+			return AjaxObject.newError("添加组织失败：id=" + organization.getParent().getId() + "的父组织不存在！").toString();
 		}
 		organizationService.save(organization);
 		
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));
 		return AjaxObject.newOk("添加组织成功！").toString();
 	}
 	
@@ -98,34 +104,40 @@ public class OrganizationController {
 		return UPDATE;
 	}
 	
+	@Log(message="修改了{0}组织的信息。")
 	@RequiresPermissions("Organization:edit")
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public @ResponseBody String update(Organization organization) {
 		BeanValidators.validateWithException(validator, organization);
 		organizationService.update(organization);
 		
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));
 		return AjaxObject.newOk("修改组织成功！").toString();
 	}
 	
+	@Log(message="删除了{0}组织。")
 	@RequiresPermissions("Organization:delete")
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
 	public @ResponseBody String delete(@PathVariable Long id) {
-		AjaxObject ajaxObject = new AjaxObject();
+		Organization organization = organizationService.get(id);
 		try {
 			organizationService.delete(id);
-			ajaxObject.setMessage("删除组织成功！");
 		} catch (ServiceException e) {
-			ajaxObject.setStatusCode(AjaxObject.STATUS_CODE_FAILURE);
-			ajaxObject.setMessage("删除组织失败：" + e.getMessage());
+			return AjaxObject.newError("删除组织失败：" + e.getMessage()).setCallbackType("").toString();
 		}
 		
-		ajaxObject.setCallbackType("");
-		//ajaxObject.setRel("jbsxBox2organization");
-		return ajaxObject.toString();
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));
+		return AjaxObject.newOk("删除组织成功！").setCallbackType("").toString();
 	}
 	
 	@RequiresPermissions("Organization:view")
-	@RequestMapping(value="/tree", method=RequestMethod.GET)
+	@RequestMapping(value="/tree_list", method={RequestMethod.GET, RequestMethod.POST})
+	public String tree_list(Map<String, Object> map) {
+		return TREE_LIST;
+	}
+	
+	@RequiresPermissions("Organization:view")
+	@RequestMapping(value="/tree", method={RequestMethod.GET, RequestMethod.POST})
 	public String tree(Map<String, Object> map) {
 		Organization organization = organizationService.getTree();
 		
@@ -157,10 +169,15 @@ public class OrganizationController {
 	 * 描述
 	 * @param userRole
 	 */
+	@Log(message="向{0}组织分配了{1}的角色。")
 	@RequiresPermissions("Organization:assign")
 	@RequestMapping(value="/create/organizationRole", method={RequestMethod.POST})
 	public @ResponseBody void assignRole(OrganizationRole organizationRole) {
 		organizationRoleService.save(organizationRole);
+		
+		Organization organization = organizationService.get(organizationRole.getOrganization().getId());
+		Role role = roleService.get(organizationRole.getRole().getId());
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName(), role.getName()}));
 	}
 	
 	/**
@@ -217,13 +234,17 @@ public class OrganizationController {
 	}
 	
 	/**
-	 * 删除组织分配的权限
+	 * 删除组织分配的角色
 	 * 描述
 	 * @param organizationId
 	 */
+	@Log(message="撤销了{0}组织的{1}角色。")
 	@RequiresPermissions("Organization:assign")
 	@RequestMapping(value="/delete/organizationRole/{organizationRoleId}", method={RequestMethod.POST})
 	public @ResponseBody void deleteOrganizationRole(@PathVariable Long organizationRoleId) {
+		OrganizationRole organizationRole = organizationRoleService.get(organizationRoleId);
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organizationRole.getOrganization().getName(), organizationRole.getRole().getName()}));
+		
 		organizationRoleService.delete(organizationRoleId);
 	}
 }

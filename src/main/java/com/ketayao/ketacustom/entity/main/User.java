@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ketayao.security.entity.authenticate.User.java
+ * Filename:		com.ketayao.ketacustom.entity.authenticate.User.java
  * Class:			User
  * Date:			2012-8-2
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.service.UserRoleService.java
+ * Filename:		com.ketayao.ketacustom.service.UserRoleService.java
  * Class:			UserRoleService
  * Date:			2012-8-7
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -25,6 +25,7 @@ import com.ketayao.ketacustom.entity.main.UserRole;
  */
 
 public interface UserRoleService {
+	UserRole get(Long id);
 	
 	/**
 	 * 根据userId，找到已分配的角色。

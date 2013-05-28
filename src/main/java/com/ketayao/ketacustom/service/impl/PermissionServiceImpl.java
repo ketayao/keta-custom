@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.security.service.impl.RolePermissionImpl.java
+ * Filename:		com.ketayao.ketacustom.service.impl.RolePermissionImpl.java
  * Class:			RolePermissionImpl
  * Date:			2013-4-16
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ketayao.ketacustom.dao.PermissionDao;
+import com.ketayao.ketacustom.dao.PermissionDAO;
 import com.ketayao.ketacustom.entity.main.Permission;
 import com.ketayao.ketacustom.service.PermissionService;
 
@@ -28,20 +28,19 @@ import com.ketayao.ketacustom.service.PermissionService;
  * @since   2013-4-16 下午2:12:41 
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional
 public class PermissionServiceImpl implements PermissionService{
 	
 	@Autowired
-	private PermissionDao permissionDao;
+	private PermissionDAO permissionDAO;
 
 	/**   
 	 * @param permission  
 	 * @see com.ketayao.ketacustom.service.PermissionService#save(com.ketayao.ketacustom.entity.main.Permission)  
 	 */
-	@Transactional
 	@Override
 	public void save(Permission permission) {
-		permissionDao.save(permission);
+		permissionDAO.save(permission);
 	}
 
 	/**   
@@ -51,17 +50,16 @@ public class PermissionServiceImpl implements PermissionService{
 	 */
 	@Override
 	public Permission get(Long id) {
-		return permissionDao.findOne(id);
+		return permissionDAO.findOne(id);
 	}
 
 	/**   
 	 * @param permission  
 	 * @see com.ketayao.ketacustom.service.PermissionService#update(com.ketayao.ketacustom.entity.main.Permission)  
 	 */
-	@Transactional
 	@Override
 	public void update(Permission permission) {
-		permissionDao.save(permission);
+		permissionDAO.save(permission);
 	}
 
 	/**   
@@ -70,6 +68,6 @@ public class PermissionServiceImpl implements PermissionService{
 	 */
 	@Override
 	public void delete(Long id) {
-		permissionDao.delete(id);
+		permissionDAO.delete(id);
 	}
 }

@@ -22,4 +22,4 @@
 
 <#include "table.ftl"/>
 
-<#global shiro=JspTaglibs["/WEB-INF/shiro/shiro.tld"]>
+<#global shiro=JspTaglibs["/WEB-INF/tld/shiro.tld"]>

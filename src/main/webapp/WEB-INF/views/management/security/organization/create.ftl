@@ -1,5 +1,6 @@
+<a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="/keta-custom/management/security/organization/tree" style="display:none;"/>
 <@dwz.layout_content>
-<@dwz.form action="${request.contextPath}/management/security/organization/create" onsubmit="return validateCallback(this, dialogReloadRel);">
+<@dwz.form action="${request.contextPath}/management/security/organization/create" onsubmit="return validateCallback(this, dialogReloadRel2Org);">
 	<input type="hidden" name="parent.id" value="${parentOrganizationId }"/>
 	<@dwz.layout_form_content layoutH="58">
 		<@dwz.label_input content="名称：">

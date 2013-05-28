@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.security.interceptor.ExecuteTimeInterceptor.java
+ * Filename:		com.ketayao.ketacustom.spring.ExecuteTimeInterceptor.java
  * Class:			ExecuteTimeInterceptor
  * Date:			2013-4-17
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

@@ -1,8 +1,8 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.dao.RoleDao.java
- * Class:			RoleDao
+ * Filename:		com.ketayao.ketacustom.dao.UserRoleDao.java
+ * Class:			UserRoleDao
  * Date:			2012-8-7
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
  * Version          1.1.0
@@ -13,19 +13,19 @@
  
 package com.ketayao.ketacustom.dao;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ketayao.ketacustom.entity.main.Role;
+import com.ketayao.ketacustom.entity.main.UserRole;
 
 /** 
  * 	
  * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
  * Version  1.1.0
- * @since   2012-8-7 下午5:03:07 
+ * @since   2012-8-7 下午5:08:15 
  */
 
-public interface RoleDao extends JpaRepository<Role, Long> {
-	Page<Role> findByNameContaining(String name, Pageable pageable);
+public interface UserRoleDAO extends JpaRepository<UserRole, Long> {
+	List<UserRole> findByUserId(Long userId);
 }

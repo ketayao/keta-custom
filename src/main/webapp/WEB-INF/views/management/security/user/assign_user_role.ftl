@@ -21,7 +21,7 @@ jQuery(document).ready(function(){
 	        	var roleName = $remove.find("td").eq(0).text();
 		    	// 添加分配
 				$("#hasRoles").append("<tr><td>" + roleName + "</td><td>" + priority + "</td></tr>");
-				$('tr[class="selected"]', getCurrentNavtabRel()).find("td").eq(5).find("div").append(roleName + "  ");
+				$('tr[class="selected"]', getCurrentNavtabRel()).find("td").eq(6).find("div").append(roleName + "  ");
     		}		
         });	
     });

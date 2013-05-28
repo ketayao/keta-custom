@@ -1,6 +1,6 @@
 <#-- button,buttonActive,buttonDisabled -->
 <#macro button title="" status="button" id="" class="">
-	<div class="${status}"><div class="buttonContent"><button
+	<div class="${status}"><div class="buttonContent"><button type="submit"
 <#if class!=""> class="${class}"</#if><#rt/>
 <#if id!=""> id="${id}"</#if><#rt/>	
 >${title}</button></div></div>

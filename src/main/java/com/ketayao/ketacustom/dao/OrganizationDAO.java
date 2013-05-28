@@ -1,9 +1,9 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.dao.ModuleDao.java
- * Class:			ModuleDao
- * Date:			2012-8-6
+ * Filename:		com.ketayao.ketacustom.dao.OrganizationDao.java
+ * Class:			OrganizationDao
+ * Date:			2012-8-27
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
  * Version          1.1.0
  * Description:		
@@ -23,33 +23,25 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 
-import com.ketayao.ketacustom.entity.main.Module;
+import com.ketayao.ketacustom.entity.main.Organization;
 
 /** 
  * 	
  * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
  * Version  1.1.0
- * @since   2012-8-6 上午9:31:03 
+ * @since   2012-8-27 下午3:55:47 
  */
 
-public interface ModuleDao extends JpaRepository<Module, Long> {
-	Page<Module> findByParentId(Long parentId, Pageable pageable);
+public interface OrganizationDAO extends JpaRepository<Organization, Long>{
+	Page<Organization> findByParentId(Long parentId, Pageable pageable);
 	
-	Page<Module> findByParentIdAndNameContaining(Long parentId, String name, Pageable pageable);
+	Page<Organization> findByParentIdAndNameContaining(Long parentId, String name, Pageable pageable);
 	
 	@QueryHints(value={
 			@QueryHint(name="org.hibernate.cacheable",value="true"),
 			@QueryHint(name="org.hibernate.cacheRegion",value="com.ketayao.ketacustom.entity.main")
 		}
 	)
-	@Query("from Module m order by m.priority ASC")
-	List<Module> findAllWithCache();
-	
-	/**
-	 * 根据sn，查找Module
-	 * 描述
-	 * @param sn
-	 * @return
-	 */
-	List<Module> findBySn(String sn);
+	@Query("from Organization")
+	List<Organization> findAllWithCache();
 }

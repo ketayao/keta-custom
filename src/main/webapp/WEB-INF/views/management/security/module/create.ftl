@@ -49,11 +49,12 @@ jQuery(document).ready(function(){
      	 	return false;	
      	 } 
      	 
-    	 return validateCallback(this, dialogReloadRel);
+    	 return validateCallback(this, dialogReloadRel2Module);
      });
 });
 //-->
 </script>
+<a id="refreshJbsxBox2moduleTree" rel="jbsxBox2moduleTree" target="ajax" href="${request.contextPath}/management/security/module/tree" style="display:none;"/>
 <@dwz.layout_content>
 <@dwz.form action="${request.contextPath}/management/security/module/create" id="permissionForm" onsubmit="">
 	<input type="hidden" name="parent.id" value="${parentModuleId }"/>

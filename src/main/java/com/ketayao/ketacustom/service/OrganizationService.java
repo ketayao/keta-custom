@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.service.OrganizationService.java
+ * Filename:		com.ketayao.ketacustom.service.OrganizationService.java
  * Class:			OrganizationService
  * Date:			2012-8-27
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

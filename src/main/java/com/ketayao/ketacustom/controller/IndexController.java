@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.controller.IndexController.java
+ * Filename:		com.ketayao.ketacustom.controller.IndexController.java
  * Class:			IndexController
  * Date:			2012-8-2
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -31,8 +31,10 @@ import com.ketayao.ketacustom.SecurityConstants;
 import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.entity.main.Permission;
 import com.ketayao.ketacustom.entity.main.User;
+import com.ketayao.ketacustom.log.Log;
+import com.ketayao.ketacustom.log.LogMessageObject;
+import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.ModuleService;
-import com.ketayao.ketacustom.service.UserRoleService;
 import com.ketayao.ketacustom.service.UserService;
 import com.ketayao.ketacustom.shiro.ShiroDbRealm;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
@@ -51,26 +53,28 @@ public class IndexController {
 	private UserService userService;
 	
 	@Autowired
-	private UserRoleService userRoleService;
-	
-	@Autowired
 	private ModuleService moduleService;
 	
 	private static final String INDEX = "management/index/index";
 	private static final String UPDATE_PASSWORD = "management/index/updatePwd";
 	private static final String UPDATE_BASE = "management/index/updateBase";
 	
+	@Log(message="{0}登录了系统。")
 	@RequiresAuthentication 
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String index(HttpServletRequest request) {
 		Subject subject = SecurityUtils.getSubject();
 		ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser)subject.getPrincipal();
+		// 加入ipAddress
+		shiroUser.setIpAddress(request.getRemoteAddr());
 		
 		Module menuModule = getMenuModule(subject);
 
 		// 这个是放入user还是shiroUser呢？
 		request.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());
 		request.setAttribute("menuModule", menuModule);
+
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{shiroUser.getLoginName()}));
 		return INDEX;
 	}
 	
@@ -95,10 +99,11 @@ public class IndexController {
 	}
 	
 	@RequestMapping(value="/updatePwd", method=RequestMethod.GET)
-	public String updatePassword() {
+	public String preUpdatePassword() {
 		return UPDATE_PASSWORD;
 	}
 	
+	@Log(message="{0}修改了密码。")
 	@RequestMapping(value="/updatePwd", method=RequestMethod.POST)
 	public @ResponseBody String updatePassword(HttpServletRequest request, String oldPassword, 
 			String plainPassword, String rPassword) {
@@ -107,22 +112,20 @@ public class IndexController {
 		if (plainPassword.equals(rPassword)) {
 			user.setPlainPassword(plainPassword);
 			userService.update(user);
-			
-			AjaxObject ajaxObject = new AjaxObject("密码修改成功！");
-			return ajaxObject.toString();
+		
+			LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{user.getUsername()}));
+			return AjaxObject.newOk("修改密码成功！").toString();
 		}
 		
-		AjaxObject ajaxObject = new AjaxObject("密码修改失败！");
-		ajaxObject.setStatusCode(AjaxObject.STATUS_CODE_FAILURE);
-		ajaxObject.setCallbackType("");
-		return ajaxObject.toString();
+		return AjaxObject.newError("修改密码失败！").setCallbackType("").toString();
 	}
 	
 	@RequestMapping(value="/updateBase", method=RequestMethod.GET)
-	public String preUpdate() {
+	public String preUpdateBase() {
 		return UPDATE_BASE;
 	}
 	
+	@Log(message="{0}修改了详细信息。")
 	@RequestMapping(value="/updateBase", method=RequestMethod.POST)
 	public @ResponseBody String update(User user, HttpServletRequest request) {
 		User loginUser = (User)request.getSession().getAttribute(SecurityConstants.LOGIN_USER);
@@ -131,8 +134,8 @@ public class IndexController {
 		loginUser.setEmail(user.getEmail());
 
 		userService.update(loginUser);
-
-		AjaxObject ajaxObject = new AjaxObject("详细信息修改成功！");
-		return ajaxObject.toString();
+		
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{user.getUsername()}));
+		return AjaxObject.newOk("修改详细信息成功！").toString();
 	}
 }

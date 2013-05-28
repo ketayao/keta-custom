@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.service.RoleService.java
+ * Filename:		com.ketayao.ketacustom.service.RoleService.java
  * Class:			RoleService
  * Date:			2012-8-7
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

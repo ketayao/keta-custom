@@ -20,13 +20,14 @@
 			<@dwz.tool_button content="编辑任务" class="edit" width="530" height="250" href="${request.contextPath}/management/sample/task/update/{slt_uid}"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="Task:delete">
-			<@dwz.tool_button content="删除任务" class="delete" target="ajaxTodo" href="${request.contextPath}/management/sample/task/delete/{slt_uid}" title="确认要删除该任务?"/>
+			<@dwz.tool_button content="删除任务" class="delete" target="selectedTodo" rel="ids" href="${request.contextPath}/management/sample/task/delete" title="确认要删除该任务?"/>
 		</@shiro.hasPermission>
 	</@dwz.tool_bar>
 	
 	<@dwz.table_common layoutH="138">
 		<thead>
 			<tr>
+				<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
 				<th width="200">任务名称</th>
 				<th>描述</th>
 			</tr>
@@ -34,6 +35,7 @@
 		<tbody>
 			<#list tasks as item>
 			<tr target="slt_uid" rel="${item.id}">
+				<td><input name="ids" value="${item.id}" type="checkbox"></td>
 				<td>${item.title}</td>
 				<td>${item.description!''}</td>
 			</tr>

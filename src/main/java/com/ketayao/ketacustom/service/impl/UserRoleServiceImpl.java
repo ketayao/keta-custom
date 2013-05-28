@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.service.impl.UserRoleServiceImpl.java
+ * Filename:		com.ketayao.ketacustom.service.impl.UserRoleServiceImpl.java
  * Class:			UserRoleServiceImpl
  * Date:			2012-8-7
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ketayao.ketacustom.dao.UserRoleDao;
+import com.ketayao.ketacustom.dao.UserRoleDAO;
 import com.ketayao.ketacustom.entity.main.UserRole;
 import com.ketayao.ketacustom.service.UserRoleService;
 
@@ -30,30 +30,38 @@ import com.ketayao.ketacustom.service.UserRoleService;
  * @since   2012-8-7 下午5:09:50 
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional
 public class UserRoleServiceImpl implements UserRoleService {
 
-	private UserRoleDao userRoleDao;
+	private UserRoleDAO userRoleDAO;
 	
 	/**  
 	 * 构造函数
 	 * @param jpaRepository  
 	 */ 
 	@Autowired
-	public UserRoleServiceImpl(UserRoleDao userRoleDao) {
-		this.userRoleDao = userRoleDao;
+	public UserRoleServiceImpl(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
+	}
+	
+	/**   
+	 * @param id
+	 * @return  
+	 * @see com.ketayao.ketacustom.service.UserRoleService#get(java.lang.Long)  
+	 */
+	@Override
+	public UserRole get(Long id) {
+		return userRoleDAO.findOne(id);
 	}
 
-	@Transactional
 	@Override
 	public void save(UserRole userRole) {
-		userRoleDao.save(userRole);
+		userRoleDAO.save(userRole);
 	}
 
-	@Transactional
 	@Override
 	public void delete(Long userRoleId) {
-		userRoleDao.delete(userRoleId);
+		userRoleDAO.delete(userRoleId);
 	}
 
 	/**   
@@ -62,7 +70,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 	 * @see com.ketayao.ketacustom.service.UserRoleService#find(Long)  
 	 */
 	public List<UserRole> find(Long userId) {
-		return userRoleDao.findByUserId(userId);
+		return userRoleDAO.findByUserId(userId);
 	}
 
 }

@@ -14,7 +14,7 @@ function getCurrentNavtabRel(){
 	var $pDiv = $('.tabsPage div[class="page unitBox"][style*="block"]').first();
 	var $ub = $("div.unitBox", $pDiv);
 	if ($ub.length > 0) {
-		return $ub;
+		return $ub.first();
 	}
 	return $pDiv;
 }
@@ -96,4 +96,28 @@ function reloadRel(json){
 		}
 	}
 	
+}
+
+/**
+ * 根据id自动局部刷新，用于organization页面
+ * @param json
+ */
+function dialogReloadRel2Org(json){
+	if (json.statusCode == DWZ.statusCode.ok) {
+		$("#refreshJbsxBox2organizationTree").click();
+	}
+	
+	dialogReloadRel(json);
+}
+
+/**
+ * 根据id自动局部刷新，用于module页面
+ * @param json
+ */
+function dialogReloadRel2Module(json){
+	if (json.statusCode == DWZ.statusCode.ok) {
+		$("#refreshJbsxBox2moduleTree").click();
+	}
+	
+	dialogReloadRel(json);
 }

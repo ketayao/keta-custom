@@ -1,3 +1,4 @@
+<a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="/keta-custom/management/security/organization/tree" style="display:none;"/>
 <@dwz.pagerForm action="${request.contextPath}/management/security/organization/list/${parentOrganizationId}" page=page onsubmit="return divSearch(this, 'jbsxBox2organization');">
 	<input type="hidden" name="keywords" value="${keywords!''}"/>
 </@dwz.pagerForm>
@@ -17,7 +18,7 @@
 			<@dwz.tool_button content="编辑组织" class="group_edit" width="530" height="250" href="${request.contextPath}/management/security/organization/update/{slt_uid}"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="Organization:delete">
-			<@dwz.tool_button content="删除组织" class="group_delete" target="ajaxTodo" callback="reloadRel" href="${request.contextPath}/management/security/organization/delete/{slt_uid}" title="确认要删除该模块?"/>
+			<@dwz.tool_button content="删除组织" class="group_delete" target="ajaxTodo" callback="dialogReloadRel2Org" href="${request.contextPath}/management/security/organization/delete/{slt_uid}" title="确认要删除该组织?"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="Organization:assign">
 			<@dwz.tool_line/>

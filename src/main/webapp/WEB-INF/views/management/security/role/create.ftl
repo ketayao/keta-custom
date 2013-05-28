@@ -39,9 +39,11 @@ jQuery(document).ready(function(){
         		<#assign treeStyle=treeStyle + "<div class=\"indent\"></div>">
         		<div class="node"></div>
         	</#if>
+        	<span style="float:left;">
 			<a href="javascript:void(0);" class="permissionList">
 			${child.name}
 			</a>
+			</span>			
 			<span class="inputValueRole">
 				<#list child.permissions as permission>
 			 		${permission.name}<input type="checkbox" name="rolePermissions[${moduleIndex}].permission.id" value="${permission.id}"/>

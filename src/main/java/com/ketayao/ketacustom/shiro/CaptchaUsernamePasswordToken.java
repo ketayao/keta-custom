@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.authenticate.CaptchaUsernamePasswordToken.java
+ * Filename:		com.ketayao.ketacustom.shiro.CaptchaUsernamePasswordToken.java
  * Class:			CaptchaUsernamePasswordToken
  * Date:			2012-8-7
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

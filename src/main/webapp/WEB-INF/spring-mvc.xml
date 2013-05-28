@@ -14,23 +14,33 @@
 		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
 	
+	<!-- 系统日志跟踪功能 -->
+	<bean id="log4JDBCImpl" class="com.ketayao.ketacustom.log.impl.Log4JDBCImpl" >
+		<property name="logEntityService" ref="logEntityServiceImpl"/>
+		<property name="rootLogLevel" value="ERROR"/>
+		<property name="customLogLevel">
+           <map>
+              <entry key="com.ketayao.ketacustom" value="TRACE" />
+              <entry key="com.sample" value="INFO" />
+           </map>
+       </property>
+	</bean>
+	
 	<mvc:interceptors>
 		<!-- 监控运行时间 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<bean class="com.ketayao.ketacustom.spring.ExecuteTimeInterceptor" />
 		</mvc:interceptor>	
-	</mvc:interceptors>	
-
-	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
-		<mvc:message-converters register-defaults="true">
-			<!-- 将StringHttpMessageCOnverter的默认编码设为UTF-8 -->
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-				<constructor-arg value="UTF-8" />
+		<mvc:interceptor>
+			<mvc:mapping path="/management/**" />
+			<mvc:mapping path="/login/timeout/success"/>
+			<bean class="com.ketayao.ketacustom.log.spring.LogInterceptor" >
+				<property name="logAPI" ref="log4JDBCImpl"/>
 			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
-
+		</mvc:interceptor>		
+	</mvc:interceptors>
+     
 	<!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
 	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 	    <property name="mediaTypes" >
@@ -40,7 +50,15 @@
 	        </value>
 	    </property>
 	</bean>
-		
+	
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+			</bean>
+		</mvc:message-converters>	
+	</mvc:annotation-driven>
+
 	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->
 	<mvc:default-servlet-handler/>
 	
@@ -50,7 +68,7 @@
         <property name="templateLoaderPath" value="/" />  
         <property name="freemarkerSettings">  
             <props>  
-                <prop key="template_update_delay">1</prop>  
+                <prop key="template_update_delay">0</prop>  
                 <prop key="default_encoding">UTF-8</prop>  
                 <prop key="locale">zh_CN</prop>
 				<prop key="url_escaping_charset">UTF-8</prop>

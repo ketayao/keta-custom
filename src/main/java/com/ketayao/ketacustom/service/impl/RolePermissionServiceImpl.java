@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.security.service.impl.RolePermissionServiceImpl.java
+ * Filename:		com.ketayao.ketacustom.service.impl.RolePermissionServiceImpl.java
  * Class:			RolePermissionServiceImpl
  * Date:			2013-4-16
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ketayao.ketacustom.dao.RolePermissionDao;
+import com.ketayao.ketacustom.dao.RolePermissionDAO;
 import com.ketayao.ketacustom.entity.main.RolePermission;
 import com.ketayao.ketacustom.service.RolePermissionService;
 
@@ -30,20 +30,19 @@ import com.ketayao.ketacustom.service.RolePermissionService;
  * @since   2013-4-16 下午2:14:10 
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional
 public class RolePermissionServiceImpl implements RolePermissionService {
 	
 	@Autowired
-	private RolePermissionDao rolePermissionDao;
+	private RolePermissionDAO rolePermissionDAO;
 
 	/**   
 	 * @param rolePermission  
 	 * @see com.ketayao.ketacustom.service.RolePermissionService#save(com.ketayao.ketacustom.entity.main.RolePermission)  
 	 */
-	@Transactional
 	@Override
 	public void save(RolePermission rolePermission) {
-		rolePermissionDao.save(rolePermission);
+		rolePermissionDAO.save(rolePermission);
 	}
 
 	/**   
@@ -53,27 +52,25 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	 */
 	@Override
 	public RolePermission get(Long id) {
-		return rolePermissionDao.findOne(id);
+		return rolePermissionDAO.findOne(id);
 	}
 
 	/**   
 	 * @param rolePermission  
 	 * @see com.ketayao.ketacustom.service.RolePermissionService#update(com.ketayao.ketacustom.entity.main.RolePermission)  
 	 */
-	@Transactional
 	@Override
 	public void update(RolePermission rolePermission) {
-		rolePermissionDao.save(rolePermission);
+		rolePermissionDAO.save(rolePermission);
 	}
 
 	/**   
 	 * @param id  
 	 * @see com.ketayao.ketacustom.service.RolePermissionService#delete(java.lang.Long)  
 	 */
-	@Transactional
 	@Override
 	public void delete(Long id) {
-		rolePermissionDao.delete(id);
+		rolePermissionDAO.delete(id);
 	}
 
 	/**   
@@ -83,7 +80,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	 */
 	@Override
 	public List<RolePermission> findByRoleId(Long roleId) {
-		return rolePermissionDao.findByRoleId(roleId);
+		return rolePermissionDAO.findByRoleId(roleId);
 	}
 
 }

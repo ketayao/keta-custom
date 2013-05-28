@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.security.service.impl.OrganizationRoleServiceImpl.java
+ * Filename:		com.ketayao.ketacustom.service.impl.OrganizationRoleServiceImpl.java
  * Class:			OrganizationRoleServiceImpl
  * Date:			2013-4-15
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ketayao.ketacustom.dao.OrganizationRoleDao;
+import com.ketayao.ketacustom.dao.OrganizationRoleDAO;
 import com.ketayao.ketacustom.entity.main.OrganizationRole;
 import com.ketayao.ketacustom.service.OrganizationRoleService;
 
@@ -30,19 +30,29 @@ import com.ketayao.ketacustom.service.OrganizationRoleService;
  * @since   2013-4-15 下午4:16:04 
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional
 public class OrganizationRoleServiceImpl implements OrganizationRoleService {
 	
-	private OrganizationRoleDao organizationRoleDao;
+	private OrganizationRoleDAO organizationRoleDAO;
 	
 	/**
 	 * 
 	 * 构造函数
-	 * @param organizationRoleDao
+	 * @param organizationRoleDAO
 	 */
 	@Autowired
-	public OrganizationRoleServiceImpl(OrganizationRoleDao organizationRoleDao) {
-		this.organizationRoleDao = organizationRoleDao;
+	public OrganizationRoleServiceImpl(OrganizationRoleDAO organizationRoleDAO) {
+		this.organizationRoleDAO = organizationRoleDAO;
+	}
+	
+	/**   
+	 * @param id
+	 * @return  
+	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#get(java.lang.Long)  
+	 */
+	@Override
+	public OrganizationRole get(Long id) {
+		return organizationRoleDAO.findOne(id);
 	}
 
 	/**   
@@ -52,27 +62,25 @@ public class OrganizationRoleServiceImpl implements OrganizationRoleService {
 	 */
 	@Override
 	public List<OrganizationRole> find(Long organizationId) {
-		return organizationRoleDao.findByOrganizationId(organizationId);
+		return organizationRoleDAO.findByOrganizationId(organizationId);
 	}
 
 	/**   
 	 * @param organizationRole  
 	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#save(com.ketayao.ketacustom.entity.main.OrganizationRole)  
 	 */
-	@Transactional
 	@Override
 	public void save(OrganizationRole organizationRole) {
-		organizationRoleDao.save(organizationRole);
+		organizationRoleDAO.save(organizationRole);
 	}
 
 	/**   
 	 * @param organizationRoleId  
 	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#delete(java.lang.Long)  
 	 */
-	@Transactional
 	@Override
 	public void delete(Long organizationRoleId) {
-		organizationRoleDao.delete(organizationRoleId);
+		organizationRoleDAO.delete(organizationRoleId);
 	}
 
 }

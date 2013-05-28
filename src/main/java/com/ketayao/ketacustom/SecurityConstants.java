@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.dao.SecurityConstants.java
+ * Filename:		com.ketayao.ketacustom.SecurityConstants.java
  * Class:			SecurityConstants
  * Date:			2012-8-9
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -12,6 +12,7 @@
  **/
  
 package com.ketayao.ketacustom;
+
 
 /** 
  * 	
@@ -30,4 +31,14 @@ public interface SecurityConstants {
 	 * 验证码
 	 */
 	public final static String CAPTCHA_KEY = "captcha_key";
+	
+	/**
+	 * 日志参数
+	 */
+	public final static String LOG_ARGUMENTS = "log_arguments";
+	
+	/**
+	 * ResponseBody注解返回的mapModel。
+	 */
+	public final static String MODEL_MAP = "model_map";
 }

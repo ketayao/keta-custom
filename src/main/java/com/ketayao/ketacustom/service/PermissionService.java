@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.security.service.PermissionService.java
+ * Filename:		com.ketayao.ketacustom.service.PermissionService.java
  * Class:			PermissionService
  * Date:			2013-4-16
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

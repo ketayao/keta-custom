@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.service.impl.OrganizationServiceImpl.java
+ * Filename:		com.ketayao.ketacustom.service.impl.OrganizationServiceImpl.java
  * Class:			OrganizationServiceImpl
  * Date:			2012-8-27
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -20,8 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ketayao.ketacustom.dao.OrganizationDao;
-import com.ketayao.ketacustom.dao.UserDao;
+import com.ketayao.ketacustom.dao.OrganizationDAO;
+import com.ketayao.ketacustom.dao.UserDAO;
 import com.ketayao.ketacustom.entity.main.Organization;
 import com.ketayao.ketacustom.exception.ServiceException;
 import com.ketayao.ketacustom.service.OrganizationService;
@@ -35,16 +35,15 @@ import com.ketayao.ketacustom.util.dwz.PageUtils;
  * @since   2012-8-27 下午3:56:46 
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional
 public class OrganizationServiceImpl implements OrganizationService {
 	
 	@Autowired
-	private UserDao userDao;
+	private UserDAO userDAO;
 	
 	@Autowired
-	private OrganizationDao organizationDao;
+	private OrganizationDAO organizationDao;
 	
-	@Transactional
 	@Override
 	public void save(Organization organization) {
 		organizationDao.save(organization);
@@ -55,7 +54,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return organizationDao.findOne(id);
 	}
 
-	@Transactional
 	@Override
 	public void update(Organization organization) {
 		organizationDao.save(organization);
@@ -66,7 +64,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * @throws ServiceException  
 	 * @see com.ketayao.ketacustom.service.OrganizationService#delete(java.lang.Long)  
 	 */
-	@Transactional
 	public void delete(Long id) throws ServiceException {
 		if (isRoot(id)) {
 			throw new ServiceException("不允许删除根组织。");
@@ -79,11 +76,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 			throw new ServiceException(organization.getName() + "组织下存在子组织，不允许删除。");
 		}
 		
-		if (userDao.findByOrganizationId(id).size() > 0) {
+		if (userDAO.findByOrganizationId(id).size() > 0) {
 			throw new ServiceException(organization.getName() + "组织下存在用户，不允许删除。");
 		}
 		
-		organizationDao.delete(id);
+		organization.setParent(null);
+		organizationDao.delete(organization);
 	}
 
 	/**   

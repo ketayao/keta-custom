@@ -15,9 +15,10 @@ import org.hibernate.validator.constraints.Range;
 import com.ketayao.ketacustom.entity.IdEntity;
 
 /**
- * 
- * @author Administrator
- * @hibernate.class table="T_UsersRoles"
+ * 	
+ * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
+ * Version  2.1.0
+ * @since   2013-5-6 下午2:29:52
  */
 @Entity
 @Table(name="security_user_role")

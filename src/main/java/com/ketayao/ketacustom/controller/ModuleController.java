@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.controller.ModuleController.java
+ * Filename:		com.ketayao.ketacustom.controller.ModuleController.java
  * Class:			ModuleController
  * Date:			2012-8-6
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -33,6 +33,9 @@ import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.entity.main.Permission;
 import com.ketayao.ketacustom.exception.ExistedException;
 import com.ketayao.ketacustom.exception.ServiceException;
+import com.ketayao.ketacustom.log.Log;
+import com.ketayao.ketacustom.log.LogMessageObject;
+import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.ModuleService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 import com.ketayao.ketacustom.util.dwz.Page;
@@ -57,6 +60,7 @@ public class ModuleController {
 	private static final String LIST = "management/security/module/list";
 	private static final String TREE = "management/security/module/tree";
 	private static final String VIEW = "management/security/module/view";
+	private static final String TREE_LIST = "management/security/module/tree_list";
 	
 	@RequiresPermissions("Module:save")
 	@RequestMapping(value="/create/{parentModuleId}", method=RequestMethod.GET)
@@ -65,6 +69,7 @@ public class ModuleController {
 		return CREATE;
 	}
 	
+	@Log(message="添加了{0}模块。")
 	@RequiresPermissions("Module:save")
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public @ResponseBody String create(Module module) {
@@ -72,7 +77,7 @@ public class ModuleController {
 		
 		Module parentModule = moduleService.get(module.getParent().getId());
 		if (parentModule == null) {
-			return AjaxObject.newError("模块添加失败：id=" + module.getParent().getId() + "的父模块不存在！").toString();
+			return AjaxObject.newError("添加模块失败：id=" + module.getParent().getId() + "的父模块不存在！").toString();
 		}
 		
 		List<Permission> permissions = Lists.newArrayList();
@@ -90,10 +95,11 @@ public class ModuleController {
 		try {
 			moduleService.save(module);
 		} catch (ExistedException e) {
-			return AjaxObject.newError("模块添加失败：" + e.getMessage()).toString();
+			return AjaxObject.newError("添加模块失败：" + e.getMessage()).toString();
 		}
 		
-		return AjaxObject.newOk("模块添加成功！").toString();
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{module.getName()}));
+		return AjaxObject.newOk("添加模块成功！").toString();
 	}
 	
 	@RequiresPermissions("Module:edit")
@@ -105,6 +111,7 @@ public class ModuleController {
 		return UPDATE;
 	}
 	
+	@Log(message="修改了{0}模块的信息。")
 	@RequiresPermissions("Module:edit")
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public @ResponseBody String update(Module module) {
@@ -139,23 +146,29 @@ public class ModuleController {
 		
 		moduleService.update(oldModule);
 		
-		return AjaxObject.newOk("模块修改成功！").toString();
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldModule.getName()}));
+		return AjaxObject.newOk("修改模块成功！").toString();
 	}
 	
+	@Log(message="删除了{0}模块。")
 	@RequiresPermissions("Module:delete")
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
 	public @ResponseBody String delete(@PathVariable Long id) {
-		AjaxObject ajaxObject = new AjaxObject();
+		Module module = moduleService.get(id);
 		try {
 			moduleService.delete(id);
-			ajaxObject.setMessage("模块删除成功！");
 		} catch (ServiceException e) {
-			ajaxObject.setStatusCode(AjaxObject.STATUS_CODE_FAILURE);
-			ajaxObject.setMessage("模块删除失败：" + e.getMessage());
+			return AjaxObject.newError("删除模块失败：" + e.getMessage()).setCallbackType("").toString();
 		}
 		
-		ajaxObject.setCallbackType("");
-		return ajaxObject.toString();
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{module.getName()}));
+		return AjaxObject.newOk("删除模块成功！").setCallbackType("").toString();
+	}
+	
+	@RequiresPermissions("Module:view")
+	@RequestMapping(value="/tree_list", method={RequestMethod.GET, RequestMethod.POST})
+	public String tree_list(Map<String, Object> map) {
+		return TREE_LIST;
 	}
 	
 	@RequiresPermissions("Module:view")

@@ -28,9 +28,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		List<String> errorList = BeanValidators.extractPropertyAndMessageAsList(ex.getConstraintViolations());
 		StringBuilder msg = new StringBuilder();
 		for (String error : errorList) {
-			msg.append(error);
+			msg.append(error + ";");
 		}
 		
+		msg.setCharAt(msg.length() - 1, '.');
 		AjaxObject ajaxObject = AjaxObject.newError(msg.toString());
 		return new ResponseEntity<String>(ajaxObject.toString(), HttpStatus.OK);
 	}

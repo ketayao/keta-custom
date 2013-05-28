@@ -12,7 +12,7 @@
 	</bean>
 
 	<!-- 項目自定义的Realm -->
-	<bean id="shiroDbRealm" class="com.ketayao.ketacustom.shiro.ShiroDbRealm" depends-on="userDao, userRoleDao, moduleDao, organizationRoleDao, captchaService">
+	<bean id="shiroDbRealm" class="com.ketayao.ketacustom.shiro.ShiroDbRealm" depends-on="userDAO, userRoleDAO, moduleDAO, organizationRoleDAO, captchaService">
 		<property name="userService" ref="userServiceImpl"/>
 		<property name="userRoleService" ref="userRoleServiceImpl"/>
 		<property name="moduleService" ref="moduleServiceImpl"/>
@@ -42,7 +42,6 @@
 			<value>
 				/Captcha.jpg = anon
 				/styles/** = anon
-				/Captcha.jpg = anon
 				/login/timeout = anon
 				/login = authc
 				/logout = logout

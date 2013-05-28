@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.security.service.OrganizationRoleService.java
+ * Filename:		com.ketayao.ketacustom.service.OrganizationRoleService.java
  * Class:			OrganizationRoleService
  * Date:			2013-4-15
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -25,6 +25,8 @@ import com.ketayao.ketacustom.entity.main.OrganizationRole;
  */
 
 public interface OrganizationRoleService {
+	OrganizationRole get(Long id);
+	
 	/**
 	 * 根据organizationId，找到已分配的角色。
 	 * 描述

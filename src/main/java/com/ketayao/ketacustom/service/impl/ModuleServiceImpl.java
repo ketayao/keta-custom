@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.service.impl.ModuleServiceImpl.java
+ * Filename:		com.ketayao.ketacustom.service.impl.ModuleServiceImpl.java
  * Class:			ModuleServiceImpl
  * Date:			2012-8-6
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ketayao.ketacustom.dao.ModuleDao;
+import com.ketayao.ketacustom.dao.ModuleDAO;
 import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.exception.ExistedException;
 import com.ketayao.ketacustom.exception.ServiceException;
@@ -35,29 +35,27 @@ import com.ketayao.ketacustom.util.dwz.PageUtils;
  * @since   2012-8-6 上午9:45:28 
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional
 public class ModuleServiceImpl implements ModuleService {
 	@Autowired
-	private ModuleDao moduleDao;
+	private ModuleDAO moduleDAO;
 	
-	@Transactional
 	@Override
 	public void save(Module module) throws ExistedException {
-		if (moduleDao.findBySn(module.getSn()).size() > 0) {
+		if (moduleDAO.findBySn(module.getSn()).size() > 0) {
 			throw new ExistedException("已存在sn=" + module.getSn() + "的模块。");
 		}
-		moduleDao.save(module);
+		moduleDAO.save(module);
 	}
 
 	@Override
 	public Module get(Long id) {
-		return moduleDao.findOne(id);
+		return moduleDAO.findOne(id);
 	}
 
-	@Transactional
 	@Override
 	public void update(Module module) {
-		moduleDao.save(module);
+		moduleDAO.save(module);
 	}
 
 	/**   
@@ -65,7 +63,6 @@ public class ModuleServiceImpl implements ModuleService {
 	 * @throws ServiceException  
 	 * @see com.ketayao.ketacustom.service.ModuleService#delete(int)  
 	 */
-	@Transactional
 	public void delete(Long id) throws ServiceException {
 		if (isRoot(id)) {
 			throw new ServiceException("不允许删除根模块。");
@@ -78,7 +75,9 @@ public class ModuleServiceImpl implements ModuleService {
 			throw new ServiceException(module.getName() + "模块下存在子模块，不允许删除。");
 		}
 		
-		moduleDao.delete(module);
+		// spring jpa data自关联时，不能级联删除，需要先设置为module.setParent(null);应该是和spring jpa data的删除逻辑有关。
+		module.setParent(null);
+		moduleDAO.delete(module);
 	}
 
 	/**   
@@ -89,7 +88,7 @@ public class ModuleServiceImpl implements ModuleService {
 	 */
 	public List<Module> find(Long parentId, Page page) {
 		org.springframework.data.domain.Page<Module> springDataPage = 
-				moduleDao.findByParentId(parentId, PageUtils.createPageable(page));
+				moduleDAO.findByParentId(parentId, PageUtils.createPageable(page));
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
@@ -103,7 +102,7 @@ public class ModuleServiceImpl implements ModuleService {
 	 */
 	public List<Module> find(Long parentId, String name, Page page) {
 		org.springframework.data.domain.Page<Module> springDataPage = 
-				moduleDao.findByParentIdAndNameContaining(parentId, name, PageUtils.createPageable(page));
+				moduleDAO.findByParentIdAndNameContaining(parentId, name, PageUtils.createPageable(page));
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
@@ -114,7 +113,7 @@ public class ModuleServiceImpl implements ModuleService {
 	 */
 	@Override
 	public List<Module> findAll() {
-		return moduleDao.findAll();
+		return moduleDAO.findAll();
 	}
 
 	/**
@@ -130,7 +129,7 @@ public class ModuleServiceImpl implements ModuleService {
 	 * @see com.ketayao.ketacustom.service.ModuleService#getTree()
 	 */
 	public Module getTree() {
-		List<Module> list = moduleDao.findAllWithCache();
+		List<Module> list = moduleDAO.findAllWithCache();
 		
 		List<Module> rootList = makeTree(list);
 				

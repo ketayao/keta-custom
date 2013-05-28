@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ketayao.ketacustom.entity.main.User;
 
-public interface UserDao extends JpaRepository<User, Long> {
+public interface UserDAO extends JpaRepository<User, Long> {
 	// 根据登录名查找用户
 	User findByUsername(String Username);
 	

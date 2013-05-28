@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.controller.RoleController.java
+ * Filename:		com.ketayao.ketacustom.controller.RoleController.java
  * Class:			RoleController
  * Date:			2012-8-7
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -31,6 +31,9 @@ import org.springside.modules.beanvalidator.BeanValidators;
 import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.entity.main.Role;
 import com.ketayao.ketacustom.entity.main.RolePermission;
+import com.ketayao.ketacustom.log.Log;
+import com.ketayao.ketacustom.log.LogMessageObject;
+import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.ModuleService;
 import com.ketayao.ketacustom.service.RoleService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
@@ -67,6 +70,7 @@ public class RoleController {
 		return CREATE;
 	}
 	
+	@Log(message="添加了{0}角色。")
 	@RequiresPermissions("Role:save")
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public @ResponseBody String create(Role role) {
@@ -85,8 +89,8 @@ public class RoleController {
 		}
 		
 		roleService.save(role);
-		
-		return AjaxObject.newOk("角色添加成功！").toString();
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{role.getName()}));
+		return AjaxObject.newOk("添加角色成功！").toString();
 	}
 	
 	@RequiresPermissions("Role:edit")
@@ -99,6 +103,7 @@ public class RoleController {
 		return UPDATE;
 	}
 	
+	@Log(message="修改了{0}角色的信息。")
 	@RequiresPermissions("Role:edit")
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public @ResponseBody String update(Role role) {
@@ -131,19 +136,19 @@ public class RoleController {
 		}
 		
 		roleService.update(oldRole);
-
-		return AjaxObject.newOk("角色修改成功！").toString();
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldRole.getName()}));
+		return AjaxObject.newOk("修改角色成功！").toString();
 	}
 	
+	@Log(message="删除了{0}角色。")
 	@RequiresPermissions("Role:delete")
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
 	public @ResponseBody String delete(@PathVariable Long id) {
-		
-		roleService.delete(id);
+		Role role = roleService.get(id);
+		roleService.delete(role.getId());
 
-		AjaxObject ajaxObject = new AjaxObject("角色删除成功！");
-		ajaxObject.setCallbackType("");
-		return ajaxObject.toString();
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{role.getName()}));
+		return AjaxObject.newOk("删除角色成功！").setCallbackType("").toString();
 	}
 	
 	@RequiresPermissions("Role:view")

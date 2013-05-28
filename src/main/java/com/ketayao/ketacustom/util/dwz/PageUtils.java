@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.util.dwz.SpringDataJpaPageConvert.java
+ * Filename:		com.ketayao.ketacustom.util.dwz.SpringDataJpaPageConvert.java
  * Class:			SpringDataJpaPageConvert
  * Date:			2012-8-6
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

@@ -17,7 +17,7 @@
 			<@dwz.tool_button content="编辑用户" class="user_edit" rel="lookup2organization_edit" width="530" height="330" href="${request.contextPath}/management/security/user/update/{slt_uid}"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="User:delete">
-			<@dwz.tool_button content="删除用户" class="user_delete" target="ajaxTodo" href="${request.contextPath}/management/security/user/delete/{slt_uid}" title="确认要删除该用户?"/>
+			<@dwz.tool_button content="删除用户" class="user_delete" target="selectedTodo" rel="ids" href="${request.contextPath}/management/security/user/delete" title="确认要删除?"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="User:reset">
 			<@dwz.tool_line/>
@@ -34,6 +34,7 @@
 	<@dwz.table_common layoutH="138">
 		<thead>
 			<tr>
+				<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>			
 				<th width="100">登录名称</th>
 				<th width="100">真实名字</th>
 				<th width="200">邮箱地址</th>
@@ -47,6 +48,7 @@
 		<tbody>
 			<#list users as item>
 			<tr target="slt_uid" rel="${item.id}">
+				<td><input name="ids" value="${item.id}" type="checkbox"></td>
 				<td>${item.username}</td>
 				<td>${item.realname}</td>
 				<td>${item.email!''}</td>

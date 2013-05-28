@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ketayao.entity.Role.java
+ * Filename:		com.ketayao.ketacustom.entity.Role.java
  * Class:			Role
  * Date:			2012-6-7
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.service.impl.ServiceUtil.java
+ * Filename:		com.ketayao.ketacustom.service.impl.ServiceUtil.java
  * Class:			ServiceUtil
  * Date:			2012-9-14
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

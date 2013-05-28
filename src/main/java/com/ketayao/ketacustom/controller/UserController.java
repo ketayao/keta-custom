@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.controller.UserController.java
+ * Filename:		com.ketayao.ketacustom.controller.UserController.java
  * Class:			UserController
  * Date:			2012-8-7
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -13,6 +13,7 @@
  
 package com.ketayao.ketacustom.controller;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,9 @@ import com.ketayao.ketacustom.entity.main.User;
 import com.ketayao.ketacustom.entity.main.UserRole;
 import com.ketayao.ketacustom.exception.ExistedException;
 import com.ketayao.ketacustom.exception.ServiceException;
+import com.ketayao.ketacustom.log.Log;
+import com.ketayao.ketacustom.log.LogMessageObject;
+import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.OrganizationService;
 import com.ketayao.ketacustom.service.RoleService;
 import com.ketayao.ketacustom.service.UserRoleService;
@@ -84,23 +88,20 @@ public class UserController {
 		return CREATE;
 	}
 	
+	@Log(message="添加了{0}用户。")
 	@RequiresPermissions("User:save")
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public @ResponseBody String create(User user) {	
 		BeanValidators.validateWithException(validator, user);
 		
 		user.setCreateTime(new Date());
-		
 		try {
 			userService.save(user);
 		} catch (ExistedException e) {
-			AjaxObject ajaxObject = new AjaxObject(e.getMessage());
-			ajaxObject.setCallbackType("");
-			ajaxObject.setStatusCode(AjaxObject.STATUS_CODE_FAILURE);
-			return ajaxObject.toString();
+			return AjaxObject.newError(e.getMessage()).setCallbackType("").toString();
 		}
 		
-		//AjaxObject ajaxObject = AjaxObject.newRefresh("accordion_3", "添加用户成功！");
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{user.getUsername()}));
 		return AjaxObject.newOk("添加用户成功！").toString();
 	}
 	
@@ -123,34 +124,57 @@ public class UserController {
 		return UPDATE;
 	}
 	
+	@Log(message="修改了{0}用户的信息。")
 	@RequiresPermissions("User:edit")
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public @ResponseBody String update(@ModelAttribute("preloadUser")User user) {
 		BeanValidators.validateWithException(validator, user);
 		userService.update(user);
 		
-		return	AjaxObject.newOk("编辑用户成功！").toString(); 
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{user.getUsername()}));
+		return	AjaxObject.newOk("修改用户成功！").toString(); 
 	}
 	
+	@Log(message="删除了{0}用户。")
 	@RequiresPermissions("User:delete")
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
 	public @ResponseBody String delete(@PathVariable Long id) {
-		AjaxObject ajaxObject = new AjaxObject("删除用户成功！");
+		User user = null;
 		try {
-			userService.delete(id);
+			user = userService.get(id);
+			userService.delete(user.getId());
 		} catch (ServiceException e) {
-			ajaxObject.setMessage(e.getMessage());
+			return AjaxObject.newError(e.getMessage()).setCallbackType("").toString();
 		}
 		
-		//AjaxObject ajaxObject = new AjaxObject("用户删除成功");
-		ajaxObject.setCallbackType("");
-		return ajaxObject.toString();
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{user.getUsername()}));
+		return AjaxObject.newOk("删除用户成功！").setCallbackType("").toString();
+	}
+	
+	@Log(message="删除了{0}用户。")
+	@RequiresPermissions("User:delete")
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	public @ResponseBody String deleteMany(Long[] ids) {
+		String[] usernames = new String[ids.length];
+		try {
+			for (int i = 0; i < ids.length; i++) {
+				User user = userService.get(ids[i]);
+				userService.delete(user.getId());
+				
+				usernames[i] = user.getUsername();
+			}
+		} catch (ServiceException e) {
+			return AjaxObject.newError(e.getMessage()).setCallbackType("").toString();
+		}
+		
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{Arrays.toString(usernames)}));
+		return AjaxObject.newOk("删除用户成功！").setCallbackType("").toString();
 	}
 	
 	@RequiresPermissions("User:view")
 	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
 	public String list(Page page, String keywords, Map<String, Object> map) {
-		List<User> users;
+		List<User> users = null;
 		if (StringUtils.isNotBlank(keywords)) {
 			users = userService.find(page, keywords);
 		} else {
@@ -163,15 +187,18 @@ public class UserController {
 		return LIST;
 	}
 	
+	@Log(message="{0}用户{1}")
 	@RequiresPermissions("User:reset")
 	@RequestMapping(value="/reset/{type}/{userId}", method=RequestMethod.POST)
 	public @ResponseBody String reset(@PathVariable String type, @PathVariable Long userId) {
 		User user = userService.get(userId);
 		AjaxObject ajaxObject = new AjaxObject();
+		ajaxObject.setCallbackType("");
+		
 		if (type.equals("password")) {
 			user.setPlainPassword("123456");
 			
-			ajaxObject.setMessage("重置密码成功，默认为123456！"); 
+			ajaxObject.setMessage("重置密码成功，默认为123456！");
 		} else if (type.equals("status")) {
 			if (user.getStatus().equals("enabled")) {
 				user.setStatus("disabled");
@@ -183,14 +210,20 @@ public class UserController {
 		}
 		
 		userService.update(user);
-		ajaxObject.setCallbackType("");
+		
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{user.getUsername(), ajaxObject.getMessage()}));
 		return ajaxObject.toString();
 	}
 	
+	@Log(message="向{0}用户分配了{1}的角色。")
 	@RequiresPermissions("User:assign")
 	@RequestMapping(value="/create/userRole", method={RequestMethod.POST})
 	public @ResponseBody void assignRole(UserRole userRole) {
 		userRoleService.save(userRole);
+		
+		User user = userService.get(userRole.getUser().getId());
+		Role role = roleService.get(userRole.getRole().getId());
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{user.getUsername(), role.getName()}));
 	}
 	
 	@RequiresPermissions("User:assign")
@@ -232,9 +265,13 @@ public class UserController {
 		return LOOK_USER_ROLE;
 	}
 	
+	@Log(message="撤销了{0}用户的{1}角色。")
 	@RequiresPermissions("User:assign")
 	@RequestMapping(value="/delete/userRole/{userRoleId}", method={RequestMethod.POST})
 	public @ResponseBody void deleteUserRole(@PathVariable Long userRoleId) {
+		UserRole userRole = userRoleService.get(userRoleId);
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{userRole.getUser().getUsername(), userRole.getRole().getName()}));
+		
 		userRoleService.delete(userRoleId);
 	}
 	

@@ -1,3 +1,4 @@
+<a id="refreshJbsxBox2moduleTree" rel="jbsxBox2moduleTree" target="ajax" href="${request.contextPath}/management/security/module/tree" style="display:none;"/>
 <@dwz.pagerForm action="${request.contextPath}/management/security/module/list/${parentModuleId}" page=page onsubmit="return divSearch(this, 'jbsxBox2module');">
 	<input type="hidden" name="keywords" value="${keywords!''}"/>
 </@dwz.pagerForm>
@@ -20,7 +21,7 @@
 			<@dwz.tool_button content="编辑模块" class="application_edit" width="530" height="500" href="${request.contextPath}/management/security/module/update/{slt_uid}"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="Module:delete">
-			<@dwz.tool_button content="删除模块" class="application_delete" target="ajaxTodo" callback="reloadRel" href="${request.contextPath}/management/security/module/delete/{slt_uid}" title="确认要删除该模块?"/>
+			<@dwz.tool_button content="删除模块" class="application_delete" target="ajaxTodo" callback="dialogReloadRel2Module" href="${request.contextPath}/management/security/module/delete/{slt_uid}" title="确认要删除该模块?"/>
 		</@shiro.hasPermission>
 	</@dwz.tool_bar>
 	

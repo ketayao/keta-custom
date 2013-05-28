@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.util.dwz.Pager.java
+ * Filename:		com.ketayao.ketacustom.util.dwz.Pager.java
  * Class:			Pager
  * Date:			2012-6-11
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>

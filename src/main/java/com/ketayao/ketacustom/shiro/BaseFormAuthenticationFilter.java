@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.shiro.BaseFormAuthenticationFilter.java
+ * Filename:		com.ketayao.ketacustom.shiro.BaseFormAuthenticationFilter.java
  * Class:			BaseFormAuthenticationFilter
  * Date:			2012-10-29
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -73,7 +73,7 @@ public class BaseFormAuthenticationFilter extends FormAuthenticationFilter {
 				if (log.isTraceEnabled()) {
 					log.trace("Login submission detected.  Attempting to execute login.");
 				}
-				return executeLogin(request, response);
+				return false;
 			}
 		} catch (Exception e) {
 			log.error(Exceptions.getStackTraceAsString(e));

@@ -32,7 +32,7 @@ import com.sample.service.TaskService;
  * @since   2013-4-21 下午7:56:11 
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional
 public class TaskServiceImpl implements TaskService {
 	
 	@Autowired
@@ -56,7 +56,6 @@ public class TaskServiceImpl implements TaskService {
 	 * @param task  
 	 * @see com.sample.service.TaskService#save(com.sample.entity.Task)  
 	 */
-	@Transactional
 	@Override
 	public void save(Task task) {
 		taskDAO.save(task);
@@ -76,7 +75,6 @@ public class TaskServiceImpl implements TaskService {
 	 * @param task  
 	 * @see com.sample.service.TaskService#update(com.sample.entity.Task)  
 	 */
-	@Transactional
 	@Override
 	public void update(Task task) {
 		taskDAO.save(task);
@@ -86,7 +84,6 @@ public class TaskServiceImpl implements TaskService {
 	 * @param id  
 	 * @see com.sample.service.TaskService#delete(java.lang.Long)  
 	 */
-	@Transactional
 	@Override
 	public void delete(Long id) {
 		taskDAO.delete(id);

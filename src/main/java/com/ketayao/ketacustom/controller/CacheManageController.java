@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.controller.CacheManageController.java
+ * Filename:		com.ketayao.ketacustom.controller.CacheManageController.java
  * Class:			CacheManageController
  * Date:			2012-9-14
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.service.CacheService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 
@@ -43,13 +44,12 @@ public class CacheManageController {
 		return INDEX;
 	}
 	
+	@Log(message="进行了缓存清理。")
 	@RequiresPermissions("CacheManage:edit")
 	@RequestMapping(value="/clear", method=RequestMethod.POST)
 	public @ResponseBody String clear() {
 		cacheService.clearAllCache();
 		
-		AjaxObject ajaxObject = new AjaxObject("清除缓存成功！");
-		ajaxObject.setCallbackType("");
-		return ajaxObject.toString();
+		return AjaxObject.newOk("清除缓存成功！").setCallbackType("").toString();
 	}
 }

@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ygsoft.security.controller.LoginController.java
+ * Filename:		com.ketayao.ketacustom.controller.LoginController.java
  * Class:			LoginController
  * Date:			2012-8-2
  * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -14,7 +14,6 @@
 package com.ketayao.ketacustom.controller;
 
 import java.util.Map;
-
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.utils.Exceptions;
 
 import com.ketayao.ketacustom.SecurityConstants;
+import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.shiro.IncorrectCaptchaException;
 import com.ketayao.ketacustom.shiro.ShiroDbRealm;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
@@ -68,12 +68,16 @@ public class LoginController {
 		return LOGIN_DIALOG;
 	}
 
+	@Log(message="会话超时， 该用户重新登录系统。")
 	@RequestMapping(value = "/timeout/success", method = {RequestMethod.GET})
 	public @ResponseBody
 	String timeoutSuccess(HttpServletRequest request) {
 		Subject subject = SecurityUtils.getSubject();
 		ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser)subject.getPrincipal();
-
+		
+		// 加入ipAddress
+		shiroUser.setIpAddress(request.getRemoteAddr());
+		
 		// 这个是放入user还是shiroUser呢？
 		request.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());
 		
