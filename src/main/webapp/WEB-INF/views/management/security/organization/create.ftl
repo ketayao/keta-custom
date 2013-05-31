@@ -1,4 +1,8 @@
-<a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="/keta-custom/management/security/organization/tree" style="display:none;"/>
+<<<<<<< HEAD
+<a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="${request.contextPath}/management/security/organization/tree" style="display:none;"></a>
+=======
+<a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="${request.contextPath}/management/security/organization/tree" style="display:none;"/>
+>>>>>>> refs/heads/master
 <@dwz.layout_content>
 <@dwz.form action="${request.contextPath}/management/security/organization/create" onsubmit="return validateCallback(this, dialogReloadRel2Org);">
 	<input type="hidden" name="parent.id" value="${parentOrganizationId }"/>

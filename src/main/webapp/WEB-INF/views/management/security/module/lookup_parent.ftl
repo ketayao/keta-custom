@@ -1,10 +1,13 @@
-<#macro lookup_org children>
+<#macro lookup_parent children>
     <#if children?exists && children?size gt 0>
     	<ul>
         <#list children as child>
+        	<#if id==child.id>
+				<#break/>
+			</#if>
 			<li>
 				<a href="javascript:" onclick="$.bringBack({id:'${child.id}', name:'${child.name}'})">${child.name}</a>
-            <@lookup_org children=child.children />
+            	<@lookup_parent children=child.children />
             </li>
 		</#list>
 		</ul>
@@ -14,8 +17,8 @@
 <@dwz.layout_content>
 	<@dwz.layout_form_content layoutH="58">
 		<ul class="tree expand">
-			<li><a href="javascript:">${org.name}</a>
-				<@lookup_org children=org.children />
+			<li><a href="javascript:">${module.name}</a>
+				<@lookup_parent children=module.children />
 			</li>
 		</ul>
 	</@dwz.layout_form_content>

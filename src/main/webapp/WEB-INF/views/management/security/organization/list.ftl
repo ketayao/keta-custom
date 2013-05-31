@@ -1,10 +1,14 @@
-<a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="/keta-custom/management/security/organization/tree" style="display:none;"/>
+<<<<<<< HEAD
+<a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="${request.contextPath}/management/security/organization/tree" style="display:none;"></a>
+=======
+<a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="${request.contextPath}/management/security/organization/tree" style="display:none;"/>
+>>>>>>> refs/heads/master
 <@dwz.pagerForm action="${request.contextPath}/management/security/organization/list/${parentOrganizationId}" page=page onsubmit="return divSearch(this, 'jbsxBox2organization');">
 	<input type="hidden" name="keywords" value="${keywords!''}"/>
 </@dwz.pagerForm>
 
 <@dwz.search_form action="${request.contextPath}/management/security/organization/list/${parentOrganizationId}" onsubmit="return divSearch(this, 'jbsxBox2organization');">
-	<@dwz.label_input2 content="模块名称：">
+	<@dwz.label_input2 content="组织名称：">
 		<input type="text" name="keywords" value="${keywords!''}"/>
 	</@dwz.label_input2>
 </@dwz.search_form>
@@ -15,7 +19,7 @@
 			<@dwz.tool_button content="添加组织" class="group_add" width="530" height="250" href="${request.contextPath}/management/security/organization/create/${parentOrganizationId}"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="Organization:edit">
-			<@dwz.tool_button content="编辑组织" class="group_edit" width="530" height="250" href="${request.contextPath}/management/security/organization/update/{slt_uid}"/>
+			<@dwz.tool_button content="编辑组织" class="group_edit" rel="lookupParent2org_edit" width="530" height="250" href="${request.contextPath}/management/security/organization/update/{slt_uid}"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="Organization:delete">
 			<@dwz.tool_button content="删除组织" class="group_delete" target="ajaxTodo" callback="dialogReloadRel2Org" href="${request.contextPath}/management/security/organization/delete/{slt_uid}" title="确认要删除该组织?"/>
@@ -23,7 +27,7 @@
 		<@shiro.hasPermission name="Organization:assign">
 			<@dwz.tool_line/>
 			<@dwz.tool_button content="分配角色" class="shield_add" href="${request.contextPath}/management/security/organization/lookup2create/organizationRole/{slt_uid}" width="400" height="500" title="分配角色"/>
-			<@dwz.tool_button content="撤销角色" class="shield_delete" href="${request.contextPath}/management/security/organization/lookup2delete/organizationRole/{slt_uid}" width="400" height="500" title="删除已分配角色"/>
+			<@dwz.tool_button content="撤销角色" class="shield_delete" href="${request.contextPath}/management/security/organization/lookup2delete/organizationRole/{slt_uid}" width="400" height="500" title="撤销角色"/>
 		</@shiro.hasPermission>		
 	</@dwz.tool_bar>
 	

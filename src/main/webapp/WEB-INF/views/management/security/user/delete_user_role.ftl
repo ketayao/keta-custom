@@ -28,6 +28,8 @@ jQuery(document).ready(function(){
 //-->
 </script>
 <@dwz.layout_content>
+	<fieldset>
+		<legend>用户已分配角色</legend>
 	<@dwz.table_css>
 		<thead>
 			<tr>
@@ -52,4 +54,5 @@ jQuery(document).ready(function(){
 			</#list>
 		</tbody>
 	</@dwz.table_css>
+	</fieldset>
 </@dwz.layout_content>

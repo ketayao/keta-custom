@@ -22,10 +22,10 @@
 		<@shiro.hasPermission name="User:reset">
 			<@dwz.tool_line/>
 			<@dwz.tool_button content="重置密码" class="arrow_refresh" target="ajaxTodo" href="${request.contextPath}/management/security/user/reset/password/{slt_uid}" title="确认重置密码为123456?"/>
-			<@dwz.tool_button content="更新状态" class="user_go" target="ajaxTodo" href="${request.contextPath}/management/security/user/reset/status/{slt_uid}" title="确认更新状态"/>
-			<@dwz.tool_line/>
+			<@dwz.tool_button content="更新状态" class="user_go" target="ajaxTodo" href="${request.contextPath}/management/security/user/reset/status/{slt_uid}" title="确认更新状态?"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="User:assign">
+			<@dwz.tool_line/>
 			<@dwz.tool_button content="分配角色" class="shield_add" href="${request.contextPath}/management/security/user/lookup2create/userRole/{slt_uid}" width="400" height="500" title="分配角色"/>
 			<@dwz.tool_button content="撤销角色" class="shield_delete" href="${request.contextPath}/management/security/user/lookup2delete/userRole/{slt_uid}" width="400" height="500" title="撤销角色"/>
 		</@shiro.hasPermission>

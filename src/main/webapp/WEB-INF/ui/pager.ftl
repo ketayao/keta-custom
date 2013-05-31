@@ -44,6 +44,6 @@
 		</select>
 		<span>总条数: ${page.totalCount}</span>
 	</div>
-	<div <#if rel!="">rel="${rel}"</#if>class="pagination" targetType="${target}" totalCount="${page.totalCount}" numPerPage="${page.numPerPage}" pageNumShown="${pageNumShown}" currentPage="${page.pageNum}"></div>
+	<div <#if rel!="">rel="${rel}" </#if>class="pagination" targetType="${target}" totalCount="${page.totalCount}" numPerPage="${page.numPerPage}" pageNumShown="${pageNumShown}" currentPage="${page.pageNum}"></div>
 </div>
 </#macro>

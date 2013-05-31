@@ -54,7 +54,7 @@ jQuery(document).ready(function(){
 });
 //-->
 </script>
-<a id="refreshJbsxBox2moduleTree" rel="jbsxBox2moduleTree" target="ajax" href="${request.contextPath}/management/security/module/tree" style="display:none;"/>
+<a id="refreshJbsxBox2moduleTree" rel="jbsxBox2moduleTree" target="ajax" href="${request.contextPath}/management/security/module/tree" style="display:none;"></a>
 <@dwz.layout_content>
 <@dwz.form action="${request.contextPath}/management/security/module/update" id="permissionForm" onsubmit="">
 	<input type="hidden" name="id" value="${module.id }"/>
@@ -76,7 +76,12 @@ jQuery(document).ready(function(){
 		</@dwz.label_input>	
 		<@dwz.label_input content="描述：">
 			<input type="text" name="description" size="32" maxlength="255" alt="描述" value="${module.description!'' }"/>
-		</@dwz.label_input>	
+		</@dwz.label_input>
+		<@dwz.label_input content="父模块：">
+			<input name="parent.id" value="${module.parent.id }" type="hidden"/>
+			<input class="required" name="parent.name" type="text" readonly="readonly" value="${module.parent.name }"/>
+			<a class="btnLook" href="${request.contextPath}/management/security/module/lookupParent/${module.id}" lookupGroup="parent" mask="true" title="更改父模块" width="400">查找带回</a>	
+		</@dwz.label_input>			
 	</@dwz.fieldset>			
 	<@dwz.fieldset title="自定义授权">
 		<div class="toNewPermission">

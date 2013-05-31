@@ -29,7 +29,7 @@ jQuery(document).ready(function(){
 //-->
 </script>
 <@dwz.layout_content>
-	<@dwz.fieldset title="已分配角色">
+	<@dwz.fieldset title="组织已分配角色">
 		<@dwz.table_css>
 			<thead>
 				<tr>
@@ -43,7 +43,7 @@ jQuery(document).ready(function(){
 					<td>${item.role.name}</td>
 					<td>
 						<div style="float: left;line-height: 21px;margin: 0px 10px;width: 30px;">${item.priority}</div>
-						<@dwz.button title="删除关联" id="submit_${item.id}" class="deleteOrganizationRole"/>
+						<@dwz.button title="撤销" id="submit_${item.id}" class="deleteOrganizationRole"/>
 					</td>
 				</tr>					
 				</#list>

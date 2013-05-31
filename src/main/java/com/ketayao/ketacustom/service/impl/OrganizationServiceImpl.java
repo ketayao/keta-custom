@@ -42,21 +42,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private UserDAO userDAO;
 	
 	@Autowired
-	private OrganizationDAO organizationDao;
+	private OrganizationDAO organizationDAO;
 	
 	@Override
 	public void save(Organization organization) {
-		organizationDao.save(organization);
+		organizationDAO.save(organization);
 	}
 
 	@Override
 	public Organization get(Long id) {
-		return organizationDao.findOne(id);
+		return organizationDAO.findOne(id);
 	}
 
 	@Override
 	public void update(Organization organization) {
-		organizationDao.save(organization);
+		organizationDAO.save(organization);
 	}
 
 	/**   
@@ -81,7 +81,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		
 		organization.setParent(null);
-		organizationDao.delete(organization);
+		organizationDAO.delete(organization);
 	}
 
 	/**   
@@ -92,7 +92,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	public List<Organization> find(Long parentId, Page page) {
 		org.springframework.data.domain.Page<Organization> springDataPage = 
-				organizationDao.findByParentId(parentId, PageUtils.createPageable(page));
+				organizationDAO.findByParentId(parentId, PageUtils.createPageable(page));
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
@@ -106,7 +106,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	public List<Organization> find(Long parentId, String name, Page page) {
 		org.springframework.data.domain.Page<Organization> springDataPage = 
-				organizationDao.findByParentIdAndNameContaining(parentId, name, PageUtils.createPageable(page));
+				organizationDAO.findByParentIdAndNameContaining(parentId, name, PageUtils.createPageable(page));
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
@@ -124,7 +124,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * @see com.ketayao.ketacustom.service.OrganizationService#getTree()
 	 */
 	public Organization getTree() {
-		List<Organization> list = organizationDao.findAllWithCache();
+		List<Organization> list = organizationDAO.findAllWithCache();
 		
 		List<Organization> rootList = makeTree(list);
 				

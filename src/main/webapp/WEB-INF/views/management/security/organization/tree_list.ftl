@@ -8,7 +8,7 @@
 				</div>
 				
 				<div layoutH="0" id="jbsxBox2organizationList" class="unitBox" style="margin-left:246px;">
-					<!--#include virtual="list1.html" -->
+					<@c.import url="/management/security/organization/list/1"/>
 				</div>
 			</div>				
 		</@dwz.tabs_content>

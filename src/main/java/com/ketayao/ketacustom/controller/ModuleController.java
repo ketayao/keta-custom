@@ -19,6 +19,7 @@ import java.util.Map;
 import javax.validation.Validator;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,8 @@ public class ModuleController {
 	private static final String TREE = "management/security/module/tree";
 	private static final String VIEW = "management/security/module/view";
 	private static final String TREE_LIST = "management/security/module/tree_list";
+	private static final String LOOKUP_PARENT = "management/security/module/lookup_parent";
+	
 	
 	@RequiresPermissions("Module:save")
 	@RequestMapping(value="/create/{parentModuleId}", method=RequestMethod.GET)
@@ -123,6 +126,7 @@ public class ModuleController {
 		oldModule.setDescription(module.getDescription());
 		oldModule.setSn(module.getSn());
 		oldModule.setUrl(module.getUrl());
+		oldModule.setParent(module.getParent());
 		
 		for (Permission permission : module.getPermissions()) {
 			if (StringUtils.isNotBlank(permission.getShortName())) {
@@ -206,5 +210,14 @@ public class ModuleController {
 		
 		map.put("module", module);
 		return VIEW;
+	}
+	
+	@RequiresPermissions(value={"Module:edit", "Module:save"}, logical=Logical.OR)
+	@RequestMapping(value="/lookupParent/{id}", method={RequestMethod.GET})
+	public String lookup(@PathVariable Long id, Map<String, Object> map) {
+		Module module = moduleService.getTree();
+		
+		map.put("module", module);
+		return LOOKUP_PARENT;
 	}
 }

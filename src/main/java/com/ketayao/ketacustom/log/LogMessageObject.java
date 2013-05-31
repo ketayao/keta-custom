@@ -56,7 +56,7 @@ public class LogMessageObject {
 	}
 	
 	public static LogMessageObject newWrite(){
-		return new LogMessageObject();
+		return new LogMessageObject(true);
 	}
 	
 	public static LogMessageObject newIgnore(){

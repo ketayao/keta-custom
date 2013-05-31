@@ -19,6 +19,7 @@ import java.util.Map;
 import javax.validation.Validator;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,6 +72,8 @@ public class OrganizationController {
 	
 	private static final String LOOK_UP_ROLE = "management/security/organization/assign_organization_role";
 	private static final String LOOK_ORGANIZATION_ROLE = "management/security/organization/delete_organization_role";
+	
+	private static final String LOOKUP_PARENT = "management/security/organization/lookup_parent";
 	
 	@RequiresPermissions("Organization:save")
 	@RequestMapping(value="/create/{parentOrganizationId}", method=RequestMethod.GET)
@@ -246,5 +249,14 @@ public class OrganizationController {
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organizationRole.getOrganization().getName(), organizationRole.getRole().getName()}));
 		
 		organizationRoleService.delete(organizationRoleId);
+	}
+	
+	@RequiresPermissions(value={"Organization:edit", "Organization:save"}, logical=Logical.OR)
+	@RequestMapping(value="/lookupParent/{id}", method={RequestMethod.GET})
+	public String lookup(@PathVariable Long id, Map<String, Object> map) {
+		Organization organization  = organizationService.getTree();
+		
+		map.put("organization", organization);
+		return LOOKUP_PARENT;
 	}
 }

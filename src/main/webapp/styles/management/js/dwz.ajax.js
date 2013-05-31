@@ -170,7 +170,8 @@ function dialogAjaxDone(json){
  */
 function navTabSearch(form, navTabId){
 	var $form = $(form);
-	if (form[DWZ.pageInfo.pageNum]) form[DWZ.pageInfo.pageNum].value = 1;
+	//if (form[DWZ.pageInfo.pageNum]) form[DWZ.pageInfo.pageNum].value = 1;
+	if (form[DWZ.pageInfo.numPerPage]) form[DWZ.pageInfo.numPerPage].value = 15;// 保存每页显示条数
 	navTab.reload($form.attr('action'), {data: $form.serializeArray(), navTabId:navTabId});
 	return false;
 }

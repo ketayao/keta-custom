@@ -1,4 +1,4 @@
-<a id="refreshJbsxBox2moduleTree" rel="jbsxBox2moduleTree" target="ajax" href="${request.contextPath}/management/security/module/tree" style="display:none;"/>
+<a id="refreshJbsxBox2moduleTree" rel="jbsxBox2moduleTree" target="ajax" href="${request.contextPath}/management/security/module/tree" style="display:none;"></a>
 <@dwz.pagerForm action="${request.contextPath}/management/security/module/list/${parentModuleId}" page=page onsubmit="return divSearch(this, 'jbsxBox2module');">
 	<input type="hidden" name="keywords" value="${keywords!''}"/>
 </@dwz.pagerForm>
@@ -18,7 +18,7 @@
 			<@dwz.tool_button content="添加模块" class="application_add" width="530" height="500" href="${request.contextPath}/management/security/module/create/${parentModuleId}"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="Module:edit">
-			<@dwz.tool_button content="编辑模块" class="application_edit" width="530" height="500" href="${request.contextPath}/management/security/module/update/{slt_uid}"/>
+			<@dwz.tool_button content="编辑模块" class="application_edit" rel="lookupParent2module_edit" width="530" height="500" href="${request.contextPath}/management/security/module/update/{slt_uid}"/>
 		</@shiro.hasPermission>
 		<@shiro.hasPermission name="Module:delete">
 			<@dwz.tool_button content="删除模块" class="application_delete" target="ajaxTodo" callback="dialogReloadRel2Module" href="${request.contextPath}/management/security/module/delete/{slt_uid}" title="确认要删除该模块?"/>
@@ -38,7 +38,7 @@
 		<tbody>
 			<#list modules as item>
 			<tr target="slt_uid" rel="${item.id}">
-				<td><a href="${request.contextPath}/management/security/module/list/${item.id}" target="ajax" rel="jbsxBox2module">${item.name}</a></td>
+				<td><a href="${request.contextPath}/management/security/module/list/${item.id}" target="ajax" rel="jbsxBox2moduleList">${item.name}</a></td>
 				<td>${item.priority}</td>
 				<td>${item.sn}</td>
 				<td>${item.parent.name}</td>

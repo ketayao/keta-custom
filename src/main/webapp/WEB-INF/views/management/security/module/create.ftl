@@ -54,12 +54,12 @@ jQuery(document).ready(function(){
 });
 //-->
 </script>
-<a id="refreshJbsxBox2moduleTree" rel="jbsxBox2moduleTree" target="ajax" href="${request.contextPath}/management/security/module/tree" style="display:none;"/>
+<a id="refreshJbsxBox2moduleTree" rel="jbsxBox2moduleTree" target="ajax" href="${request.contextPath}/management/security/module/tree" style="display:none;"></a>
 <@dwz.layout_content>
 <@dwz.form action="${request.contextPath}/management/security/module/create" id="permissionForm" onsubmit="">
 	<input type="hidden" name="parent.id" value="${parentModuleId }"/>
 	<@dwz.layout_form_content layoutH="58" id="permissionFormContent">
-	<@dwz.fieldset title="自定义授权">
+	<@dwz.fieldset title="模块信息">
 		<@dwz.label_input content="名称：">
 			<input type="text" name="name" class="required" size="32" maxlength="32" alt="请输入模块名称"/>
 		</@dwz.label_input>	
