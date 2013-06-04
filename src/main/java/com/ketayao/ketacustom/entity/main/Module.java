@@ -86,7 +86,7 @@ public class Module extends IdEntity implements Comparable<Module> {
 	@JoinColumn(name="parentId")
 	private Module parent;
 	
-	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="parent")
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="parent")
 	@OrderBy("priority ASC")
 	private List<Module> children = Lists.newArrayList();
 	

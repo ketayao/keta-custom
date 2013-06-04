@@ -1,1 +1,0 @@
-<@dwz.tree object=module target="ajax" class="tree expand" href="${request.contextPath}/management/security/module/list" rel="jbsxBox2moduleList"/>

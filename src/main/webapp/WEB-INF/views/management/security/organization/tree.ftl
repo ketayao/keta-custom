@@ -1,1 +1,0 @@
-<@dwz.tree object=organization target="ajax" class="tree expand" href="${request.contextPath}/management/security/organization/list" rel="jbsxBox2organizationList"/>

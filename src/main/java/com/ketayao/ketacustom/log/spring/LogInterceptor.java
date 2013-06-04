@@ -66,6 +66,10 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
+		if (!(handler instanceof HandlerMethod)) {
+			return ;
+		}
+		
 		final HandlerMethod handlerMethod = (HandlerMethod)handler;
 		Method method = handlerMethod.getMethod();
 		

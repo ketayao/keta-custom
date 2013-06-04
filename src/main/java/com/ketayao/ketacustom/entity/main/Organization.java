@@ -60,7 +60,7 @@ public class Organization extends IdEntity {
 	@JoinColumn(name="parentId")
 	private Organization parent;
 	
-	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="parent")
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="parent")
 	private List<Organization> children = Lists.newArrayList();
 	
 	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="organization")

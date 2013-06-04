@@ -28,10 +28,12 @@
 	
 	<mvc:interceptors>
 		<!-- 监控运行时间 -->
+		<!-- 
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<bean class="com.ketayao.ketacustom.spring.ExecuteTimeInterceptor" />
-		</mvc:interceptor>	
+		</mvc:interceptor>
+		 -->	
 		<mvc:interceptor>
 			<mvc:mapping path="/management/**" />
 			<mvc:mapping path="/login/timeout/success"/>
@@ -40,18 +42,8 @@
 			</bean>
 		</mvc:interceptor>		
 	</mvc:interceptors>
-     
-	<!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
-	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-	    <property name="mediaTypes" >
-	        <value>
-	            json=application/json
-	            xml=application/xml
-	        </value>
-	    </property>
-	</bean>
 	
-	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<constructor-arg value="UTF-8" />
@@ -62,41 +54,11 @@
 	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->
 	<mvc:default-servlet-handler/>
 	
-	<!-- FreeMarker环境配置 -->  
-    <bean id="freeMarkerConfigurer"  
-        class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
-        <property name="templateLoaderPath" value="/" />  
-        <property name="freemarkerSettings">  
-            <props>  
-                <prop key="template_update_delay">0</prop>  
-                <prop key="default_encoding">UTF-8</prop>  
-                <prop key="locale">zh_CN</prop>
-				<prop key="url_escaping_charset">UTF-8</prop>
-				<prop key="boolean_format">true,false</prop>
-				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
-				<prop key="date_format">yyyy-MM-dd</prop>
-				<prop key="time_format">HH:mm:ss</prop>
-				<prop key="number_format">0.######</prop>
-				<prop key="whitespace_stripping">true</prop>
-				<prop key="auto_import">WEB-INF/ui/dwz.ftl as dwz</prop>
-            </props>  
-        </property>         
-    </bean>  
-  
-    <!-- FreeMarker视图解析 -->  
-    <bean id="freeMarkerViewResolver"  
-        class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">  
-        <property name="viewClass"
-			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
-        <property name="cache" value="true" />  
-        <property name="prefix" value="WEB-INF/views/" />  
-        <property name="suffix" value=".ftl" />  
-        <property name="contentType" value="text/html;charset=UTF-8"/>
-        
-		<property name="exposeSessionAttributes" value="true"/>
-		<property name="allowSessionOverride" value="true"/>
-		<property name="requestContextAttribute" value="request"/>
-    </bean>
+	<!-- 定义JSP文件的位置 --> 
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>	
 	
 	<!-- 定义无Controller的path<->view直接映射 -->
 	<mvc:view-controller path="/" view-name="redirect:/management/index"/>

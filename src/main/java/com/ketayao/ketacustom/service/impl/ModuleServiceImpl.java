@@ -75,8 +75,6 @@ public class ModuleServiceImpl implements ModuleService {
 			throw new ServiceException(module.getName() + "模块下存在子模块，不允许删除。");
 		}
 		
-		// spring jpa data自关联时，不能级联删除，需要先设置为module.setParent(null);应该是和spring jpa data的删除逻辑有关。
-		module.setParent(null);
 		moduleDAO.delete(module);
 	}
 
