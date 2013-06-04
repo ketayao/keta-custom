@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50515
 File Encoding         : 65001
 
-Date: 2013-05-28 16:45:17
+Date: 2013-06-06 16:26:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,13 +27,11 @@ CREATE TABLE `security_log_entity` (
   `message` varchar(255) DEFAULT NULL,
   `username` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=295 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of security_log_entity
 -- ----------------------------
-INSERT INTO `security_log_entity` VALUES ('2', '2013-05-09 18:58:02', '127.0.0.1', 'TRACE', '登录成功。', null);
-INSERT INTO `security_log_entity` VALUES ('3', '2013-05-09 19:00:37', '127.0.0.1', 'TRACE', 'admin:登录成功。', null);
 INSERT INTO `security_log_entity` VALUES ('4', '2013-05-25 17:41:41', '127.0.0.1', 'TRACE', 'admin:登录成功。', null);
 INSERT INTO `security_log_entity` VALUES ('5', '2013-05-25 21:48:05', '127.0.0.1', 'TRACE', 'admin:登录成功。', null);
 INSERT INTO `security_log_entity` VALUES ('8', '2013-05-26 10:41:16', '127.0.0.1', 'TRACE', 'admin:登录成功。', null);
@@ -207,6 +205,118 @@ INSERT INTO `security_log_entity` VALUES ('179', '2013-05-28 15:02:14', '127.0.0
 INSERT INTO `security_log_entity` VALUES ('180', '2013-05-28 15:05:08', '127.0.0.1', 'INFO', '添加了1212任务，LogMessageObject的isWritten为true。', 'admin');
 INSERT INTO `security_log_entity` VALUES ('181', '2013-05-28 16:14:39', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
 INSERT INTO `security_log_entity` VALUES ('182', '2013-05-28 16:15:38', '127.0.0.1', 'TRACE', '修改了测试模块模块的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('183', '2013-05-29 09:12:47', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('184', '2013-05-29 17:31:36', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('185', '2013-05-29 17:31:50', '127.0.0.1', 'TRACE', '添加了12121组织。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('186', '2013-05-31 09:12:41', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('187', '2013-05-31 11:02:12', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('188', '2013-05-31 11:42:10', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('189', '2013-05-31 11:56:34', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('190', '2013-05-31 12:00:58', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('191', '2013-05-31 12:08:42', '127.0.0.1', 'TRACE', '修改了新模块模块的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('192', '2013-05-31 12:09:12', '127.0.0.1', 'TRACE', '修改了121215组织的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('193', '2013-05-31 12:10:40', '127.0.0.1', 'TRACE', '修改了新模块模块的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('194', '2013-05-31 12:13:28', '127.0.0.1', 'TRACE', '修改了多级模块测试模块的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('195', '2013-05-31 12:23:09', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('196', '2013-05-31 12:25:46', '127.0.0.1', 'TRACE', '修改了121215组织的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('197', '2013-06-02 17:43:48', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('198', '2013-06-03 09:41:22', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('199', '2013-06-03 09:42:07', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('200', '2013-06-03 09:42:36', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('201', '2013-06-03 09:42:50', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('202', '2013-06-03 09:43:18', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('203', '2013-06-03 09:43:43', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('204', '2013-06-03 09:44:16', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('205', '2013-06-03 09:53:40', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('206', '2013-06-03 09:53:58', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('207', '2013-06-03 09:55:04', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('208', '2013-06-03 09:55:23', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('209', '2013-06-03 09:55:38', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('210', '2013-06-03 09:55:52', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('211', '2013-06-03 09:55:59', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('212', '2013-06-03 10:00:48', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('213', '2013-06-03 10:02:25', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('214', '2013-06-03 11:05:45', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('215', '2013-06-03 11:05:50', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('216', '2013-06-03 11:12:54', '127.0.0.1', 'TRACE', 'cya用户重置密码成功，默认为123456！', 'admin');
+INSERT INTO `security_log_entity` VALUES ('217', '2013-06-03 11:17:14', '127.0.0.1', 'TRACE', 'admin修改了详细信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('218', '2013-06-03 11:21:06', '127.0.0.1', 'TRACE', 'admin修改了密码。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('219', '2013-06-03 11:27:41', '127.0.0.1', 'TRACE', '修改了cya用户的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('220', '2013-06-03 11:36:40', '127.0.0.1', 'TRACE', '添加了kblog用户。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('221', '2013-06-03 11:48:02', '127.0.0.1', 'TRACE', '向kblog用户分配了管理员的角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('222', '2013-06-03 11:48:10', '127.0.0.1', 'TRACE', '向kblog用户分配了营销人员的角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('223', '2013-06-03 11:52:39', '127.0.0.1', 'TRACE', '撤销了kblog用户的营销人员角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('224', '2013-06-03 11:56:18', '127.0.0.1', 'TRACE', 'cya用户重置密码成功，默认为123456！', 'admin');
+INSERT INTO `security_log_entity` VALUES ('225', '2013-06-03 14:25:27', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('226', '2013-06-03 14:32:22', '127.0.0.1', 'TRACE', '修改了cya用户的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('227', '2013-06-03 14:32:54', '127.0.0.1', 'TRACE', '删除了[kblog]用户。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('228', '2013-06-03 14:33:02', '127.0.0.1', 'TRACE', 'task2用户重置密码成功，默认为123456！', 'admin');
+INSERT INTO `security_log_entity` VALUES ('229', '2013-06-03 14:33:07', '127.0.0.1', 'TRACE', 'task2用户更新状态成功，当前为不可用', 'admin');
+INSERT INTO `security_log_entity` VALUES ('230', '2013-06-03 16:32:52', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('231', '2013-06-03 17:01:38', '127.0.0.1', 'TRACE', '添加了hh角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('232', '2013-06-04 09:17:44', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('233', '2013-06-04 09:54:50', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('234', '2013-06-04 10:20:30', '127.0.0.1', 'TRACE', '添加了gg模块。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('235', '2013-06-04 10:28:22', '127.0.0.1', 'TRACE', '修改了ggk模块的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('236', '2013-06-04 10:42:07', '127.0.0.1', 'TRACE', '修改了ggk模块的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('237', '2013-06-04 10:42:37', '127.0.0.1', 'TRACE', '删除了ggk模块。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('238', '2013-06-04 11:19:49', '127.0.0.1', 'TRACE', '添加了gg组织。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('239', '2013-06-04 11:24:18', '127.0.0.1', 'TRACE', '修改了gg2组织的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('240', '2013-06-04 11:29:02', '127.0.0.1', 'TRACE', '向gg2组织分配了管理员的角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('241', '2013-06-04 11:29:05', '127.0.0.1', 'TRACE', '向gg2组织分配了营销人员的角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('242', '2013-06-04 11:33:53', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('243', '2013-06-04 11:35:40', '127.0.0.1', 'TRACE', '撤销了gg2组织的营销人员角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('244', '2013-06-04 11:36:57', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('245', '2013-06-04 11:39:12', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('246', '2013-06-04 11:55:03', '127.0.0.1', 'TRACE', '添加了tt角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('247', '2013-06-04 15:08:17', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('248', '2013-06-04 15:14:04', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('249', '2013-06-04 16:30:57', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('250', '2013-06-04 16:40:22', '127.0.0.1', 'TRACE', '添加了tt2角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('251', '2013-06-04 17:06:50', '127.0.0.1', 'TRACE', '修改了tt2角色的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('252', '2013-06-04 17:14:03', '127.0.0.1', 'TRACE', '删除了tt2角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('253', '2013-06-04 17:22:15', '127.0.0.1', 'TRACE', '修改了yaan用户的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('254', '2013-06-04 17:22:36', '127.0.0.1', 'TRACE', '添加了opnmzxcvb用户。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('255', '2013-06-04 17:23:06', '127.0.0.1', 'TRACE', 'opnmzxcvb用户重置密码成功，默认为123456！', 'admin');
+INSERT INTO `security_log_entity` VALUES ('256', '2013-06-04 17:23:12', '127.0.0.1', 'TRACE', 'opnmzxcvb用户更新状态成功，当前为不可用', 'admin');
+INSERT INTO `security_log_entity` VALUES ('257', '2013-06-05 08:56:04', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('258', '2013-06-05 09:00:42', '127.0.0.1', 'TRACE', '添加了gg用户。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('259', '2013-06-05 09:01:14', '127.0.0.1', 'TRACE', '修改了gg用户的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('260', '2013-06-05 09:02:26', '127.0.0.1', 'TRACE', '向gg用户分配了tt的角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('261', '2013-06-05 09:02:30', '127.0.0.1', 'TRACE', '撤销了gg用户的tt角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('262', '2013-06-05 09:19:12', '127.0.0.1', 'TRACE', '添加了人人组织。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('263', '2013-06-05 09:20:35', '127.0.0.1', 'TRACE', '修改了人人2组织的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('264', '2013-06-05 09:20:45', '127.0.0.1', 'TRACE', '修改了人人2组织的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('265', '2013-06-05 09:21:07', '127.0.0.1', 'TRACE', '向121215组织分配了管理员的角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('266', '2013-06-05 09:21:13', '127.0.0.1', 'TRACE', '撤销了121215组织的管理员角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('267', '2013-06-05 09:22:16', '127.0.0.1', 'TRACE', '删除了人人2组织。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('268', '2013-06-05 09:27:20', '127.0.0.1', 'TRACE', '添加了bb模块。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('269', '2013-06-05 09:27:43', '127.0.0.1', 'TRACE', '修改了bb模块的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('270', '2013-06-05 09:27:59', '127.0.0.1', 'TRACE', '删除了bb模块。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('271', '2013-06-05 09:29:07', '127.0.0.1', 'TRACE', '进行了缓存清理。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('272', '2013-06-05 09:29:24', '127.0.0.1', 'TRACE', '删除了2条日志。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('273', '2013-06-05 09:42:12', '127.0.0.1', 'INFO', '添加了基于SimpleJdbcDaoSupport通用分页任务，LogMessageObject的isWritten为true。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('274', '2013-06-05 09:45:26', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('275', '2013-06-05 09:46:54', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('276', '2013-06-05 09:47:41', '127.0.0.1', 'TRACE', 'Log的override用法实例，override为true，会忽略掉level。删除了[基于SimpleJdbcDaoSupport通用分页]任务。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('277', '2013-06-05 09:55:26', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('278', '2013-06-05 09:56:12', '127.0.0.1', 'TRACE', '删除了1212组织。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('279', '2013-06-05 09:57:43', '127.0.0.1', 'TRACE', '会话超时， 该用户重新登录系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('280', '2013-06-05 09:58:28', '127.0.0.1', 'TRACE', '删除了116模块。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('281', '2013-06-05 10:00:08', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('282', '2013-06-05 10:08:11', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('283', '2013-06-05 10:08:17', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('284', '2013-06-05 10:10:10', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('285', '2013-06-05 10:12:17', '127.0.0.1', 'TRACE', '修改了新模块2模块的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('286', '2013-06-05 10:12:46', '127.0.0.1', 'TRACE', '修改了新模块26模块的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('287', '2013-06-05 10:31:25', '127.0.0.1', 'TRACE', 'admin登录了系统。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('288', '2013-06-05 10:32:40', '127.0.0.1', 'INFO', '添加了的粉丝任务，LogMessageObject的isWritten为true。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('289', '2013-06-05 10:32:46', '127.0.0.1', 'TRACE', 'Log的override用法实例，override为true，会忽略掉level。删除了[1212, 的粉丝]任务。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('290', '2013-06-05 10:44:14', '127.0.0.1', 'TRACE', '修改了vv3组织的信息。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('291', '2013-06-05 10:44:31', '127.0.0.1', 'TRACE', '向vv3组织分配了管理员的角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('292', '2013-06-05 10:44:36', '127.0.0.1', 'TRACE', '撤销了vv3组织的管理员角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('293', '2013-06-05 10:44:40', '127.0.0.1', 'TRACE', '向vv3组织分配了tt的角色。', 'admin');
+INSERT INTO `security_log_entity` VALUES ('294', '2013-06-05 10:46:07', '127.0.0.1', 'TRACE', '删除了tt角色。', 'admin');
 
 -- ----------------------------
 -- Table structure for `security_module`
@@ -223,7 +333,7 @@ CREATE TABLE `security_module` (
   PRIMARY KEY (`id`),
   KEY `FK6510844BB3395F9` (`parent_id`),
   CONSTRAINT `FK6510844BB3395F9` FOREIGN KEY (`parent_id`) REFERENCES `security_module` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of security_module
@@ -239,12 +349,11 @@ INSERT INTO `security_module` VALUES ('18', '', '组织管理', '99', 'Organizat
 INSERT INTO `security_module` VALUES ('24', '', '缓存管理', '99', 'CacheManage', '/management/security/cacheManage/index', '2');
 INSERT INTO `security_module` VALUES ('38', '测试下', '测试模块', '99', 'sdfs', '测试下', '1');
 INSERT INTO `security_module` VALUES ('52', '', '自定义权限测试', '99', 'ggg', '/vv', '38');
-INSERT INTO `security_module` VALUES ('53', '', '多级模块测试', '99', 'gg', '/gg', '38');
+INSERT INTO `security_module` VALUES ('53', '', '多级模块测试', '99', 'gg', '/gg', '52');
 INSERT INTO `security_module` VALUES ('54', '', '模块测试2', '99', '多级模块测试2', '/hh', '53');
-INSERT INTO `security_module` VALUES ('58', '', '新模块', '99', 'ff', '/dd', '38');
+INSERT INTO `security_module` VALUES ('58', '', '新模块26', '99', 'ff', '/dd', '53');
 INSERT INTO `security_module` VALUES ('59', '', '日志管理', '99', 'logEntity', '/management/security/logEntity/list', '2');
-INSERT INTO `security_module` VALUES ('60', '', '123123', '99', 'ggg222', '/ds', null);
-INSERT INTO `security_module` VALUES ('61', '', '116', '99', 'sfsdf', '/1212', null);
+INSERT INTO `security_module` VALUES ('60', '', '123123', '99', 'ggg222', '/ds', '1');
 
 -- ----------------------------
 -- Table structure for `security_organization`
@@ -258,7 +367,7 @@ CREATE TABLE `security_organization` (
   PRIMARY KEY (`id`),
   KEY `FK1DBDA7D2FCC01B00` (`parent_id`),
   CONSTRAINT `FK1DBDA7D2FCC01B00` FOREIGN KEY (`parent_id`) REFERENCES `security_organization` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of security_organization
@@ -274,9 +383,10 @@ INSERT INTO `security_organization` VALUES ('8', '', '玉宇电力', '2');
 INSERT INTO `security_organization` VALUES ('9', '', '叙永供电', '2');
 INSERT INTO `security_organization` VALUES ('10', '', '古蔺供电', '2');
 INSERT INTO `security_organization` VALUES ('11', '测试组织权限', '测试组织权限', '3');
-INSERT INTO `security_organization` VALUES ('12', '', 'vv', null);
-INSERT INTO `security_organization` VALUES ('13', '', '121', null);
-INSERT INTO `security_organization` VALUES ('14', '', '1212', null);
+INSERT INTO `security_organization` VALUES ('12', '', 'vv3', '1');
+INSERT INTO `security_organization` VALUES ('13', '', '121', '1');
+INSERT INTO `security_organization` VALUES ('15', '', '121215', '10');
+INSERT INTO `security_organization` VALUES ('16', 'asd', 'gg2', '15');
 
 -- ----------------------------
 -- Table structure for `security_organization_role`
@@ -292,12 +402,13 @@ CREATE TABLE `security_organization_role` (
   KEY `FK557CA4C3C592DFF7` (`role_id`),
   CONSTRAINT `FK557CA4C3C592DFF7` FOREIGN KEY (`role_id`) REFERENCES `security_role` (`id`),
   CONSTRAINT `FK557CA4C3D069FDD7` FOREIGN KEY (`organization_id`) REFERENCES `security_organization` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of security_organization_role
 -- ----------------------------
 INSERT INTO `security_organization_role` VALUES ('1', '99', '11', '7');
+INSERT INTO `security_organization_role` VALUES ('2', '99', '16', '3');
 
 -- ----------------------------
 -- Table structure for `security_permission`
@@ -374,10 +485,6 @@ INSERT INTO `security_permission` VALUES ('139', null, '增', 'save', '60');
 INSERT INTO `security_permission` VALUES ('140', null, '删', 'delete', '60');
 INSERT INTO `security_permission` VALUES ('141', null, '查', 'view', '60');
 INSERT INTO `security_permission` VALUES ('142', null, '改', 'edit', '60');
-INSERT INTO `security_permission` VALUES ('143', null, '增', 'save', '61');
-INSERT INTO `security_permission` VALUES ('144', null, '删', 'delete', '61');
-INSERT INTO `security_permission` VALUES ('145', null, '查', 'view', '61');
-INSERT INTO `security_permission` VALUES ('146', null, '改', 'edit', '61');
 INSERT INTO `security_permission` VALUES ('159', '', '增', 'save', '38');
 INSERT INTO `security_permission` VALUES ('160', '', '删', 'delete', '38');
 INSERT INTO `security_permission` VALUES ('161', '', '查', 'view', '38');
@@ -402,6 +509,7 @@ INSERT INTO `security_role` VALUES ('4', null, '财务人员');
 INSERT INTO `security_role` VALUES ('5', null, '营销人员');
 INSERT INTO `security_role` VALUES ('7', null, '任务实例角色');
 INSERT INTO `security_role` VALUES ('8', '仅仅是测试角色2', 'test');
+INSERT INTO `security_role` VALUES ('9', 'hh', 'hh');
 
 -- ----------------------------
 -- Table structure for `security_role_permission`
@@ -443,6 +551,10 @@ INSERT INTO `security_role_permission` VALUES ('73', '127', '7');
 INSERT INTO `security_role_permission` VALUES ('74', '128', '7');
 INSERT INTO `security_role_permission` VALUES ('75', '129', '7');
 INSERT INTO `security_role_permission` VALUES ('76', '130', '7');
+INSERT INTO `security_role_permission` VALUES ('77', '25', '9');
+INSERT INTO `security_role_permission` VALUES ('78', '26', '9');
+INSERT INTO `security_role_permission` VALUES ('79', '27', '9');
+INSERT INTO `security_role_permission` VALUES ('80', '28', '9');
 
 -- ----------------------------
 -- Table structure for `security_user`
@@ -462,23 +574,25 @@ CREATE TABLE `security_user` (
   PRIMARY KEY (`id`),
   KEY `FKD607B56A453A1286` (`org_id`),
   CONSTRAINT `FKD607B56A453A1286` FOREIGN KEY (`org_id`) REFERENCES `security_organization` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of security_user
 -- ----------------------------
-INSERT INTO `security_user` VALUES ('1', '2012-08-03 14:58:38', 'ketayao@gmail.com', '63d348232ada9b10ae9068267c664f8fef8d1019', '13518109990', '姚强', '12b6f220b64fdf26', 'enabled', 'admin', '2');
+INSERT INTO `security_user` VALUES ('1', '2012-08-03 14:58:38', 'ketayao@gmail.com', '7a8f27edd04296d1a2f484cca71c6834a87356b6', '13518109993', '姚强', '9754469b0353a6a7', 'enabled', 'admin', '2');
 INSERT INTO `security_user` VALUES ('3', '2012-08-07 00:00:00', 'task@task.com', '802874fa2303c5ef3d5ce56fbeba6a16f2ff7aef', '84893620', '简单任务实例用户', 'acda641cfd0f313d', 'enabled', 'task', '11');
-INSERT INTO `security_user` VALUES ('4', '2012-08-07 16:12:17', 'sdf@ss.com', '0448b9fa8b0b4ad255e71ad3305e1677114ccf08', '1231231', '任务实例用户2', '6c3eb539e4f04701', 'enabled', 'task2', '11');
+INSERT INTO `security_user` VALUES ('4', '2012-08-07 16:12:17', 'sdf@ss.com', 'e36219917bddd2405d6afbee52a5bf7456d8ca3c', '1231231', '任务实例用户2', '91843ac5f24430dc', 'disabled', 'task2', '11');
 INSERT INTO `security_user` VALUES ('5', '2012-08-13 11:17:31', 'jjyy@sina.com', '638c3e2f7984d9bc6f539df5dfc6a1e7b5088743', '13658025333', '王五', 'fabffbdfe3f64c0b', 'enabled', 'ww', '4');
 INSERT INTO `security_user` VALUES ('6', '2012-08-28 10:14:20', '', 'c2d8884974f8e4d586815c8d05b3e94bdcd40eee', '4411455', '龟六', '683552b3232cadaa', 'enabled', 'gl', '5');
 INSERT INTO `security_user` VALUES ('8', '2012-09-11 17:07:46', '', '0d44d808a023549ff328a358c2ff4e11b82a38c9', '', '管理员', 'e094b48ae2aec9ed', 'enabled', 'gly', '2');
 INSERT INTO `security_user` VALUES ('9', '2012-09-11 17:08:37', '', 'cd96c812a562b24f9aa1e16c29a14496a566c1f1', '', '财务', 'ece0bed822f7bd56', 'disabled', 'cw', '2');
 INSERT INTO `security_user` VALUES ('11', '2013-04-17 21:39:30', 'kkkk@sina.com', '449a9feae1d5ba02571e4c36ee026e59ec9ea759', '1198897', '陈诚', '0e62c4d6cf2d35c6', 'enabled', 'cc', '6');
-INSERT INTO `security_user` VALUES ('12', '2013-04-17 21:41:57', '', '8881cebe212c3811ac261b1a4d3222665aa9e523', '', '雅安加油', '26ba58c8e43ae927', 'enabled', 'yaan', '8');
+INSERT INTO `security_user` VALUES ('12', '2013-04-17 21:41:57', '', '8881cebe212c3811ac261b1a4d3222665aa9e523', '123121123123', '雅安加油', '26ba58c8e43ae927', 'enabled', 'yaan', '8');
 INSERT INTO `security_user` VALUES ('13', '2013-04-17 21:43:01', '', 'a44416b929e52db57c04bc2fced80485a3e12735', '', '庐山', '3874746de55953bf', 'enabled', 'lushan', '10');
-INSERT INTO `security_user` VALUES ('14', '2013-04-17 21:43:55', '', 'a1637c74f77ae7e5aa358958a89b30d9c01ee6a0', '11434920', '陈雅', '9a76bb09259a3d78', 'enabled', 'cya', '9');
+INSERT INTO `security_user` VALUES ('14', '2013-04-17 21:43:55', '', '12afbc40964938e5a2e49ceab0eba9ee7e55d5b6', '114349203', '陈雅', '29aad8354b24a552', 'enabled', 'cya', '5');
 INSERT INTO `security_user` VALUES ('15', '2013-04-20 13:27:54', '', 'ef3ba970aeabbcc91818c10e906900db9f5a7b10', '', '一般管理员', '4fd3ebe72f684f6d', 'enabled', 'manage', '2');
+INSERT INTO `security_user` VALUES ('16', '2013-06-04 17:22:36', '', '42581c277a26527051a0380ce58a7dc200be16b2', '', '12312', '4e166cb90ef19ca7', 'disabled', 'opnmzxcvb', '8');
+INSERT INTO `security_user` VALUES ('17', '2013-06-05 09:00:42', 'sdfsd@sina.com', '385a965e1a0035f1def3cdd564bf3c2115a3150e', '12312312', '1212123', '4b38243e2fe01055', 'disabled', 'gg', '10');
 
 -- ----------------------------
 -- Table structure for `security_user_role`
@@ -520,7 +634,7 @@ CREATE TABLE `ss_task` (
   `description` varchar(255) DEFAULT NULL,
   `title` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ss_task
@@ -532,4 +646,3 @@ INSERT INTO `ss_task` VALUES ('4', '', '售后任务');
 INSERT INTO `ss_task` VALUES ('5', '', '集成任务');
 INSERT INTO `ss_task` VALUES ('6', '', '更新任务');
 INSERT INTO `ss_task` VALUES ('7', '', '后续任务');
-INSERT INTO `ss_task` VALUES ('13', '', '1212');

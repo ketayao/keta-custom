@@ -80,7 +80,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 			throw new ServiceException(organization.getName() + "组织下存在用户，不允许删除。");
 		}
 		
-		organization.setParent(null);
 		organizationDAO.delete(organization);
 	}
 
