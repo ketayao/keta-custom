@@ -53,7 +53,7 @@
 		<tbody>
 			<c:forEach var="item" items="${modules}">
 			<tr target="slt_uid" rel="${item.id}">
-				<td><a href="${request.contextPath}/management/security/module/list/${item.id}" target="ajax" rel="jbsxBox2moduleList">${item.name}</a></td>
+				<td><a href="${contextPath}/management/security/module/list/${item.id}" target="ajax" rel="jbsxBox2moduleList">${item.name}</a></td>
 				<td>${item.priority}</td>
 				<td>${item.sn}</td>
 				<td>${item.parent.name}</td>

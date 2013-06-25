@@ -23,6 +23,6 @@
 %>    
 <ul class="tree expand">
 	<li><a href="${contextPath }/management/security/module/list/${module.id}"
-		target="ajax" rel="jbsxBox2module">${module.name }</a> <%=tree(module2, request.getContextPath())%>
+		target="ajax" rel="jbsxBox2moduleList">${module.name }</a> <%=tree(module2, request.getContextPath())%>
 	</li>
 </ul>
