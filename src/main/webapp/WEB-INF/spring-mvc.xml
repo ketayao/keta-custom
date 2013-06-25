@@ -61,7 +61,7 @@
 	</bean>	
 	
 	<!-- 定义无Controller的path<->view直接映射 -->
-	<mvc:view-controller path="/" view-name="redirect:/management/index"/>
+	<mvc:view-controller path="/" view-name="redirect:/login"/>
 	
 	 <!-- 全局异常配置 start -->  
      <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  

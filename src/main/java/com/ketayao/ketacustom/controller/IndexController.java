@@ -18,7 +18,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,7 +60,7 @@ public class IndexController {
 	private static final String UPDATE_BASE = "management/index/updateBase";
 	
 	@Log(message="{0}登录了系统。")
-	@RequiresAuthentication 
+	@RequiresUser 
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String index(HttpServletRequest request) {
 		Subject subject = SecurityUtils.getSubject();

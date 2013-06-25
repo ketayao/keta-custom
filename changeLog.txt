@@ -34,6 +34,7 @@ new
 keta-custom3.0.0
 
 fixbug
+修复shiro记住我报错的bug。
 
 enhancement
 
