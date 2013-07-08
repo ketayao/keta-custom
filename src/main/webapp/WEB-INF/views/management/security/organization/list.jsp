@@ -27,18 +27,18 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 		<shiro:hasPermission name="Organization:save">
-			<li><a class="group_add" target="dialog" mask="true" width="530" height="250" href="${contextPath}/management/security/organization/create/${parentOrganizationId}"><span>添加组织</span></a></li>
+			<li><a iconClass="${contextPath }#group_add" target="dialog" mask="true" width="530" height="250" href="${contextPath}/management/security/organization/create/${parentOrganizationId}"><span>添加组织</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Organization:edit">
-			<li><a class="group_edit" target="dialog" mask="true" rel="lookupParent2org_edit" width="530" height="250" href="${contextPath}/management/security/organization/update/{slt_uid}"><span>编辑组织</span></a></li>
+			<li><a iconClass="${contextPath }#group_edit" target="dialog" mask="true" rel="lookupParent2org_edit" width="530" height="250" href="${contextPath}/management/security/organization/update/{slt_uid}"><span>编辑组织</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Organization:delete">
-			<li><a class="group_delete" class="group_delete" target="ajaxTodo" callback="dialogReloadRel2Org" href="${contextPath}/management/security/organization/delete/{slt_uid}" title="确认要删除该组织?"><span>删除组织</span></a></li>
+			<li><a iconClass="${contextPath }#group_delete" target="ajaxTodo" callback="dialogReloadRel2Org" href="${contextPath}/management/security/organization/delete/{slt_uid}" title="确认要删除该组织?"><span>删除组织</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Organization:assign">
 			<li class="line">line</li>
-			<li><a class="shield_add" target="dialog" mask="true" width="400" height="500" href="${contextPath}/management/security/organization/lookup2create/organizationRole/{slt_uid}"><span>分配角色</span></a></li>
-			<li><a class="shield_delete" target="dialog" mask="true" width="400" height="500" href="${contextPath}/management/security/organization/lookup2delete/organizationRole/{slt_uid}"><span>撤销角色</span></a></li>
+			<li><a iconClass="${contextPath }#shield_add" target="dialog" mask="true" width="400" height="500" href="${contextPath}/management/security/organization/lookup2create/organizationRole/{slt_uid}"><span>分配角色</span></a></li>
+			<li><a iconClass="${contextPath }#shield_delete" target="dialog" mask="true" width="400" height="500" href="${contextPath}/management/security/organization/lookup2delete/organizationRole/{slt_uid}"><span>撤销角色</span></a></li>
 		</shiro:hasPermission>		
 		</ul>
 	</div>

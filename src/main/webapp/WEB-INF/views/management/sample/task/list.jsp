@@ -29,7 +29,7 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<shiro:hasPermission name="Task:look">
-				<li><a class="magnifier" target="dialog" mask="true" width="530" height="250" href="${contextPath }/management/sample/task/view/{slt_uid}"><span>查看任务</span></a></li>
+				<li><a iconClass="${contextPath }#magnifier" target="dialog" mask="true" width="530" height="250" href="${contextPath }/management/sample/task/view/{slt_uid}"><span>查看任务</span></a></li>
 			</shiro:hasPermission>		
 			<shiro:hasPermission name="Task:save">
 				<li><a class="add" target="dialog" mask="true" width="530" height="250" href="${contextPath }/management/sample/task/create"><span>添加任务</span></a></li>
@@ -43,7 +43,7 @@
 		</ul>
 	</div>
 	
-	<table class="table" layoutH="138" width="100%">
+	<table class="table" layoutH="137" width="100%">
 		<thead>
 			<tr>
 				<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>

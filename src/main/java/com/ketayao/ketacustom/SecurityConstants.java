@@ -37,8 +37,4 @@ public interface SecurityConstants {
 	 */
 	public final static String LOG_ARGUMENTS = "log_arguments";
 	
-	/**
-	 * ResponseBody注解返回的mapModel。
-	 */
-	public final static String MODEL_MAP = "model_map";
 }
