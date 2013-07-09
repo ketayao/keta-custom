@@ -17,12 +17,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.utils.Exceptions;
 
-import com.ketayao.ketacustom.SecurityConstants;
 import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.shiro.IncorrectCaptchaException;
-import com.ketayao.ketacustom.shiro.ShiroDbRealm;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 
 /**
@@ -54,6 +50,7 @@ public class LoginController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String login(HttpServletRequest request) {
+		request.getHeaderNames();
 		return LOGIN_PAGE;
 	}
 
@@ -71,16 +68,7 @@ public class LoginController {
 	@Log(message="会话超时， 该用户重新登录系统。")
 	@RequestMapping(value = "/timeout/success", method = {RequestMethod.GET})
 	public @ResponseBody
-	String timeoutSuccess(HttpServletRequest request) {
-		Subject subject = SecurityUtils.getSubject();
-		ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser)subject.getPrincipal();
-		
-		// 加入ipAddress
-		shiroUser.setIpAddress(request.getRemoteAddr());
-		
-		// 这个是放入user还是shiroUser呢？
-		request.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());
-		
+	String timeoutSuccess() {
 		return AjaxObject.newOk("登录成功。").toString();
 	}
 

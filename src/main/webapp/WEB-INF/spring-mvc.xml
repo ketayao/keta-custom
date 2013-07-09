@@ -54,6 +54,19 @@
 	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->
 	<mvc:default-servlet-handler/>
 	
+	<bean id="multipartResolver"  
+	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+	    <property name="defaultEncoding">  
+	        <value>UTF-8</value>  
+	    </property>  
+	    <property name="maxUploadSize">  
+	        <value>1048576</value><!-- 上传文件大小限制为1M，1*1024*1024 -->  
+	    </property>  
+	    <property name="maxInMemorySize">  
+	        <value>4096</value>  
+	    </property>  
+	</bean>	
+	
 	<!-- 定义JSP文件的位置 --> 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/"/>
@@ -67,7 +80,7 @@
      <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
          <property name="exceptionMappings">  
              <props>
-				 <prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop>               
+				 <prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop>      
                  <prop key="java.lang.Throwable">error/500</prop>
              </props>  
          </property>  
