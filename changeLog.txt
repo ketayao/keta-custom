@@ -40,3 +40,21 @@ enhancement
 
 new
 基于keta-custom2.1.1发布jsp版本。
+
+
+------------------------------------------------
+
+keta-custom3.1.0
+
+fixbug
+
+enhancement
+增加系统图标功能。
+增加上传下载功能演示。
+navTab增加外部链接功能。
+增加Excel导入导出功能。
+增加单点登录。
+使用ztree替换dwz实现的模块和组织管理。
+
+new
+
