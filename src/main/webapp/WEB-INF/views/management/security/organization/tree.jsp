@@ -3,16 +3,14 @@
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 <%!
 	public String tree(Organization organization, String basePath) {
-		if (organization.getChildren().isEmpty()) {
-			return "";
-		}
 		StringBuilder builder = new StringBuilder();
+		
+		long pid = organization.getParent() == null ? 0:organization.getParent().getId();
+		builder.append("{id:" + organization.getId() +  ", pId:" + pid + 
+				", name:\"" + organization.getName() + "\", url:\"" + basePath + "/management/security/organization/list/" + organization.getId() + "\", target:\"ajax\"},");
+		
 		for(Organization o : organization.getChildren()) {
-			
-			builder.append("{id:" + o.getId() +  ", pId:" + o.getParent().getId() + 
-				", name:\"" + o.getName() + "\", url:\"" + basePath + "/management/security/organization/list/" + o.getId() + "\", target:\"ajax\"},");
-			
-			builder.append(tree(o, basePath));
+			builder.append(tree(o, basePath));				
 		}
 		return builder.toString();
 	}

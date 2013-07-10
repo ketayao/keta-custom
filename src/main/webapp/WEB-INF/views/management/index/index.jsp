@@ -11,7 +11,6 @@
 <link href="${contextPath}/styles/management/themes/default/style.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="${contextPath}/styles/management/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="${contextPath}/styles/management/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
-<link href="${contextPath}/styles/management/themes/css/custom.css" rel="stylesheet" type="text/css" media="screen"/>
 <%-- 
 <link href="${contextPath}/styles/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
 --%>

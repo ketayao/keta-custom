@@ -4,14 +4,14 @@
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 <%!
 	public String tree(Module module, String basePath) {
-		if (module.getChildren().isEmpty()) {
-			return "";
-		}
 		StringBuilder builder = new StringBuilder();
+		
+		long pid = module.getParent() == null ? 0:module.getParent().getId();
+		builder.append("{id:" + module.getId() +  ", pId:" + pid + 
+				", name:\"" + module.getName() + "\", url:\"" + basePath + "/management/security/module/list/" + module.getId() + "\", target:\"ajax\"},");
+		
 		for(Module o : module.getChildren()) {
-			builder.append("{id:" + o.getId() +  ", pId:" + o.getParent().getId() + 
-					", name:\"" + o.getName() + "\", url:\"" + basePath + "/management/security/module/list/" + o.getId() + "\", target:\"ajax\"},");
-			builder.append(tree(o, basePath));
+			builder.append(tree(o, basePath));				
 		}
 		return builder.toString();
 	}
