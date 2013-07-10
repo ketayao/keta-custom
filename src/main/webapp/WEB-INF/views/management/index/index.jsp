@@ -32,8 +32,11 @@
 --%>
 <script src="${contextPath}/styles/management/js/dwz.min.js" type="text/javascript"></script>
 <script src="${contextPath}/styles/management/js/dwz.regional.zh.js" type="text/javascript"></script>
-<!-- 自定义JS -->
+<%-- 自定义JS --%>
 <script src="${contextPath}/styles/management/js/customer.js" type="text/javascript"></script>
+<%-- zTree --%>
+<link href="${contextPath}/styles/ztree/css/zTreeStyle.css" rel="stylesheet" type="text/css" media="screen"/>
+<script src="${contextPath}/styles/ztree/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 $(function(){	

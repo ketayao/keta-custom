@@ -6,22 +6,56 @@
 		if (organization.getChildren().isEmpty()) {
 			return "";
 		}
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<ul>" + "\n");
+		StringBuilder builder = new StringBuilder();
 		for(Organization o : organization.getChildren()) {
-			buffer.append("<li><a href=\"" + basePath + "/management/security/organization/list/" + o.getId() + "\" target=\"ajax\" rel=\"jbsxBox2organizationList\">" + o.getName() + "</a>" + "\n");
-			buffer.append(tree(o, basePath));
-			buffer.append("</li>" + "\n");
+			
+			builder.append("{id:" + o.getId() +  ", pId:" + o.getParent().getId() + 
+				", name:\"" + o.getName() + "\", url:\"" + basePath + "/management/security/organization/list/" + o.getId() + "\", target:\"ajax\"},");
+			
+			builder.append(tree(o, basePath));
 		}
-		buffer.append("</ul>" + "\n");
-		return buffer.toString();
+		return builder.toString();
 	}
 %>
 <%
 	Organization organization2 = (Organization)request.getAttribute("organization");
+	String orgTree = tree(organization2, request.getContextPath());
+	orgTree = orgTree.substring(0, orgTree.length() - 1);
 %>   
-<ul class="tree expand">
-	<li><a href="${contextPath }/management/security/organization/list/${organization.id}"
-		target="ajax" rel="jbsxBox2module">${organization.name }</a> <%=tree(organization2, request.getContextPath())%>
-	</li>
-</ul>
+
+<script type="text/javascript">
+<!--
+var setting = {
+	view: {
+		//showIcon: false
+	},
+	data: {
+		simpleData: {
+			enable:true,
+			idKey: "id",
+			pIdKey: "pId",
+			rootPId: ""
+		}
+	},
+	callback: {
+		onClick: function(event, treeId, treeNode) {
+			var $rel = $("#jbsxBox2organizationList");
+			$rel.loadUrl(treeNode.url, {}, function(){
+				$rel.find("[layoutH]").layoutH();
+			});
+
+			event.preventDefault();
+		}
+	}	
+};
+
+var zNodes =[<%=orgTree%>];
+     	
+$(document).ready(function(){
+	var t = $("#orgTree");
+	t = $.fn.zTree.init(t, setting, zNodes);
+	t.expandAll(true); 
+});
+//-->
+</script>
+<ul id="orgTree" class="ztree"></ul>
