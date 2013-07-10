@@ -11,7 +11,6 @@
 <link href="${contextPath}/styles/management/themes/default/style.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="${contextPath}/styles/management/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="${contextPath}/styles/management/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
-<link href="${contextPath}/styles/management/themes/css/custom.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="${contextPath}/styles/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
 <!--[if IE]>
 <link href="${contextPath}/styles/management/themes/css/ieHack.css" rel="stylesheet" type="text/css" media="screen"/>
@@ -86,12 +85,12 @@ $(function(){
 					</div>
 					<div class="accordionContent">
 						<ul class="tree treeFolder expand">
-							<c:forEach var="level2" items="${level1.children }">
-								<li>
-									<a href="${contextPath}${level2.url}" target="navTab" rel="moduleListNav_${level2.id }">${level2.name }</a>
-									<keta:menuAccordion child="${level2 }" target="navTab" urlPrefix="${contextPath }"/>
-								</li>
-							</c:forEach>
+						<c:forEach var="level2" items="${level1.children }">
+							<li>
+								<keta:navTabLink module="${level2 }"  urlPrefix="${contextPath }"/>
+								<keta:menuAccordion child="${level2 }" urlPrefix="${contextPath }"/>
+							</li>
+						</c:forEach>
 						</ul>
 					</div>												
 				</c:forEach>				
