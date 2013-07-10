@@ -12,6 +12,7 @@
 <link href="${contextPath}/styles/management/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="${contextPath}/styles/management/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
 <link href="${contextPath}/styles/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="${contextPath}/styles/ztree/css/zTreeStyle.css" rel="stylesheet" type="text/css" media="screen"/>
 <!--[if IE]>
 <link href="${contextPath}/styles/management/themes/css/ieHack.css" rel="stylesheet" type="text/css" media="screen"/>
 <![endif]-->
@@ -33,7 +34,7 @@
 <script src="${contextPath}/styles/management/js/dwz.regional.zh.js" type="text/javascript"></script>
 <!-- 自定义JS -->
 <script src="${contextPath}/styles/management/js/customer.js" type="text/javascript"></script>
-
+<script src="${contextPath}/styles/ztree/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(function(){	
 	DWZ.init("${contextPath}/styles/management/dwz.frag.xml", {
