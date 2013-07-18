@@ -5,11 +5,11 @@
 	<div class="pageFormContent" layouth="58">
 		<p>
 			<label>新密码：</label>
-			<input type="password" name="plainPassword" id="newPassword" class="required" maxlength="32"/>
+			<input type="password" name="plainPassword" id="newPassword" class="validate[required, maxSize[32]] required" maxlength="32"/>
 		</p>
 		<p>
 			<label>确认新密码：</label>
-			<input type="password" name="rPassword" class="required" equalTo="#newPassword" maxlength="32"/>
+			<input type="password" name="rPassword" class="validate[required,equals[newPassword], maxSize[32]] required" maxlength="32"/>
 		</p>
 	</div>
 	<div class="formBar">

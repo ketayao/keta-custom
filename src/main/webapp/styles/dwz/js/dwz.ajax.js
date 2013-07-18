@@ -11,7 +11,7 @@
  */
 function validateCallback(form, callback, confirmMsg) {
 	var $form = $(form);
-	if (!$form.valid()) {
+	if (!$form.validationEngine('validate')) {
 		return false;
 	}
 	
@@ -42,7 +42,7 @@ function validateCallback(form, callback, confirmMsg) {
  */
 function iframeCallback(form, callback){
 	var $form = $(form), $iframe = $("#callbackframe");
-	if(!$form.valid()) {return false;}
+	if(!$form.validationEngine('validate')) {return false;}
 
 	if ($iframe.size() == 0) {
 		$iframe = $("<iframe id='callbackframe' name='callbackframe' src='about:blank' style='display:none'></iframe>").appendTo("body");

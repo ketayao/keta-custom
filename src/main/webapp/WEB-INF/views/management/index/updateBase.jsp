@@ -13,11 +13,11 @@
 		</p>
 		<p>
 			<label>电话：</label>
-			<input type="text" name="phone" class="phone" size="30" value="${login_user.phone }" maxlength="32"/>
+			<input type="text" name="phone" class="validate[custom[phone],maxSize[32]]" size="30" maxlength="32" value="${login_user.phone }"/>
 		</p>
 		<p>
 			<label>用户邮箱：</label>
-			<input type="text" name="email" class="email" maxlength="128" size="30" value="${login_user.email }"/>
+			<input type="text" name="email" class="validate[custom[email],maxSize[128]]" size="30" maxlength="128" value="${login_user.email }"/>
 		</p>	
 	</div>
 			

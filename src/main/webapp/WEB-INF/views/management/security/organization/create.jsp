@@ -8,7 +8,7 @@
 		<dl>
 			<dt>名称：</dt>
 			<dd>
-				<input type="text" name="name" class="required" size="32" maxlength="64" alt="请输入组织名称"/>
+				<input type="text" name="name" class="validate[required,maxSize[64]] required" size="32" maxlength="64" alt="请输入组织名称"/>
 			</dd>
 		</dl>		
 		<dl>

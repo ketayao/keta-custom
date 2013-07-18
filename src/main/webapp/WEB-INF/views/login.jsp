@@ -6,18 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>KETA定制化平台</title>
-<link href="${contextPath}/styles/management/themes/default/style.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/styles/management/themes/css/core.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/styles/management/themes/css/login.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/styles/dwz/themes/default/style.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/styles/dwz/themes/css/core.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/styles/dwz/themes/css/login.css" rel="stylesheet" type="text/css" />
 
 <!-- form验证 -->
-<link rel="stylesheet" href="${contextPath}/styles/formValidator.2.2.1/css/validationEngine.jquery.css" type="text/css"/>
-<script src="${contextPath}/styles/formValidator.2.2.1/js/jquery-1.6.min.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/formValidator.2.2.1/js/languages/jquery.validationEngine-zh_CN.js" type="text/javascript" charset="utf-8"></script>
-<script src="${contextPath}/styles/formValidator.2.2.1/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="${contextPath}/styles/validationEngine/css/validationEngine.jquery.css" type="text/css"/>
+<script src="${contextPath}/styles/jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="${contextPath}/styles/validationEngine/js/languages/jquery.validationEngine-zh_CN.js" type="text/javascript" charset="utf-8"></script>
+<script src="${contextPath}/styles/validationEngine/js/jquery.validationEngine-2.6.4.js" type="text/javascript" charset="utf-8"></script>
 <script>
     jQuery(document).ready(function(){
-        // binds form submission and fields to the validation engine
         jQuery("#formID").validationEngine();
     });
     jQuery(document).ready(function(){
@@ -34,7 +33,7 @@
 	<div id="login">
 		<div id="login_header">
 			<h1 class="login_logo">
-				<img src="${contextPath}/styles/management/themes/default/images/logo.png" />
+				<img src="${contextPath}/styles/dwz/themes/default/images/logo.png" />
 			</h1>
 
 			<div class="login_headerContent">
@@ -75,7 +74,7 @@
 					</div>
 				</form>
 			</div>
-			<div class="login_banner"><img src="${contextPath}/styles/management/themes/default/images/login_banner.jpg" /></div>
+			<div class="login_banner"><img src="${contextPath}/styles/dwz/themes/default/images/login_banner.jpg" /></div>
 			<div class="login_main">
 				<ul class="helpList">
 					<li><a href="javascript:toggleBox('forgotPwd')">忘记密码?</a></li>

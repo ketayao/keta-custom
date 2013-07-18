@@ -56,4 +56,13 @@ $(document).ready(function(){
 });
 //-->
 </script>
-<ul id="orgTree" class="ztree"></ul>
+<style>
+<!--
+#orgTree li span {
+	text-align:left;
+	float: left;
+	display: inline;
+} 
+-->
+</style>
+<ul id="orgTree" class="ztree" style="display: block;"></ul>

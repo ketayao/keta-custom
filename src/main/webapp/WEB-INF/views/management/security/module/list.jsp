@@ -27,13 +27,13 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 		<shiro:hasPermission name="Module:view">
-			<li><a iconClass="${contextPath }#magnifier" target="dialog" width="530" height="500" mask="true" href="${contextPath }/management/security/module/view/{slt_uid}" title="查看模块"><span>查看模块</span></a></li>
+			<li><a iconClass="${contextPath }#magnifier" target="dialog" width="540" height="500" mask="true" href="${contextPath }/management/security/module/view/{slt_uid}" title="查看模块"><span>查看模块</span></a></li>
 		</shiro:hasPermission>		
 		<shiro:hasPermission name="Module:save">
-			<li><a iconClass="${contextPath }#application_add" target="dialog" width="530" height="500" mask="true" href="${contextPath }/management/security/module/create/${parentModuleId}" title="添加模块"><span>添加模块</span></a></li>
+			<li><a iconClass="${contextPath }#application_add" target="dialog" width="540" height="500" mask="true" href="${contextPath }/management/security/module/create/${parentModuleId}" title="添加模块"><span>添加模块</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Module:edit">
-			<li><a iconClass="${contextPath }#application_edit" target="dialog" rel="lookupParent2module_edit" width="530" height="500" mask="true" href="${contextPath }/management/security/module/update/{slt_uid}" title="编辑模块"><span>编辑模块</span></a></li>
+			<li><a iconClass="${contextPath }#application_edit" target="dialog" rel="lookupParent2module_edit" width="540" height="500" mask="true" href="${contextPath }/management/security/module/update/{slt_uid}" title="编辑模块"><span>编辑模块</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Module:delete">
 			<li><a iconClass="${contextPath }#application_delete" target="ajaxTodo" callback="dialogReloadRel2Module" href="${contextPath }/management/security/module/delete/{slt_uid}" title="确认要删除该模块?"><span>删除模块</span></a></li>

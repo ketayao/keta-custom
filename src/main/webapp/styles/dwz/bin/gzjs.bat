@@ -5,7 +5,7 @@ REM -------------- start package javascript --------------
 
 type ..\js\dwz.core.js > dwzESC.js
 type ..\js\dwz.util.date.js >> dwzESC.js
-type ..\js\dwz.validate.method.js >> dwzESC.js
+REM -------------- type ..\js\dwz.validate.method.js >> dwzESC.js
 type ..\js\dwz.barDrag.js >> dwzESC.js
 type ..\js\dwz.drag.js >> dwzESC.js
 type ..\js\dwz.tree.js >> dwzESC.js

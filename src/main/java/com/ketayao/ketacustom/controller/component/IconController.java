@@ -46,7 +46,7 @@ public class IconController {
 	public String list(HttpServletRequest request, Map<String, Object> map) {
 		
 		String webPath = request.getSession().getServletContext().getRealPath("/");
-		String imgPath = webPath + "/styles/management/themes/css/images/toolbar_icons16";
+		String imgPath = webPath + "/styles/dwz/themes/css/images/toolbar_icons16";
 		
 		File dir = new File(imgPath);
 		File[] files = dir.listFiles();

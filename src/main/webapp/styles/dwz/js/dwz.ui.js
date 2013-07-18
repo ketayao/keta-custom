@@ -149,26 +149,11 @@ function initUI(_box){
 	//validate form
 	$("form.required-validate", $p).each(function(){
 		var $form = $(this);
-		$form.validate({
-			onsubmit: false,
-			focusInvalid: false,
-			focusCleanup: true,
-			errorElement: "span",
-			ignore:".ignore",
-			invalidHandler: function(form, validator) {
-				var errors = validator.numberOfInvalids();
-				if (errors) {
-					var message = DWZ.msg("validateFormError",[errors]);
-					alertMsg.error(message);
-				} 
-			}
-		});
-		
-		$form.find('input[customvalid]').each(function(){
-			var $input = $(this);
-			$input.rules("add", {
-				customvalid: $input.attr("customvalid")
-			})
+
+		$form.validationEngine('attach', {
+		  scroll: false,
+		  ajaxFormValidation: true,
+		  promptPosition: 'centerRight'
 		});
 	});
 
@@ -299,7 +284,7 @@ function readyToolbarCSS() {
 				if ($span.length == 0) {
 					// 用作<td>中的<a>
 					$(this).css({
-						"background":"url(" + contextPath + "/styles/management/themes/css/images/toolbar_icons16/" + imageName + ".png) no-repeat",
+						"background":"url(" + contextPath + "/styles/dwz/themes/css/images/toolbar_icons16/" + imageName + ".png) no-repeat",
 						"background-position":"50% 50%",
 						"width":"22px",
 						"height":"20px",
@@ -311,7 +296,7 @@ function readyToolbarCSS() {
 				} else {
 					// 用作panelBar toolBar中的<span>
 					$span.css({
-						"background-image":"url(" + contextPath + "/styles/management/themes/css/images/toolbar_icons16/" + imageName + ".png)",
+						"background-image":"url(" + contextPath + "/styles/dwz/themes/css/images/toolbar_icons16/" + imageName + ".png)",
 						"background-position": "0 3px"
 					});						
 				}

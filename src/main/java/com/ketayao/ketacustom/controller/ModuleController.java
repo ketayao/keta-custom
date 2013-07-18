@@ -129,13 +129,13 @@ public class ModuleController {
 		oldModule.setParent(module.getParent());
 		
 		for (Permission permission : module.getPermissions()) {
-			if (StringUtils.isNotBlank(permission.getShortName())) {
-				if (permission.getId() == null) {
+			if (StringUtils.isNotBlank(permission.getShortName())) {// 已选中的
+				if (permission.getId() == null) {//新增
 					permission.setModule(oldModule);
 					oldModule.getPermissions().add(permission);
-				}
-			} else {
-				if (permission.getId() != null) {
+				} 
+			} else {// 未选中的
+				if (permission.getId() != null) {//删除
 					for (Permission oldPermission : oldModule.getPermissions()) {
 						if (oldPermission.getId().equals(permission.getId())) {
 							oldPermission.setModule(null);
@@ -147,7 +147,7 @@ public class ModuleController {
 				}
 			}
 		}
-		
+
 		moduleService.update(oldModule);
 		
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldModule.getName()}));

@@ -11,17 +11,17 @@ jQuery(document).ready(function(){
 //-->
 </script>
 <div class="pageContent">
-	<form method="post" action="${contextPath }/login" class="pageForm" onsubmit="return validateCallback(this, dialogAjaxDone)">
+	<form method="post" action="${contextPath }/login" class="required-validate pageForm" onsubmit="return validateCallback(this, dialogAjaxDone)">
 		<%-- 指定为ajax请求 --%>
 		<input type="hidden" name="ajax" value="true"/>
 		<div class="pageFormContent" layoutH="58">
 			<p>
 				<label>用户名:</label>
-				<input type="text" name="username" id="username" maxlength="20" class="required"/>
+				<input type="text" name="username" id="username" maxlength="32" class="validate[required] required"/>
 			</p>
 			<p>
 				<label>密&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
-				<input type="password" name="password" id="password" maxlength="20" class="required"/>
+				<input type="password" name="password" id="password" maxlength="32" class="validate[required] required"/>
 			</p>
 			<p>
 				<label>验证码:</label>

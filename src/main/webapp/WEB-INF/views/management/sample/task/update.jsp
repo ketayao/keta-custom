@@ -7,7 +7,7 @@
 	<div class="pageFormContent" layoutH="58">
 	<p>
 		<label>任务名称：</label>
-		<input type="text" name="title" class="required" size="32" maxlength="32" value="${task.title}"/>
+		<input type="text" name="title" class="validate[required,maxSize[32]] required" size="32" maxlength="32" value="${task.title}"/>
 	</p>
 	<p>
 		<label>描述：</label>

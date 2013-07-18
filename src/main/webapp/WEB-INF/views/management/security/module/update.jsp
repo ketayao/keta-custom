@@ -4,20 +4,19 @@
 <!--
 // top
 jQuery(document).ready(function(){
+	var $fieldset = $("#newPermissonInput");
+    
+    var $name = $("input[name=_name]",$fieldset);
+    var $shortName = $("input[name=_shortName]",$fieldset);
+    var $description = $("input[name=_description]",$fieldset);	
      
     $("#newPermission").click(function(event){
-    	var $fieldset = $("#newPermissonInput");
+        var nameValidate = !$name.validationEngine('validate');
+        var shortNameValidate = !$shortName.validationEngine('validate');
+        var descriptionValidate = !$description.validationEngine('validate');
         
-        var $name = $("input[name=_name]",$fieldset);
-        var $shortName = $("input[name=_shortName]",$fieldset);
-        var $description = $("input[name=_description]",$fieldset);
-        
-        // 验证
-        if (!$name.valid() && !$shortName.valid()) {
-        	return false;
-        } 
-        
-        if (!$description.valid()) {
+     	// 验证
+        if (!nameValidate || !shortNameValidate || !descriptionValidate) {
         	return false;
         }
         
@@ -43,15 +42,21 @@ jQuery(document).ready(function(){
      $("#permissionForm").submit(function(event){
          event.preventDefault();
     	 event.stopPropagation();
+		
+    	 var _nameClass = $name.attr("class");
+    	 var _shortNameClass = $shortName.attr("class");
+    	 var _descriptionClass = $description.attr("class");
     	 
-     	 var $newPermissonInput = $("#newPermissonInput");
-     	 $newPermissonInput.remove();
-     	 if (!$(this).valid()) {
-     	 	$("#permissionFormContent").append($newPermissonInput);
-     	 	return false;	
-     	 } 
-     	 
-    	 validateCallback(this, dialogReloadRel2Module);
+    	 $name.attr("class", "required");
+    	 $shortName.attr("class", "required");
+    	 
+     	 var result = validateCallback(this, dialogReloadRel2Module);
+     	 if (!result) {
+     		$name.attr("class", _nameClass);
+     		$shortName.attr("class", _shortNameClass);
+     		$description.attr("class", _descriptionClass);
+     	 }
+    	 return result;
      });
 });
 //-->
@@ -66,24 +71,24 @@ jQuery(document).ready(function(){
 		<legend>模块信息</legend>	
 		<p>
 			<label>名称：</label>
-			<input type="text" name="name" class="required" size="32" maxlength="32" value="${module.name }" alt="请输入模块名称"/>
+			<input type="text" name="name" class="validate[required,maxSize[32]] required" size="32" maxlength="32" value="${module.name }" alt="请输入模块名称"/>
 		</p>	
 		<p>
 			<label>优先级：</label>
-			<input type="text" name="priority" class="required digits" size="2" maxlength="2" value="${module.priority }"/>
+			<input type="text" name="priority" class="validate[required,custom[integer],min[1],max[99]] required" size="2" maxlength="2" value="${module.priority }"/>
 			<span class="info">&nbsp;&nbsp;默认:99</span>
 		</p>		
 		<p>
 			<label>URL：</label>
-			<input type="text" name="url" class="required" size="32" maxlength="255" alt="请输入访问地址（以/开头）" value="${module.url }"/>
+			<input type="text" name="url" class="validate[required,maxSize[255]] required" size="32" maxlength="255" alt="以/或者http开头" value="${module.url }"/>
 		</p>		
 		<p>
 			<label>授权名称：</label>
-			<input type="text" name="sn" class="required" size="32" maxlength="32" alt="授权名称" value="${module.sn }" readOnly=readOnly/>
+			<input type="text" name="sn" class="validate[required,maxSize[32]] required" size="32" maxlength="32" alt="授权名称" value="${module.sn }" readOnly=readOnly/>
 		</p>		
 		<p>
 			<label>描述：</label>
-			<input type="text" name="description" size="32" maxlength="255" alt="描述" value="${module.description }"/>
+			<input type="text" name="description" class="validate[maxSize[255]]" size="32" maxlength="255" alt="描述" value="${module.description }"/>
 		</p>
 		<p>
 			<label>父模块：</label>
@@ -108,16 +113,16 @@ jQuery(document).ready(function(){
 		<legend>动态新增</legend>
 			<p>
 				<label>名称：</label>
-				<input type="text" name="_name" class="required" size="32" maxlength="32" alt="请输入名称"/>
+				<input type="text" name="_name" class="validate[required,maxSize[32]] required" size="32" maxlength="32" alt="请输入名称"/>
 			</p>
 			<p>
 				<label>短名：</label>
-				<input type="text" name="_shortName" class="required" size="16" maxlength="16" alt="请输入短名"/>
+				<input type="text" name="_shortName" class="validate[required,maxSize[16]] required" size="16" maxlength="16" alt="请输入短名"/>
 				<span class="info">&nbsp;&nbsp;用作授权验证</span>
 			</p>
 			<p>
 				<label>描述：</label>
-				<input type="text" name="_description" size="32" maxlength="255" alt="描述"/>
+				<input type="text" name="_description" size="32" class="validate[maxSize[255]]" maxlength="255" alt="描述"/>
 			</p>
 			<div class="button" id="newPermission"><div class="buttonContent"><button type="submit">新增</button></div></div>		
 		</fieldset>
