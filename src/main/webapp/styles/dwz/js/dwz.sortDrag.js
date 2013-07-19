@@ -5,7 +5,7 @@
 	var _op = {
 		cursor: 'move', // selector 的鼠标手势
 		sortBoxs: 'div.sortDrag', //拖动排序项父容器
-		replace: true, //2个sortBox之间拖动替换
+		replace: false, //2个sortBox之间拖动替换
 		items: '> *', //拖动排序项选择器
 		selector: '', //拖动排序项用于拖动的子元素的选择器，为空时等于item
 		zIndex: 1000
@@ -16,7 +16,7 @@
 			var $helper = $item.clone();
 			var position = $item.position();
 			$helper.data('$sortBox', $sortBox).data('op', op).data('$item', $item).data('$placeholder', $placeholder);
-			$helper.addClass('sortDragHelper').css({position:'absolute',top:position.top,left:position.left,zIndex:op.zIndex,width:$item.width()+'px',height:$item.height()+'px'}).jDrag({
+			$helper.addClass('sortDragHelper').css({position:'absolute',top:position.top+$sortBox.scrollTop(),left:position.left,zIndex:op.zIndex,width:$item.width()+'px',height:$item.height()+'px'}).jDrag({
 				selector:op.selector,
 				drag:this.drag,
 				stop:this.stop,
@@ -49,11 +49,11 @@
 			}
 		},
 		stop:function(){
-			var $helper = $(arguments[0]), $item = $helper.data('$item'), $placeholder = $helper.data('$placeholder');
+			var $helper = $(arguments[0]), $sortBox = $helper.data('$sortBox'), $item = $helper.data('$item'), $placeholder = $helper.data('$placeholder');
 
 			var position = $placeholder.position();
 			$helper.animate({
-				top: position.top + "px",
+				top: (position.top+$sortBox.scrollTop()) + "px",
 				left: position.left + "px"
 			}, {
 				complete: function(){

@@ -51,9 +51,6 @@ var alertMsg = {
 			$(this._bgId).show();
 		}
 		
-		//用于屏蔽点击回车，触发click事件，再次打开alert
-		$('<input type="text" style="width:0;height:0;" name="_alertFocusCtr"/>').appendTo(this._boxId).focus().hide();
-		
 		var jButs = $(this._boxId).find("a.button");
 		var jCallButs = jButs.filter("[rel=callback]");
 		var jDoc = $(document);

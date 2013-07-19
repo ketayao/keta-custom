@@ -131,6 +131,9 @@ function navTabAjaxDone(json){
 			alertMsg.confirm(json.confirmMsg || DWZ.msg("forwardConfirmMsg"), {
 				okCall: function(){
 					navTab.reload(json.forwardUrl);
+				},
+				cancelCall: function(){
+					navTab.closeCurrentTab(json.navTabId);
 				}
 			});
 		} else {
