@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springside.modules.utils.Exceptions;
 
+import com.ketayao.ketacustom.SecurityConstants;
+
 /** 
  * 	
  * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
@@ -99,6 +101,13 @@ public class BaseFormAuthenticationFilter extends FormAuthenticationFilter {
 		//we handled the success redirect directly, prevent the chain from continuing:
 		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse)response;
+		
+		ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser)subject.getPrincipal();
+		// 加入ipAddress
+		shiroUser.setIpAddress(request.getRemoteAddr());
+		
+		// 这个是放入user还是shiroUser呢？
+		httpServletRequest.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());
 		
 		if (!"XMLHttpRequest".equalsIgnoreCase(httpServletRequest.getHeader("X-Requested-With")) 
 				|| request.getParameter("ajax") == null) {// 不是ajax请求
