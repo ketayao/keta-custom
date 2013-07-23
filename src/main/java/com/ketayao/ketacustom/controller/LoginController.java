@@ -49,14 +49,19 @@ public class LoginController {
 	private static final String LOGIN_DIALOG = "management/index/loginDialog";
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String login(HttpServletRequest request) {
-		request.getHeaderNames();
+	public String login() {
 		return LOGIN_PAGE;
 	}
-
-	@RequestMapping(method = { RequestMethod.GET, RequestMethod.HEAD }, headers = "x-requested-with=XMLHttpRequest")
+	
+	@RequestMapping(method = {RequestMethod.GET}, params="ajax=true")
 	public @ResponseBody
-	String loginDialog(HttpServletRequest request) {
+	String loginDialog2AJAX() {
+		return loginDialog();
+	}
+		
+	@RequestMapping(method = {RequestMethod.GET}, headers = "X-Requested-With=XMLHttpRequest")
+	public @ResponseBody
+	String loginDialog() {
 		return AjaxObject.newTimeout("会话超时，请重新登录。").toString();
 	}
 
@@ -85,7 +90,7 @@ public class LoginController {
 		return LOGIN_PAGE;
 	}
 
-	@RequestMapping(method = { RequestMethod.POST, RequestMethod.HEAD }, headers = "x-requested-with=XMLHttpRequest")
+	@RequestMapping(method = { RequestMethod.POST}, headers = "x-requested-with=XMLHttpRequest")
 	public @ResponseBody
 	String failDialog(HttpServletRequest request) {
 		String msg = parseException(request);

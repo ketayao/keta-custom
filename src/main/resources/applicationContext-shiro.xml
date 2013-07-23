@@ -36,6 +36,7 @@
 	        	-->
 	        	<!-- 是否启用验证码检验 -->
 	            <entry key="authc" value-ref="captchaFormAuthenticationFilter"/>
+	            <entry key="user" value-ref="dWZUserFilter"/>
 	        </map>
         </property>
 		<property name="filterChainDefinitions">
@@ -56,6 +57,7 @@
 	</bean>
 	
 	<bean id="captchaFormAuthenticationFilter" class="com.ketayao.ketacustom.shiro.CaptchaFormAuthenticationFilter"/>
+	<bean id="dWZUserFilter" class="com.ketayao.ketacustom.shiro.DWZUserFilter"/>
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
