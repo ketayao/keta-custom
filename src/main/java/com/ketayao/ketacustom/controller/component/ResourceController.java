@@ -45,7 +45,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springside.modules.utils.Exceptions;
 import org.springside.modules.utils.Identities;
-import org.springside.modules.web.Servlets;
 
 import com.ketayao.ketacustom.entity.component.Resource;
 import com.ketayao.ketacustom.entity.component.StoreType;
@@ -54,9 +53,9 @@ import com.ketayao.ketacustom.log.LogMessageObject;
 import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.component.ResourceService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
-import com.ketayao.ketacustom.util.dwz.FileSizeUtils;
-import com.ketayao.ketacustom.util.dwz.FileUtils;
 import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.utils.FileUtils;
+import com.ketayao.utils.ServletUtils;
 
 /** 
  * 	
@@ -86,7 +85,7 @@ public class ResourceController {
 	
 	@RequiresPermissions("Resource:view")
 	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(HttpServletRequest request, Page page, String name, Map<String, Object> map) {
+	public String list(Page page, String name, Map<String, Object> map) {
 		List<Resource> resources = null;
 		if (StringUtils.isNotBlank(name)) {
 			resources = resourceService.findByName(page, name);
@@ -142,13 +141,13 @@ public class ResourceController {
 			
 			Resource resource = new Resource();
 			resource.setName(file.getOriginalFilename());
-			resource.setSize(FileSizeUtils.getHumanReadableFileSize(file.getSize()));
+			resource.setSize(FileUtils.getHumanReadableFileSize(file.getSize()));
 			resource.setUploadTime(new Date());
 			resource.setUuid(uuid);
 			resource.setStoreType(StoreType.FILE);
 			
 			resourceService.save(resource);
-			LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{resource.getRealStoreName()}));
+			LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{resource.getName()}));
 		} catch (Exception e) {
 			if (uploadedFile.exists()) {
 				uploadedFile.delete();
@@ -163,7 +162,7 @@ public class ResourceController {
 	private ResponseEntity<String> upload2Db(MultipartFile file) {
 		Resource resource = new Resource();
 		resource.setName(file.getOriginalFilename());
-		resource.setSize(FileSizeUtils.getHumanReadableFileSize(file.getSize()));
+		resource.setSize(FileUtils.getHumanReadableFileSize(file.getSize()));
 		resource.setUploadTime(new Date());
 		resource.setUuid(Identities.uuid2());
 		resource.setStoreType(StoreType.DB);
@@ -172,7 +171,7 @@ public class ResourceController {
 			resource.setFile(file.getBytes());
 			resourceService.save(resource);
 			
-			LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{resource.getRealStoreName()}));
+			LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{resource.getName()}));
 		} catch (Exception e) {
 			LOG.error(Exceptions.getStackTraceAsString(e));
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -193,16 +192,16 @@ public class ResourceController {
 		switch (storeType) {
 			case FILE:
 				String downloadPath = getFileStorePath(request);
-				return downloadFromFile(response, resource, downloadPath);
+				return downloadFromFile(request, response, resource, downloadPath);
 			case DB:
-				return downloadFromDb(response, resource);
+				return downloadFromDb(request, response, resource);
 			default:
 				return "下载文件错误。";
 		}
 		
 	}
 	
-	private String downloadFromFile(HttpServletResponse response, Resource resource, String downloadPath) {
+	private String downloadFromFile(HttpServletRequest request, HttpServletResponse response, Resource resource, String downloadPath) {
 		String filePath = downloadPath + File.separator + resource.getRealStoreName();
 		
 		InputStream input = null;
@@ -213,7 +212,7 @@ public class ResourceController {
 			return resource.getName() + "文件没找到或已被删除。";
 		}
 		
-		Servlets.setFileDownloadHeader(response, resource.getName());
+		ServletUtils.setFileDownloadHeader(request, response, resource.getName());
 		
 		try {
 			IOUtils.copy(input, response.getOutputStream());
@@ -227,9 +226,9 @@ public class ResourceController {
 		return null;
 	}
 	
-	private String downloadFromDb(HttpServletResponse response, Resource resource) {
+	private String downloadFromDb(HttpServletRequest request, HttpServletResponse response, Resource resource) {
 		InputStream input = new ByteArrayInputStream(resource.getFile());
-		Servlets.setFileDownloadHeader(response, resource.getName());
+		ServletUtils.setFileDownloadHeader(request, response, resource.getName());
 		
 		try {
 			IOUtils.copy(input, response.getOutputStream());

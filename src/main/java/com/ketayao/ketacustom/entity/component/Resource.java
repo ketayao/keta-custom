@@ -28,7 +28,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.ketayao.ketacustom.entity.IdEntity;
-import com.ketayao.ketacustom.util.dwz.FileUtils;
+import com.ketayao.utils.FileUtils;
 
 /** 
  * 	
