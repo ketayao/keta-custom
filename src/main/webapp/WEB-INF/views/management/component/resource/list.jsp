@@ -36,14 +36,14 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<shiro:hasPermission name="Resource:upload">
-				<li><a iconClass="${contextPath }#page_white_get" target="dialog" mask="true" width="430" height="300" close="close2upload" href="${contextPath }/management/component/resource/upload?storeType=file"><span>上传资源到文件系统</span></a></li>
-				<li><a iconClass="${contextPath }#server_database" target="dialog" mask="true" width="430" height="300" close="close2upload" href="${contextPath }/management/component/resource/upload?storeType=db"><span>上传资源到数据库</span></a></li>
+				<li><a iconClass="page_white_get" target="dialog" mask="true" width="430" height="300" close="close2upload" href="${contextPath }/management/component/resource/upload?storeType=file"><span>上传资源到文件系统</span></a></li>
+				<li><a iconClass="server_database" target="dialog" mask="true" width="430" height="300" close="close2upload" href="${contextPath }/management/component/resource/upload?storeType=db"><span>上传资源到数据库</span></a></li>
 			</shiro:hasPermission>		
 			<shiro:hasPermission name="Resource:edit">
-				<li><a iconClass="${contextPath }#page_white_edit" target="dialog" mask="true" width="530" height="250" href="${contextPath }/management/component/resource/update/{slt_uid}"><span>编辑资源</span></a></li>
+				<li><a iconClass="page_white_edit" target="dialog" mask="true" width="530" height="250" href="${contextPath }/management/component/resource/update/{slt_uid}"><span>编辑资源</span></a></li>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="Resource:delete">
-				<li><a iconClass="${contextPath }#page_white_delete" target="selectedTodo" rel="ids" href="${contextPath }/management/component/resource/delete" title="确认要删除选定资源?"><span>删除资源</span></a></li>
+				<li><a iconClass="page_white_delete" target="selectedTodo" rel="ids" href="${contextPath }/management/component/resource/delete" title="确认要删除选定资源?"><span>删除资源</span></a></li>
 			</shiro:hasPermission>
 		</ul>
 	</div>
@@ -73,7 +73,7 @@
 				<td><fmt:formatDate value="${item.uploadTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				<td>
 					<shiro:hasPermission name="Resource:download">
-						<a iconClass="${contextPath }#page_white_put" target="_blank" href="${contextPath }/management/component/resource/download/${item.storeType }/${item.uuid}" title="下载">下载</a>
+						<a iconClass="page_white_put" target="_blank" href="${contextPath }/management/component/resource/download/${item.storeType }/${item.uuid}" title="下载">下载</a>
 					</shiro:hasPermission>
 				</td>				
 			</tr>

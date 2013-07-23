@@ -273,34 +273,26 @@ function initUI(_box){
 function readyToolbarCSS() {
 	var $a = $("a[iconClass]");
 	$a.each(function(){
-		var iconClass = $(this).attr("iconClass");
-		var arr = iconClass.split("#");
-		if (arr.length == 2) {
-			var contextPath = arr[0];
-			var imageName = arr[1]; 
-			if (imageName != "") {
-				var $span = $("span", this);
-				
-				if ($span.length == 0) {
-					// 用作<td>中的<a>
-					$(this).css({
-						"background":"url(" + contextPath + "/styles/dwz/themes/css/images/toolbar_icons16/" + imageName + ".png) no-repeat",
-						"background-position":"50% 50%",
-						"width":"22px",
-						"height":"20px",
-						"text-indent":"-1000px",
-						"overflow":"hidden",
-						"display":"block",
-						"float":"left"
-					});	
-				} else {
-					// 用作panelBar toolBar中的<span>
-					$span.css({
-						"background-image":"url(" + contextPath + "/styles/dwz/themes/css/images/toolbar_icons16/" + imageName + ".png)",
-						"background-position": "0 3px"
-					});						
-				}
-			}
+		var imageName = $(this).attr("iconClass");
+		var $span = $("span", this);
+		if ($span.length == 0) {
+			// 用作<td>中的<a>
+			$(this).css({
+				"background":"url(../styles/dwz/themes/css/images/toolbar_icons16/" + imageName + ".png) no-repeat",
+				"background-position":"50% 50%",
+				"width":"22px",
+				"height":"20px",
+				"text-indent":"-1000px",
+				"overflow":"hidden",
+				"display":"block",
+				"float":"left"
+			});	
+		} else {
+			// 用作panelBar toolBar中的<span>
+			$span.css({
+				"background-image":"url(../styles/dwz/themes/css/images/toolbar_icons16/" + imageName + ".png)",
+				"background-position": "0 3px"
+			});						
 		}
 	});
 }
