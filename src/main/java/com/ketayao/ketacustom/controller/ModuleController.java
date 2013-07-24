@@ -38,6 +38,7 @@ import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.log.LogMessageObject;
 import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.ModuleService;
+import com.ketayao.ketacustom.service.PermissionService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 import com.ketayao.ketacustom.util.dwz.Page;
 
@@ -56,6 +57,9 @@ public class ModuleController {
 	@Autowired
 	private Validator validator;
 	
+	@Autowired
+	private PermissionService permissionService;
+	
 	private static final String CREATE = "management/security/module/create";
 	private static final String UPDATE = "management/security/module/update";
 	private static final String LIST = "management/security/module/list";
@@ -63,7 +67,6 @@ public class ModuleController {
 	private static final String VIEW = "management/security/module/view";
 	private static final String TREE_LIST = "management/security/module/tree_list";
 	private static final String LOOKUP_PARENT = "management/security/module/lookup_parent";
-	
 	
 	@RequiresPermissions("Module:save")
 	@RequestMapping(value="/create/{parentModuleId}", method=RequestMethod.GET)
@@ -128,11 +131,13 @@ public class ModuleController {
 		oldModule.setUrl(module.getUrl());
 		oldModule.setParent(module.getParent());
 		
+		// 模块自定义权限，删除过后新增报错，会有validate的验证错误。hibernate不能copy到permission的值，导致。
 		for (Permission permission : module.getPermissions()) {
 			if (StringUtils.isNotBlank(permission.getShortName())) {// 已选中的
 				if (permission.getId() == null) {//新增
 					permission.setModule(oldModule);
 					oldModule.getPermissions().add(permission);
+					permissionService.save(permission);
 				} 
 			} else {// 未选中的
 				if (permission.getId() != null) {//删除
@@ -143,12 +148,11 @@ public class ModuleController {
 							break;
 						}
 					}
+					permissionService.delete(permission.getId());
 					oldModule.getPermissions().remove(permission);
 				}
 			}
 		}
-
-		moduleService.update(oldModule);
 		
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldModule.getName()}));
 		return AjaxObject.newOk("修改模块成功！").toString();
