@@ -106,7 +106,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 			String parm = token.getCaptcha();
 			try {
 				if (!imageCaptchaService.validateResponseForID(SecurityUtils
-						.getSubject().getSession().getId().toString(), parm)) {
+						.getSubject().getSession().getId().toString(), parm.toLowerCase())) {//忽略大小写。
 					throw new IncorrectCaptchaException("验证码错误！");
 				}
 			} catch (Exception e) {
@@ -209,15 +209,28 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		public String password;
 	}
 	
-	public HashPassword encrypt(String plainText) {
+	public static HashPassword encryptPassword(String plainPassword) {
 		HashPassword result = new HashPassword();
 		byte[] salt = Digests.generateSalt(SALT_SIZE);
 		result.salt = Encodes.encodeHex(salt);
 
-		byte[] hashPassword = Digests.sha1(plainText.getBytes(), salt, INTERATIONS);
+		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), salt, INTERATIONS);
 		result.password = Encodes.encodeHex(hashPassword);
 		return result;
-
+	}
+	
+	/**
+	 * 
+	 * 验证密码
+	 * @param plainPassword 明文密码
+	 * @param password 密文密码
+	 * @param salt 盐值
+	 * @return
+	 */
+	public static boolean validatePassword(String plainPassword, String password, String salt) {
+		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), Encodes.decodeHex(salt), INTERATIONS);
+		String oldPassword = Encodes.encodeHex(hashPassword);
+		return password.equals(oldPassword);
 	}
 
 	/**

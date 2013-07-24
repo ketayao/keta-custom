@@ -34,6 +34,8 @@ public interface UserService {
 	List<User> find(Page page, String name);
 
 	void update(User user);
+	
+	void updatePwd(User user, String newPwd) throws ServiceException;
 
 	void save(User user) throws ExistedException;
 

@@ -31,6 +31,7 @@ import com.ketayao.ketacustom.SecurityConstants;
 import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.entity.main.Permission;
 import com.ketayao.ketacustom.entity.main.User;
+import com.ketayao.ketacustom.exception.ServiceException;
 import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.log.LogMessageObject;
 import com.ketayao.ketacustom.log.impl.LogUitl;
@@ -105,14 +106,18 @@ public class IndexController {
 	
 	@Log(message="{0}修改了密码。")
 	@RequestMapping(value="/updatePwd", method=RequestMethod.POST)
-	public @ResponseBody String updatePassword(HttpServletRequest request, String oldPassword, 
-			String plainPassword, String rPassword) {
+	public @ResponseBody String updatePassword(HttpServletRequest request, String plainPassword, 
+			String newPassword, String rPassword) {
 		User user = (User)request.getSession().getAttribute(SecurityConstants.LOGIN_USER);
 		
-		if (plainPassword.equals(rPassword)) {
+		if (newPassword != null && newPassword.equals(rPassword)) {
 			user.setPlainPassword(plainPassword);
-			userService.update(user);
-		
+			try {
+				userService.updatePwd(user, newPassword);
+			} catch (ServiceException e) {
+				LogUitl.putArgs(LogMessageObject.newIgnore());//忽略日志
+				return AjaxObject.newError(e.getMessage()).setCallbackType("").toString();
+			}
 			LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{user.getUsername()}));
 			return AjaxObject.newOk("修改密码成功！").toString();
 		}

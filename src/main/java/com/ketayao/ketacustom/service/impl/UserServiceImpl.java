@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 		
 		//设定安全的密码，使用passwordService提供的salt并经过1024次 sha-1 hash
 		if (StringUtils.isNotBlank(user.getPlainPassword()) && shiroRealm != null) {
-			HashPassword hashPassword = shiroRealm.encrypt(user.getPlainPassword());
+			HashPassword hashPassword = ShiroDbRealm.encryptPassword(user.getPlainPassword());
 			user.setSalt(hashPassword.salt);
 			user.setPassword(hashPassword.password);
 		}
@@ -101,20 +101,37 @@ public class UserServiceImpl implements UserService {
 	 * @see com.ketayao.ketacustom.service.UserService#update(com.ketayao.ketacustom.entity.main.User)  
 	 */
 	public void update(User user) {
+		userDAO.save(user);
+		shiroRealm.clearCachedAuthorizationInfo(user.getUsername());
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 * @param newPwd
+	 * @throws ServiceException  
+	 * @see com.ketayao.ketacustom.service.UserService#updatePwd(com.ketayao.ketacustom.entity.main.User, java.lang.String)
+	 */
+	@Override
+	public void updatePwd(User user, String newPwd) throws ServiceException {
 		//if (isSupervisor(user.getId())) {
 		//	logger.warn("操作员{},尝试修改超级管理员用户", SecurityUtils.getSubject().getPrincipal());
 		//	throw new ServiceException("不能修改超级管理员用户");
 		//}
 		//设定安全的密码，使用passwordService提供的salt并经过1024次 sha-1 hash
-		
-		if (StringUtils.isNotBlank(user.getPlainPassword()) && shiroRealm != null) {
-			HashPassword hashPassword = shiroRealm.encrypt(user.getPlainPassword());
+		boolean isMatch = ShiroDbRealm.validatePassword(user.getPlainPassword(), user.getPassword(), user.getSalt());
+		if (isMatch) {
+			HashPassword hashPassword = ShiroDbRealm.encryptPassword(newPwd);
 			user.setSalt(hashPassword.salt);
 			user.setPassword(hashPassword.password);
+			
+			userDAO.save(user);
+			shiroRealm.clearCachedAuthorizationInfo(user.getUsername());
+			
+			return; 
 		}
 		
-		userDAO.save(user);
-		shiroRealm.clearCachedAuthorizationInfo(user.getUsername());
+		throw new ServiceException("用户密码错误！");
 	}
 
 	/**   
@@ -127,7 +144,10 @@ public class UserServiceImpl implements UserService {
 					.getPrincipal() + "。");
 			throw new ServiceException("不能删除超级管理员用户。");
 		}
-		userDAO.delete(id);
+		User user = userDAO.findOne(id);
+		userDAO.delete(user.getId());
+		
+		shiroRealm.clearCachedAuthorizationInfo(user.getUsername());
 	}
 
 	/**   

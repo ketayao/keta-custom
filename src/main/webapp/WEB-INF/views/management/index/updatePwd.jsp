@@ -4,8 +4,12 @@
 <form method="post" action="${contextPath }/management/index/updatePwd" class="required-validate pageForm" onsubmit="return validateCallback(this, dialogAjaxDone);">
 	<div class="pageFormContent" layouth="58">
 		<p>
+			<label>当前密码：</label>
+			<input type="password" name="plainPassword" class="validate[required, maxSize[32]] required" maxlength="32"/>
+		</p>	
+		<p>
 			<label>新密码：</label>
-			<input type="password" name="plainPassword" id="newPassword" class="validate[required, maxSize[32]] required" maxlength="32"/>
+			<input type="password" name="newPassword" id="newPassword" class="validate[required, maxSize[32]] required" maxlength="32"/>
 		</p>
 		<p>
 			<label>确认新密码：</label>
