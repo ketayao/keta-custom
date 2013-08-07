@@ -154,6 +154,7 @@ public class ModuleController {
 			}
 		}
 		
+		moduleService.update(oldModule);
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldModule.getName()}));
 		return AjaxObject.newOk("修改模块成功！").toString();
 	}
