@@ -196,7 +196,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 			List<RolePermission> rolePermissions = role.getRolePermissions();
 			for (RolePermission rolePermission : rolePermissions) {
 				Permission permission = rolePermission.getPermission();
-				stringPermissions.add(permission.getModule().getSn() + ":" + permission.getShortName());
+				if (permission.getModule() != null) {//避免脏数据
+					stringPermissions.add(permission.getModule().getSn() + ":" + permission.getShortName());
+				}
 			}
 		}
 		
