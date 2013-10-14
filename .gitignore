@@ -1,8 +1,9 @@
-/logs
-/target
-/lib
-/.classpath
-/.project
-/.settings
-/bin
-/.externalToolBuilders
+.externalToolBuilders/
+
+*.log
+.classpath
+.project
+.settings/
+target/
+logs/
+bin/
