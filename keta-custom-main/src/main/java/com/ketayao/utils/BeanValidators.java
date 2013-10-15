@@ -34,6 +34,7 @@ public class BeanValidators {
 	/**
 	 * 调用JSR303的validate方法, 验证失败时抛出ConstraintViolationException.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void validateWithException(Validator validator, Object object, Class<?>... groups)
 			throws ConstraintViolationException {
 		Set constraintViolations = validator.validate(object, groups);
@@ -52,6 +53,7 @@ public class BeanValidators {
 	/**
 	 * 辅助方法, 转换Set<ConstraintViolation>为List<message>
 	 */
+	@SuppressWarnings("rawtypes")
 	public static List<String> extractMessage(Set<? extends ConstraintViolation> constraintViolations) {
 		List<String> errorMessages = Lists.newArrayList();
 		for (ConstraintViolation violation : constraintViolations) {
@@ -70,6 +72,7 @@ public class BeanValidators {
 	/**
 	 * 辅助方法, 转换Set<ConstraintViolation>为Map<property, message>.
 	 */
+	@SuppressWarnings("rawtypes")
 	public static Map<String, String> extractPropertyAndMessage(Set<? extends ConstraintViolation> constraintViolations) {
 		Map<String, String> errorMessages = Maps.newHashMap();
 		for (ConstraintViolation violation : constraintViolations) {
@@ -88,6 +91,7 @@ public class BeanValidators {
 	/**
 	 * 辅助方法, 转换Set<ConstraintViolations>为List<propertyPath message>.
 	 */
+	@SuppressWarnings("rawtypes")
 	public static List<String> extractPropertyAndMessageAsList(Set<? extends ConstraintViolation> constraintViolations) {
 		return extractPropertyAndMessageAsList(constraintViolations, " ");
 	}
@@ -102,6 +106,7 @@ public class BeanValidators {
 	/**
 	 * 辅助方法, 转换Set<ConstraintViolation>为List<propertyPath +separator+ message>.
 	 */
+	@SuppressWarnings("rawtypes")
 	public static List<String> extractPropertyAndMessageAsList(Set<? extends ConstraintViolation> constraintViolations,
 			String separator) {
 		List<String> errorMessages = Lists.newArrayList();

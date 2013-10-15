@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/include.inc.jsp"%>    
 <div class="pageContent">
 <form action="#">
 	<div class="pageFormContent" layoutH="58">

@@ -1,4 +1,3 @@
-<%@page import="org.springside.modules.utils.Exceptions"%>
 <%@page import="java.io.StringWriter"%>
 <%@page import="java.io.PrintWriter"%>
 <%@ page contentType="text/html;charset=UTF-8" isErrorPage="true" %>

@@ -8,4 +8,22 @@
   <artifactId>keta-custom-resources</artifactId>
   <packaging>war</packaging>  
   
+  <dependencies>
+	<dependency>
+		<groupId>com.ketayao</groupId>
+		<artifactId>keta-custom-main</artifactId>
+		<version>3.2</version>
+	</dependency>  
+  
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jstl</artifactId>
+	</dependency>  
+	
+	<dependency>
+		<groupId>org.apache.shiro</groupId>
+		<artifactId>shiro-web</artifactId>
+	</dependency>	
+  </dependencies>
+  
 </project>

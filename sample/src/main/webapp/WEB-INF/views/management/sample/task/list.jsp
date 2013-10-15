@@ -2,9 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 
-<keta:paginationForm action="${contextPath }/management/sample/task/list" page="${page }">
+<%@taglib prefix="dwz" uri="http://www.ketayao.com/dwz"%>
+
+<dwz:paginationForm action="${contextPath }/management/sample/task/list" page="${page }">
 	<input type="hidden" name="keywords" value="${keywords}"/>
-</keta:paginationForm>
+</dwz:paginationForm>
 
 <form method="post" action="${contextPath }/management/sample/task/list" onsubmit="return navTabSearch(this)">
 	<div class="pageHeader">
@@ -62,5 +64,5 @@
 		</tbody>
 	</table>
 	<!-- 分页 -->
-	<keta:pagination page="${page }"/>
+	<dwz:pagination page="${page }"/>
 </div>

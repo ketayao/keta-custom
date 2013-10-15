@@ -9,7 +9,6 @@
 	<artifactId>keta-custom-component</artifactId>
 	<packaging>war</packaging>
 
-
 	<!-- 依赖项定义 -->
 	<dependencies>
 		<dependency>
@@ -23,24 +22,6 @@
 			<groupId>com.ketayao</groupId>
 			<artifactId>keta-custom-main</artifactId>
 			<version>3.2</version>
-		</dependency>
-
-		<!-- SPRINGSIDE MODULES begin -->
-		<dependency>
-			<groupId>org.springside</groupId>
-			<artifactId>springside-core</artifactId>
-			<version>${springside.version}</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/springside-core-4.1.0-SNAPSHOT.jar</systemPath>
-		</dependency>
-		<!-- SPRINGSIDE MODULES end -->
-		<!-- springside -->
-		<dependency>
-			<groupId>org.springside</groupId>
-			<artifactId>springside-test</artifactId>
-			<version>${springside.version}</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/springside-test-4.1.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 
 		<!-- SPRING basic begin(一般不需要显式定义) -->
