@@ -19,11 +19,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.ketayao.ketacustom.entity.IdEntity;
+import com.ketayao.ketacustom.entity.Idable;
 import com.ketayao.ketacustom.log.LogLevel;
 
 /** 
@@ -34,10 +37,10 @@ import com.ketayao.ketacustom.log.LogLevel;
  */
 @Entity
 @Table(name="security_log_entity")
-public class LogEntity extends IdEntity {
-
-	/** 描述  */
-	private static final long serialVersionUID = 6057051455824317181L;
+public class LogEntity implements Idable<Long> {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	@Column(length=255)
 	private String message;
@@ -55,6 +58,14 @@ public class LogEntity extends IdEntity {
 	@Column(length=16)
 	@Enumerated(EnumType.STRING)
 	private LogLevel logLevel;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getMessage() {
 		return message;

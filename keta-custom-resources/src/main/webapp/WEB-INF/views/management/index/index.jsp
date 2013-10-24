@@ -120,7 +120,6 @@ $(function(){
 						<ul class="tree treeFolder expand">
 						<c:forEach var="level2" items="${level1.children }">
 							<li>
-								
 								<dwz:menuAccordion child="${level2 }" urlPrefix="${contextPath }"/>
 							</li>
 						</c:forEach>

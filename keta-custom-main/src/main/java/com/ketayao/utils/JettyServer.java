@@ -97,27 +97,35 @@ public class JettyServer {
 	 * @throws IOException 
 	 * @throws MalformedURLException 
 	 */
-	public void addOtherResources(String... path) throws MalformedURLException, IOException {
-		if (path == null || path.length < 1) {
+	public void addOtherResources(String... paths) throws MalformedURLException, IOException {
+		if (paths == null || paths.length < 1) {
 			return ;
 		}
 		
-		List<String> paths = new ArrayList<String>();
-		paths.add(DEFAULT_WEBAPP_PATH);
+		List<String> pathList = new ArrayList<String>();
+		pathList.add(DEFAULT_WEBAPP_PATH);
 		
 		for (String p : paths) {
-			if (!paths.contains(p)) {
-				paths.add(p);
+			if (!pathList.contains(p)) {
+				pathList.add(p);
 			}
 		}
 		
-		if (!paths.contains(KETA_CUSTOM_RESOURCES)) {
-			paths.add(KETA_CUSTOM_RESOURCES);
+		if (!pathList.contains(KETA_CUSTOM_RESOURCES)) {
+			pathList.add(KETA_CUSTOM_RESOURCES);
 		}
 		
-		this.resources = new ResourceCollection(paths.toArray(new String[paths.size()]));
+		this.resources = new ResourceCollection(pathList.toArray(new String[pathList.size()]));
 		
 		webAppContext.setBaseResource(resources);
+	}
+	
+	/**
+	 * 类似/target/classes/;/etc/jetty/classes/
+	 * @param paths
+	 */
+	public void addOtherClasses(String extraClasspath) {
+		webAppContext.setExtraClasspath(extraClasspath);
 	}
 
 	/**

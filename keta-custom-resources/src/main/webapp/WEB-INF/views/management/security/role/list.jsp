@@ -2,9 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 
-<keta:paginationForm action="${contextPath }/management/security/role/list" page="${page }">
+<dwz:paginationForm action="${contextPath }/management/security/role/list" page="${page }">
 	<input type="hidden" name="keywords" value="${keywords}"/>
-</keta:paginationForm>
+</dwz:paginationForm>
 
 <form method="post" action="${contextPath }/management/security/role/list" onsubmit="return navTabSearch(this)">
 	<div class="pageHeader">
@@ -60,5 +60,5 @@
 		</tbody>
 	</table>
 	<!-- 分页 -->
-	<keta:pagination page="${page }"/>
+	<dwz:pagination page="${page }"/>
 </div>

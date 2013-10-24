@@ -21,13 +21,16 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.ketayao.ketacustom.entity.IdEntity;
+import com.ketayao.ketacustom.entity.Idable;
 import com.ketayao.utils.FileUtils;
 
 /** 
@@ -38,9 +41,10 @@ import com.ketayao.utils.FileUtils;
  */
 @Entity
 @Table(name = "component_resource")
-public class Resource extends IdEntity {
-	/** 描述  */
-	private static final long serialVersionUID = -8890032394492600573L;
+public class Resource implements Idable<Long> {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
 	@Column(length=32)
 	private String size;
@@ -72,6 +76,14 @@ public class Resource extends IdEntity {
 	 */
 	@Column(length=32, unique=true, updatable=false)
 	private String uuid;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	/**  
 	 * 返回 size 的值   

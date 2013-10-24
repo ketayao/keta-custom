@@ -19,6 +19,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -30,7 +33,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
-import com.ketayao.ketacustom.entity.IdEntity;
+import com.ketayao.ketacustom.entity.Idable;
 
 /** 
  * 	
@@ -41,10 +44,10 @@ import com.ketayao.ketacustom.entity.IdEntity;
 @Entity
 @Table(name="security_role")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main")
-public class Role extends IdEntity {
-	
-	/** 描述  */
-	private static final long serialVersionUID = -5537665695891354775L;
+public class Role implements Idable<Long> {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
 	@NotBlank
 	@Length(min=1, max=32)
@@ -65,6 +68,14 @@ public class Role extends IdEntity {
 	
 	@OneToMany(mappedBy="role", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
 	private List<RolePermission> rolePermissions = Lists.newArrayList();
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	/**  
 	 * 返回 name 的值   

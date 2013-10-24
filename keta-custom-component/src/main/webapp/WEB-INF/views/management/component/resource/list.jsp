@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/include.inc.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
+<%@ taglib prefix="dwz" uri="http://www.ketayao.com/dwz"%>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <script type="text/javascript">
 <!--
 	function close2upload() {
@@ -9,9 +14,9 @@
 	}
 //-->
 </script>
-<keta:paginationForm action="${contextPath }/management/component/resource/list" page="${page }">
+<dwz:paginationForm action="${contextPath }/management/component/resource/list" page="${page }">
 	<input type="hidden" name="name" value="${name}"/>
-</keta:paginationForm>
+</dwz:paginationForm>
 
 <form method="post" action="${contextPath }/management/component/resource/list" onsubmit="return navTabSearch(this)">
 	<div class="pageHeader">
@@ -81,5 +86,5 @@
 		</tbody>
 	</table>
 	<!-- 分页 -->
-	<keta:pagination page="${page }"/>
+	<dwz:pagination page="${page }"/>
 </div>

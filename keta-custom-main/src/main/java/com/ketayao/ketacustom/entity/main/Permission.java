@@ -19,6 +19,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -31,7 +34,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
-import com.ketayao.ketacustom.entity.IdEntity;
+import com.ketayao.ketacustom.entity.Idable;
 
 /** 
  * 除了CRUD以外的自定义权限 	
@@ -42,10 +45,10 @@ import com.ketayao.ketacustom.entity.IdEntity;
 @Entity
 @Table(name="security_permission")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main")
-public class Permission extends IdEntity {
-	
-	/** 描述  */
-	private static final long serialVersionUID = -7905701060290158981L;
+public class Permission implements Idable<Long> {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
 	/**
 	 * 操作
@@ -79,6 +82,14 @@ public class Permission extends IdEntity {
 	@OneToMany(mappedBy="permission", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
 	private List<RolePermission> rolePermissiones = Lists.newArrayList();
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	/**  
 	 * 返回 name 的值   
 	 * @return name  

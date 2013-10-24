@@ -14,6 +14,14 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.ketayao</groupId>
+			<artifactId>keta-custom-generate</artifactId>
+			<scope>test</scope>
+			<version>3.2</version>
+			<type>jar</type>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.ketayao</groupId>
 			<artifactId>keta-custom-resources</artifactId>
 			<version>3.2</version>
 			<type>war</type>

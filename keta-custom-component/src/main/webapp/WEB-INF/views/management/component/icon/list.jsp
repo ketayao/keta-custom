@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/include.inc.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <form method="post" action="${contextPath }/management/component/icon/reload" onsubmit="return navTabSearch(this)">
 	<div class="pageHeader">
 		<div class="searchBar">

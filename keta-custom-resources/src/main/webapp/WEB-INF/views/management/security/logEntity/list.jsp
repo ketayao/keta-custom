@@ -2,13 +2,13 @@
 <%@page import="java.util.Date"%>
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 
-<keta:paginationForm action="${contextPath }/management/security/logEntity/list" page="${page }">
+<dwz:paginationForm action="${contextPath }/management/security/logEntity/list" page="${page }">
 	<input type="hidden" name="username" value="${logEntity.username }"/>
 	<input type="hidden" name="ipAddress" value="${logEntity.ipAddress }"/>
 	<input type="hidden" name="logLevel" value="${logEntity.logLevel }"/>
 	<input type="hidden" name="startDate" value="<fmt:formatDate value="${startDate}" pattern="yyyy-MM-dd"/>"/>
 	<input type="hidden" name="endDate" value="<fmt:formatDate value="${endDate}" pattern="yyyy-MM-dd"/>"/>
-</keta:paginationForm>
+</dwz:paginationForm>
 
 <form method="post" action="${contextPath}/management/security/logEntity/list" onsubmit="return navTabSearch(this)">
 	<div class="pageHeader">
@@ -88,5 +88,5 @@
 		</tbody>
 	</table>
 	<!-- 分页 -->
-	<keta:pagination page="${page }"/>
+	<dwz:pagination page="${page }"/>
 </div>

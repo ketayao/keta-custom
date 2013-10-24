@@ -19,6 +19,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -35,7 +38,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.google.common.collect.Lists;
-import com.ketayao.ketacustom.entity.IdEntity;
+import com.ketayao.ketacustom.entity.Idable;
 
 /** 
  * 	
@@ -47,10 +50,10 @@ import com.ketayao.ketacustom.entity.IdEntity;
 @Table(name="security_user")
 //默认的缓存策略.
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main")
-public class User extends IdEntity {
-
-	/** 描述  */
-	private static final long serialVersionUID = -4277639149589431277L;
+public class User implements Idable<Long> {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
 	@NotBlank
 	@Length(min=1, max=32)
@@ -102,6 +105,14 @@ public class User extends IdEntity {
 	@ManyToOne
 	@JoinColumn(name="orgId")
 	private Organization organization;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	/**  
 	 * 返回 realname 的值   

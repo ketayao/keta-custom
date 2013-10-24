@@ -675,6 +675,7 @@
 		<module>keta-custom-main</module>
 		<module>keta-custom-resources</module>
 		<module>keta-custom-component</module>
+		<module>keta-custom-generate</module>
 		<module>sample</module>
 	</modules>
 </project>

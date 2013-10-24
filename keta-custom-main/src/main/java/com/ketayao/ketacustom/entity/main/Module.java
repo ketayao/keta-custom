@@ -18,6 +18,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -33,7 +36,7 @@ import org.hibernate.validator.constraints.Range;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
-import com.ketayao.ketacustom.entity.IdEntity;
+import com.ketayao.ketacustom.entity.Idable;
 
 /** 
  * 	
@@ -44,10 +47,10 @@ import com.ketayao.ketacustom.entity.IdEntity;
 @Entity
 @Table(name="security_module")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main")
-public class Module extends IdEntity implements Comparable<Module> {
-
-	/** 描述  */
-	private static final long serialVersionUID = -6926690440815291509L;
+public class Module implements Comparable<Module>, Idable<Long> {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
 	@NotBlank
 	@Length(min=1, max=32)
@@ -96,6 +99,14 @@ public class Module extends IdEntity implements Comparable<Module> {
 	 */
 	@OneToMany(mappedBy="module", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
 	private List<Permission> permissions = Lists.newArrayList();
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	/**  
 	 * 返回 name 的值   

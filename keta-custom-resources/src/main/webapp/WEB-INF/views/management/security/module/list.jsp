@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 <a id="refreshJbsxBox2moduleTree" rel="jbsxBox2moduleTree" target="ajax" href="${contextPath}/management/security/module/tree" style="display:none;"></a>
-<keta:paginationForm action="${contextPath}/management/security/module/list/${parentModuleId}" page="${page }" onsubmit="return divSearch(this, 'jbsxBox2moduleList');">
+<dwz:paginationForm action="${contextPath}/management/security/module/list/${parentModuleId}" page="${page }" onsubmit="return divSearch(this, 'jbsxBox2moduleList');">
 	<input type="hidden" name="keywords" value="${keywords}"/>
-</keta:paginationForm>
+</dwz:paginationForm>
 
 <form method="post" action="${contextPath }/management/security/module/list/${parentModuleId}" onsubmit="return divSearch(this, 'jbsxBox2moduleList');">
 	<div class="pageHeader">
@@ -64,5 +64,5 @@
 	</table>
 
 	<!-- 分页 -->
-	<keta:pagination page="${page }" rel="jbsxBox2moduleList" onchange="navTabPageBreak({numPerPage:this.value}, 'jbsxBox2moduleList')"/>
+	<dwz:pagination page="${page }" rel="jbsxBox2moduleList" onchange="navTabPageBreak({numPerPage:this.value}, 'jbsxBox2moduleList')"/>
 </div>
