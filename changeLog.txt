@@ -67,6 +67,8 @@ new
 keta-custom3.2.0
 
 fixbug
+修复form两次提交的问题。
+修复分页切换超过最大页数，不显示数据问题。
 
 enhancement
 修改实体的实现，使实体继承Idable，这样更容易扩展和切换数据库。

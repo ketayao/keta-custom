@@ -239,18 +239,26 @@ function _getPagerForm($parent, args) {
 // 存在一个bug，没有替换options中的numPerPage大小
 // by ketayao
 function dwzPageBreak(options){
-    var op = $.extend({ targetType:"navTab", rel:"", data:{pageNum:"", numPerPage:"", orderField:"", orderDirection:""}, callback:null}, options);
+    var op = $.extend({ targetType:"navTab", rel:"", data:{pageNum:"", numPerPage:"", orderField:"", orderDirection:"", totalCount:""}, callback:null}, options);
     var $parent = op.targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
- 
+
+    var form = _getPagerForm($box, op.data);
+    // by ketayao，替换form中的numPerPage值
+    var params = $(form).serializeArray();
+    if (op.numPerPage) {
+        params[numPerPage].value = op.numPerPage;
+    }
+    // by ketayao，判断是否超过最大页码
+    if (op.totalCount) {
+    	var _totalPage = (op.totalCount - 1)/op.numPerPage;
+    	if (op.pageNum > _totalPage) {
+    		params[pageNum].value = _totalPage;
+    	}
+    }
+    
     if (op.rel) {
         var $box = $parent.find("#" + op.rel);
-        var form = _getPagerForm($box, op.data);
-        // by ketayao，替换form中的numPerPage值
-        var params = $(form).serializeArray();
-        if (op.numPerPage) {
-            params[1].value = op.numPerPage;
-        }
-
+        
         if (form) {
             $box.ajaxUrl({
                 type:"POST", url:$(form).attr("action"), data: params, callback:function(){
@@ -259,13 +267,6 @@ function dwzPageBreak(options){
             });
         }
     } else {
-        var form = _getPagerForm($parent, op.data);
-        var params = $(form).serializeArray();
-        // by ketayao，替换form中的numPerPage值
-        if (op.numPerPage) {
-            params[1].value = op.numPerPage;
-        }
-
         if (op.targetType == "dialog") {
             if (form) $.pdialog.reload($(form).attr("action"), {data: params, callback: op.callback});
         } else {

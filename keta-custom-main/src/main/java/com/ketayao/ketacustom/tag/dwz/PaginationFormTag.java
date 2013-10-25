@@ -33,6 +33,7 @@ public class PaginationFormTag extends SimpleTagSupport {
 		builder.append("<input type=\"hidden\" name=\"numPerPage\" value=\"" + page.getNumPerPage() + "\"/>\n");
 		builder.append("<input type=\"hidden\" name=\"orderField\" value=\"" + page.getOrderField() + "\"/>\n");
 		builder.append("<input type=\"hidden\" name=\"orderDirection\" value=\"" + page.getOrderDirection() + "\"/>\n");
+		builder.append("<input type=\"hidden\" name=\"totalCount\" value=\"" + page.getTotalCount() + "\"/>\n");
 
 		getJspContext().getOut().write(builder.toString());
 		

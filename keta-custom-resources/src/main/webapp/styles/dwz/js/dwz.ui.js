@@ -152,7 +152,7 @@ function initUI(_box){
 
 		$form.validationEngine('attach', {
 		  scroll: false,
-		  ajaxFormValidation: true,
+		  ajaxFormValidation: false,
 		  promptPosition: 'centerRight'
 		});
 	});

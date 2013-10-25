@@ -25,7 +25,7 @@
 <%-- form验证 --%>
 <script src="${contextPath}/styles/validationEngine/js/languages/jquery.validationEngine-zh_CN.js" type="text/javascript" charset="utf-8"></script>
 <script src="${contextPath}/styles/validationEngine/js/jquery.validationEngine-2.6.4.js" type="text/javascript" charset="utf-8"></script>
-<%--
+
 <script src="${contextPath}/styles/dwz/js/dwz.core.js" type="text/javascript"></script>
 <script src="${contextPath}/styles/dwz/js/dwz.util.date.js" type="text/javascript"></script>
 <script src="${contextPath}/styles/dwz/js/dwz.barDrag.js" type="text/javascript"></script>
@@ -56,9 +56,10 @@
 <script src="${contextPath}/styles/dwz/js/dwz.history.js" type="text/javascript"></script>
 <script src="${contextPath}/styles/dwz/js/dwz.combox.js" type="text/javascript"></script>
 <script src="${contextPath}/styles/dwz/js/dwz.print.js" type="text/javascript"></script>
---%>
-<script src="${contextPath}/styles/dwz/js/dwz.min.js" type="text/javascript"></script>
 
+<%--
+<script src="${contextPath}/styles/dwz/js/dwz.min.js" type="text/javascript"></script>
+--%>
 <script src="${contextPath}/styles/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 <%-- 自定义JS --%>
 <script src="${contextPath}/styles/dwz/js/customer.js" type="text/javascript"></script>
