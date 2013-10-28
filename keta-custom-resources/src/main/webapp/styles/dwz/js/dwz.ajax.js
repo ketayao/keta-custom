@@ -242,7 +242,15 @@ function dwzPageBreak(options){
     var op = $.extend({ targetType:"navTab", rel:"", data:{pageNum:"", numPerPage:"", orderField:"", orderDirection:"", totalCount:""}, callback:null}, options);
     var $parent = op.targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
 
-    var form = _getPagerForm($box, op.data);
+	var form = null;
+	var $box = null;
+	if (op.rel) {
+		$box = $parent.find("#" + op.rel);
+		form = _getPagerForm($box, op.data);
+	} else {
+		form = _getPagerForm($parent, op.data);
+	}
+    
     // by ketayao，替换form中的numPerPage值
     var params = $(form).serializeArray();
     if (op.numPerPage) {
@@ -257,8 +265,6 @@ function dwzPageBreak(options){
     }
     
     if (op.rel) {
-        var $box = $parent.find("#" + op.rel);
-        
         if (form) {
             $box.ajaxUrl({
                 type:"POST", url:$(form).attr("action"), data: params, callback:function(){
