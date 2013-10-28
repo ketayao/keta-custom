@@ -22,6 +22,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,6 +60,12 @@ public class RoleController {
 	private static final String UPDATE = "management/security/role/update";
 	private static final String LIST = "management/security/role/list";
 	private static final String VIEW = "management/security/role/view";
+	
+	@InitBinder
+	public void initListBinder(WebDataBinder binder) {
+		// 设置需要包裹的元素个数，默认为256
+	    binder.setAutoGrowCollectionLimit(5000);
+	}
 	
 	@RequiresPermissions("Role:save")
 	@RequestMapping(value="/create", method=RequestMethod.GET)
