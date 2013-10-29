@@ -29,13 +29,13 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<shiro:hasPermission name="Role:view">
-				<li><a iconClass="magnifier" target="dialog" mask="true" width="530" height="600" href="${contextPath }/management/security/role/view/{slt_uid}"><span>查看角色</span></a></li>
+				<li><a iconClass="magnifier" target="navTab" href="${contextPath }/management/security/role/view/{slt_uid}"><span>查看角色</span></a></li>
 			</shiro:hasPermission>		
 			<shiro:hasPermission name="Role:save">
-				<li><a iconClass="shield_add" target="dialog" mask="true" width="530" height="600" href="${contextPath }/management/security/role/create"><span>添加角色</span></a></li>
+				<li><a iconClass="shield_add" target="navTab" href="${contextPath }/management/security/role/create"><span>添加角色</span></a></li>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="Role:edit">
-				<li><a iconClass="shield_go" target="dialog" mask="true" width="530" height="600" href="${contextPath }/management/security/role/update/{slt_uid}"><span>编辑角色</span></a></li>
+				<li><a iconClass="shield_go" target="navTab" href="${contextPath }/management/security/role/update/{slt_uid}"><span>编辑角色</span></a></li>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="Role:delete">
 				<li><a iconClass="shield_delete" target="ajaxTodo" href="${contextPath }/management/security/role/delete/{slt_uid}" title="确认要删除该角色?"><span>删除角色</span></a></li>

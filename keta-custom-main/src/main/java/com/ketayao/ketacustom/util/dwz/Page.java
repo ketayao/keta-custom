@@ -28,8 +28,8 @@ public class Page {
 	/**
 	 * 默认每页记录数
 	 */
-	//public static final int DEFAULT_PAGE_SIZE = 15;
-	public static final int DEFAULT_PAGE_SIZE = 2;
+	public static final int DEFAULT_PAGE_SIZE = 15;
+	//public static final int DEFAULT_PAGE_SIZE = 2;
 	
 	/**
 	 * 原始页码

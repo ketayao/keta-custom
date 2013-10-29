@@ -1,0 +1,22 @@
+/*role */
+span.inputValueRole input {vertical-align:middle;margin-right:15px;}
+.treeTable span {float: left;}
+.treeTable span.button {
+	padding:0;line-height:0; margin:0; width:16px; height:16px;  vertical-align:middle;
+	border:0 none; cursor: pointer;outline:none;
+	background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;
+	background-image:url("../../ztree/css/img/zTreeStandard.png"); *background-image:url("../../ztree/css/img/zTreeStandard.gif")}
+.treeTable span.button.chk {width:13px; height:13px; margin:2px 3px 1px 0; cursor: auto;}
+.treeTable span.button.chk.checkbox_false_full {background-position:0 0}
+.treeTable span.button.chk.checkbox_false_full_focus {background-position:0 -14px}
+.treeTable span.button.chk.checkbox_false_part {background-position:0 -28px}
+.treeTable span.button.chk.checkbox_false_part_focus {background-position:0 -42px}
+.treeTable span.button.chk.checkbox_false_disable {background-position:0 -56px}
+.treeTable span.button.chk.checkbox_true_full {background-position:-14px 0}
+.treeTable span.button.chk.checkbox_true_full_focus {background-position:-14px -14px}
+.treeTable span.button.chk.checkbox_true_part {background-position:-14px -28px}
+.treeTable span.button.chk.checkbox_true_part_focus {background-position:-14px -42px}
+.treeTable span.button.chk.checkbox_true_disable {background-position:-14px -56px}
+.treeTable tr td {line-height: 16px;vertical-align: middle;}
+.treeTable tr td span.pmn{display: block; float: left; line-height: 16px;}
+.treeTable tr td span.pmnc{margin-right: 15px !important;}

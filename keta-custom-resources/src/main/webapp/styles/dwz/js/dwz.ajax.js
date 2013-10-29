@@ -253,14 +253,14 @@ function dwzPageBreak(options){
     
     // by ketayao，替换form中的numPerPage值
     var params = $(form).serializeArray();
-    if (op.numPerPage) {
-        params[numPerPage].value = op.numPerPage;
+    if (op.data.numPerPage) {
+        params[1].value = op.data.numPerPage;
     }
     // by ketayao，判断是否超过最大页码
-    if (op.totalCount) {
-    	var _totalPage = (op.totalCount - 1)/op.numPerPage;
-    	if (op.pageNum > _totalPage) {
-    		params[pageNum].value = _totalPage;
+    if (params[4]) {
+    	var _totalPage = parseInt((params[4].value - 1)/op.data.numPerPage);
+    	if (params[0].value > _totalPage) {
+    		params[0].value = _totalPage;
     	}
     }
     
