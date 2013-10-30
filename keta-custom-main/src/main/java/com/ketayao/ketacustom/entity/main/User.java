@@ -49,7 +49,7 @@ import com.ketayao.ketacustom.entity.Idable;
 @Entity
 @Table(name="security_user")
 //默认的缓存策略.
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main")
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.User")
 public class User implements Idable<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

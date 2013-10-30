@@ -44,7 +44,7 @@ import com.ketayao.ketacustom.entity.Idable;
  */
 @Entity
 @Table(name = "security_organization")
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main")
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.Organization")
 public class Organization implements Idable<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

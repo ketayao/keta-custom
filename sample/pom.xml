@@ -315,13 +315,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<packagingExcludes>WEB-INF/web.xml</packagingExcludes>
-					<overlays>
-						<overlay>
-							<groupId>com.ketayao</groupId>
-							<artifactId>keta-custom-resources</artifactId>
-						</overlay>
-					</overlays>
+					<warName>${project.artifactId}</warName>
 				</configuration>
 			</plugin>
 		</plugins>

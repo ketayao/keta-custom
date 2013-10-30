@@ -36,7 +36,7 @@ import com.ketayao.ketacustom.entity.Idable;
  */
 @Entity
 @Table(name="security_role_permission")
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main")
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.RolePermission")
 public class RolePermission implements Idable<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

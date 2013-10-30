@@ -12,17 +12,17 @@
 			<fileNamePattern>logs/${projectName}.%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<pattern>%d [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
 
 	<!-- project default level -->
-	<logger name="com.ketayao" level="DEBUG" />
+	<logger name="com.ketayao" level="INFO" />
 
 	<!--log4jdbc -->
 	<!-- <logger name="jdbc.sqltiming" level="INFO"/> -->
 
-	<root level="DEBUG">
+	<root level="ERROR">
 		<appender-ref ref="console" />
 		<appender-ref ref="rollingFile" />
 	</root>

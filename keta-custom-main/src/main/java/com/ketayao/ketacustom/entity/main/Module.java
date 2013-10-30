@@ -46,7 +46,7 @@ import com.ketayao.ketacustom.entity.Idable;
  */
 @Entity
 @Table(name="security_module")
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main")
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.Module")
 public class Module implements Comparable<Module>, Idable<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

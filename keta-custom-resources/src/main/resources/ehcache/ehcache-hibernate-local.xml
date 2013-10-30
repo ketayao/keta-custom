@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false">
+
+	<diskStore path="java.io.tmpdir/hibernate/keta-custom" />
+
+	<!-- DefaultCache setting. -->
+	<defaultCache 
+		maxEntriesLocalHeap="10000" 
+		eternal="false"
+		timeToIdleSeconds="300" 
+		timeToLiveSeconds="600" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="100000" 
+		memoryStoreEvictionPolicy="LFU"/>
+		
+	<!-- security entity-->
+	<cache name="com.ketayao.ketacustom.entity.main.User" 
+		maxEntriesLocalHeap="1000" 
+		eternal="false" 
+		overflowToDisk="true" 
+		maxEntriesLocalDisk="10000" />	
+	<cache 
+		name="com.ketayao.ketacustom.entity.main.UserRole"
+		maxEntriesLocalHeap="1000" 
+		eternal="false" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />		
+	<cache 
+		name="com.ketayao.ketacustom.entity.main.RolePermission"
+		maxEntriesLocalHeap="10000" 
+		eternal="false" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="1000000" />
+	<cache 
+		name="com.ketayao.ketacustom.entity.main.Role"
+		maxEntriesLocalHeap="1000" 
+		eternal="false" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+	<cache 
+		name="com.ketayao.ketacustom.entity.main.Permission"
+		maxEntriesLocalHeap="10000" 
+		eternal="false" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="100000" />
+	<cache 
+		name="com.ketayao.ketacustom.entity.main.OrganizationRole"
+		maxEntriesLocalHeap="1000" 
+		eternal="false" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+	<cache 
+		name="com.ketayao.ketacustom.entity.main.Organization"
+		maxEntriesLocalHeap="1000" 
+		eternal="false" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />	
+	<cache 
+		name="com.ketayao.ketacustom.entity.main.Module"
+		maxEntriesLocalHeap="1000" 
+		eternal="false" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />										
+</ehcache>

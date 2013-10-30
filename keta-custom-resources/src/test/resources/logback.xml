@@ -2,7 +2,7 @@
 <configuration>
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<pattern>%d [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
 
@@ -12,17 +12,17 @@
 			<fileNamePattern>logs/keta-custom.%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<pattern>%d [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
 
 	<!-- project default level -->
-	<logger name="com.ketayao" level="INFO" />
+	<logger name="com.ketayao" level="DEBUG" />
 
 	<!--log4jdbc -->
 	<!-- <logger name="jdbc.sqltiming" level="INFO"/> -->
 
-	<root level="ERROR">
+	<root level="DEBUG">
 		<appender-ref ref="console" />
 		<appender-ref ref="rollingFile" />
 	</root>
