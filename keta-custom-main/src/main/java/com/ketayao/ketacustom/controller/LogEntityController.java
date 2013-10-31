@@ -15,17 +15,12 @@ package com.ketayao.ketacustom.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.servlet.ServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -37,7 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.entity.main.LogEntity;
 import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.log.LogLevel;
@@ -46,6 +40,7 @@ import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.LogEntityService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.persistence.DynamicSpecifications;
 
 /** 
  * 	
@@ -70,13 +65,11 @@ public class LogEntityController {
 	
 	@RequiresPermissions("LogEntity:view")
 	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(Page page, LogEntity logEntity,  Date startDate, Date endDate, Map<String, Object> map) {
-		LogEntitySpecification logEntitySpecification = new LogEntitySpecification(logEntity, startDate, endDate);
-		List<LogEntity> logEntities = logEntityService.findByExample(logEntitySpecification, page); 
+	public String list(Page page, ServletRequest request, Map<String, Object> map) {
+		Specification<LogEntity> spec = DynamicSpecifications.bySearchFilter(request, LogEntity.class);
 		
-		map.put("logEntity", logEntity);
-		map.put("startDate", startDate);
-		map.put("endDate", endDate);
+		List<LogEntity> logEntities = logEntityService.findByExample(spec, page); 
+		
 		map.put("page", page);
 		map.put("logEntities", logEntities);
 		map.put("logLevels", LogLevel.values());
@@ -96,72 +89,5 @@ public class LogEntityController {
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{ids.length}));
 		ajaxObject.setCallbackType("");
 		return ajaxObject.toString();
-	}
-	
-	private class LogEntitySpecification implements Specification<LogEntity> {
-		
-		private LogEntity logEntity;
-		private Date startDate;
-		private Date endDate; 
-		
-		public LogEntitySpecification(LogEntity logEntity) {
-			this.logEntity = logEntity;	
-		}
-		
-		public LogEntitySpecification(LogEntity logEntity, Date startDate, Date endDate) {
-			this(logEntity);
-			this.startDate = startDate;
-			this.endDate = endDate;
-		}
-
-		/**   
-		 * @param root
-		 * @param query
-		 * @param criteriabuilder
-		 * @return  
-		 * @see org.springframework.data.jpa.domain.Specification#toPredicate(javax.persistence.criteria.Root, javax.persistence.criteria.CriteriaQuery, javax.persistence.criteria.CriteriaBuilder)  
-		 */
-		@Override
-		public Predicate toPredicate(Root<LogEntity> root,
-				CriteriaQuery<?> query, CriteriaBuilder criteriabuilder) {
-			List<Predicate> predicateList = Lists.newArrayList();
-			
-			if (logEntity.getLogLevel() != null) {
-				Predicate logLevelPredicate = criteriabuilder.equal(root.get("logLevel"), logEntity.getLogLevel());
-				predicateList.add(logLevelPredicate);
-			}
-			
-			if (logEntity.getUsername() != null && StringUtils.isNotBlank(logEntity.getUsername())) {
-				Predicate usernamePredicate = criteriabuilder.equal(root.get("username"), logEntity.getUsername());
-				predicateList.add(usernamePredicate);
-			}
-			
-			if (logEntity.getIpAddress() != null && StringUtils.isNotBlank(logEntity.getIpAddress())) {
-				Predicate ipAddressPredicate = criteriabuilder.equal(root.get("ipAddress"), logEntity.getIpAddress());
-				predicateList.add(ipAddressPredicate);
-			}
-			
-			if (startDate != null && endDate == null) {
-				endDate = new Date();
-			} else if (endDate != null && startDate == null) {
-				startDate = new Date(0L);
-		    } 
-			
-			if (startDate != null && endDate != null) {
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(endDate);
-				calendar.add(Calendar.DAY_OF_YEAR, 1);
-				endDate = calendar.getTime();
-		    	
-				Predicate datePredicate = criteriabuilder.between(root.<Date>get("createTime"), startDate, endDate);
-				predicateList.add(datePredicate);	
-			}
-			
-			Predicate[] predicates = new Predicate[predicateList.size()];
-	        predicateList.toArray(predicates);
-			
-			return criteriabuilder.and(predicates);
-		}
-		
 	}
 }

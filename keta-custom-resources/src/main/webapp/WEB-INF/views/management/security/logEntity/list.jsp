@@ -3,11 +3,11 @@
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 
 <dwz:paginationForm action="${contextPath }/management/security/logEntity/list" page="${page }">
-	<input type="hidden" name="username" value="${logEntity.username }"/>
-	<input type="hidden" name="ipAddress" value="${logEntity.ipAddress }"/>
-	<input type="hidden" name="logLevel" value="${logEntity.logLevel }"/>
-	<input type="hidden" name="startDate" value="<fmt:formatDate value="${startDate}" pattern="yyyy-MM-dd"/>"/>
-	<input type="hidden" name="endDate" value="<fmt:formatDate value="${endDate}" pattern="yyyy-MM-dd"/>"/>
+	<input type="hidden" name="search_EQ_username" value="${param.search_LIKE_username }"/>
+	<input type="hidden" name="search_EQ_ipAddress" value="${param.search_EQ_ipAddress }"/>
+	<input type="hidden" name="search_EQ_logLevel" value="${param.search_EQ_logLevel }"/>
+	<input type="hidden" name="search_GTE_createTime" value="${param.search_GTE_createTime}"/>
+	<input type="hidden" name="search_LTE_createTime" value="${param.search_LTE_createTime}"/>
 </dwz:paginationForm>
 
 <form method="post" action="${contextPath}/management/security/logEntity/list" onsubmit="return navTabSearch(this)">
@@ -16,18 +16,18 @@
 			<ul class="searchContent">
 				<li>
 					<label style="width: 100px;">登录名称：</label>
-					<input type="text" name="username" value="${logEntity.username }"/>
+					<input type="text" name="search_LIKE_username" value="${param.search_LIKE_username }"/>
 				</li>	
 				<li>
 					<label style="width: 100px;">登录IP：</label>
-					<input type="text" name="ipAddress" value="${logEntity.ipAddress }"/>
+					<input type="text" name="search_EQ_ipAddress" value="${param.search_EQ_ipAddress }"/>
 				</li>
 				<li>
 					<label style="width: 100px;">日志等级：</label>
-					<select name="logLevel">
+					<select name="search_EQ_logLevel">
 						<option value="">所有</option>
 						<c:forEach var="logLevel" items="${logLevels }"> 
-							<option value="${logLevel}" ${logEntity.logLevel == logLevel ? 'selected="selected"':'' }>${logLevel}</option>
+							<option value="${logLevel}" ${param.search_EQ_logLevel == logLevel ? 'selected="selected"':'' }>${logLevel}</option>
 						</c:forEach>
 					</select>
 				</li>																
@@ -35,12 +35,12 @@
 			<ul class="searchContent">	
 				<li>
 					<label style="width: 100px;">日志开始时间：</label>
-					<input type="text" name="startDate" class="date" readonly="readonly" style="float:left;" value="<fmt:formatDate value="${startDate}" pattern="yyyy-MM-dd"/>"/>
+					<input type="text" name="search_GTE_createTime" class="date" readonly="readonly" style="float:left;" value="${param.search_GTE_createTime}"/>
 					<a class="inputDateButton" href="javascript:;" style="float:left;">选择</a>
 				</li>			
 				<li>
 					<label style="width: 100px;">日志结束时间：</label>
-					<input type="text" name="endDate" class="date" readonly="readonly" style="float:left;" value="<fmt:formatDate value="${endDate}" pattern="yyyy-MM-dd"/>"/>
+					<input type="text" name="search_LTE_createTime" class="date" readonly="readonly" style="float:left;" value="${param.search_LTE_createTime}"/>
 					<a class="inputDateButton" href="javascript:;" style="float:left;">选择</a>
 				</li>							
 			</ul>			

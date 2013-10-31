@@ -37,4 +37,8 @@ public interface SecurityConstants {
 	 */
 	public final static String LOG_ARGUMENTS = "log_arguments";
 	
+	/**
+	 * 动态查询，参数前缀
+	 */
+	public final static String SEARCH_PREFIX = "search_";
 }
