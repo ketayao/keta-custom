@@ -23,7 +23,7 @@ public class ${className} implements Idable<Long>{
 	/**
 	 *${column.comment}
 	 */
-    @Column(<#if column.nullable != false>nullable=false, </#if>length=${column.size})
+    @Column(<#if column.nullable == false>nullable=false, </#if>length=${column.size})
     private ${column.javaType} ${column.fieldName};	
     
 	</#list>
