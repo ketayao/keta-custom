@@ -12,7 +12,7 @@ import com.ketayao.utils.JettyServer;
 public class QuickStartServer {  
 
 	public static final int PORT = 9090;
-	public static final String CONTEXT = "/keta-custom";
+	public static final String CONTEXT = "/${projectName}";
 	public static final String BASE_URL = "http://localhost:" + PORT + CONTEXT;
 	public static final String[] TLD_JAR_NAMES = new String[] {"spring-webmvc", "shiro-web",
 			"springside-core" };

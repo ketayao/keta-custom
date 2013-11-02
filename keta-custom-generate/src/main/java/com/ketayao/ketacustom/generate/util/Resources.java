@@ -15,7 +15,7 @@ public class Resources {
 	protected static Logger logger = LoggerFactory.getLogger(Resources.class);
 
 	/************mysql 数据库配置 ************/
-	public static String JDBC_DRIVER = "org.gjt.mm.mysql.Driver";
+	public static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	public static String JDBC_URL = "jdbc:mysql://localhost:3306/keta_custom?useUnicode=true&characterEncoding=UTF-8"; // 数据库访问串
 	public static String JDBC_USERNAME = "root";
 	public static String JDBC_PASSWORD = "root";
@@ -63,27 +63,16 @@ public class Resources {
 				logger.error("参数设置错误：表名、包名、模块名、类名、功能名、索引字段不能为空。");
 				System.exit(-1);
 			}
-			
-			if (StringUtils.isNotBlank(TPL_SUBMODULE_NAME)) {
-				PKN_ENTITY = TPL_PACKAGE_NAME + "." + TPL_MODULE_NAME + ".entity." + TPL_SUBMODULE_NAME;
-				PKN_DAO = TPL_PACKAGE_NAME + "." + TPL_MODULE_NAME + ".dao." + TPL_SUBMODULE_NAME;
-				PKN_SERVICE = TPL_PACKAGE_NAME + "." + TPL_MODULE_NAME + ".service." + TPL_SUBMODULE_NAME;
-				PKN_SERVICE_IMPL = TPL_PACKAGE_NAME + "." + TPL_MODULE_NAME + ".service.impl." + TPL_SUBMODULE_NAME;
-				PKN_CONTROLLER = TPL_PACKAGE_NAME + "." + TPL_MODULE_NAME + ".controller." + TPL_SUBMODULE_NAME;
-				
-				if (StringUtils.isBlank(TPL_REQUEST_MAPPING)) {
-					TPL_REQUEST_MAPPING = "management/" + TPL_MODULE_NAME + "/" + TPL_SUBMODULE_NAME + "/" + StringUtils.uncapitalize(TPL_CLASS_NAME);
-				}
-			} else {
-				PKN_ENTITY = TPL_PACKAGE_NAME + "." + TPL_MODULE_NAME + ".entity";
-				PKN_DAO = TPL_PACKAGE_NAME + "." + TPL_MODULE_NAME + ".dao";
-				PKN_SERVICE = TPL_PACKAGE_NAME + "." + TPL_MODULE_NAME + ".service";
-				PKN_SERVICE_IMPL = TPL_PACKAGE_NAME + "." + TPL_MODULE_NAME + ".service.impl";
-				PKN_CONTROLLER = TPL_PACKAGE_NAME + "." + TPL_MODULE_NAME + ".controller";
-				
-				if (StringUtils.isBlank(TPL_REQUEST_MAPPING)) {
-					TPL_REQUEST_MAPPING = "management/" + TPL_MODULE_NAME + "/" + StringUtils.uncapitalize(TPL_CLASS_NAME);
-				}
+
+			PKN_ENTITY = TPL_PACKAGE_NAME + ".entity";
+			PKN_DAO = TPL_PACKAGE_NAME + ".dao";
+			PKN_SERVICE = TPL_PACKAGE_NAME + ".service";
+			PKN_SERVICE_IMPL = TPL_PACKAGE_NAME + ".service.impl";
+			PKN_CONTROLLER = TPL_PACKAGE_NAME + ".controller";
+			if (StringUtils.isNotBlank(TPL_SUBMODULE_NAME) && StringUtils.isBlank(TPL_REQUEST_MAPPING)) {
+				TPL_REQUEST_MAPPING = "management/" + TPL_MODULE_NAME + "/" + TPL_SUBMODULE_NAME + "/" + StringUtils.uncapitalize(TPL_CLASS_NAME);
+			} else if (StringUtils.isBlank(TPL_REQUEST_MAPPING)) {
+				TPL_REQUEST_MAPPING = "management/" + TPL_MODULE_NAME + "/" + StringUtils.uncapitalize(TPL_CLASS_NAME);
 			}
 			
 		} catch (IOException e) {
