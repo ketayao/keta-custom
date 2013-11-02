@@ -21,7 +21,6 @@ public class JettyServer {
 	private static final String WINDOWS_WEBDEFAULT_PATH = "jetty/webdefault-windows.xml";
 	
 	private static final String KETA_CUSTOM_RESOURCES = "../keta-custom-resources/src/main/webapp";
-	private static final String KETA_CUSTOM_JAVA_RESOURCES = "../keta-custom-resources/src/main/resources/";
 	
 	private int port = 8080;
 	private String context;
@@ -86,7 +85,6 @@ public class JettyServer {
 		webContext.setResourceAlias(DEFAULT_WEBAPP_PATH, contextPath);
 		
 		webContext.setBaseResource(resources);
-		webContext.setExtraClasspath(KETA_CUSTOM_JAVA_RESOURCES);
 		
 		server.setHandler(webContext);
 		return server;
@@ -127,7 +125,7 @@ public class JettyServer {
 	 * @param paths
 	 */
 	public void addOtherClasses(String extraClasspath) {
-		webAppContext.setExtraClasspath(KETA_CUSTOM_JAVA_RESOURCES + ";" + extraClasspath);
+		webAppContext.setExtraClasspath(extraClasspath);
 	}
 
 	/**
