@@ -83,7 +83,7 @@
 	<!-- production环境 -->
  	<beans profile="production">
  		<context:property-placeholder ignore-unresolvable="true"
-			location="classpath*:/jdbc.properties" />	
+			location="classpath:/jdbc.properties" />	
 		
 		<!-- 数据源配置, 使用DBCP数据库连接池 -->
 		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
