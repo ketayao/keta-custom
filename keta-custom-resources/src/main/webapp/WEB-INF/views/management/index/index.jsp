@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="dwz" uri="http://www.ketayao.com/dwz"%>    
 <%@ page import="java.util.Date"%>    
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

@@ -112,7 +112,7 @@ public class ${className}Controller {
 		return LIST;
 	}
 	
-	@RequiresPermissions("${className}:look")
+	@RequiresPermissions("${className}:view")
 	@RequestMapping(value="/view/{id}", method={RequestMethod.GET})
 	public String view(@PathVariable Long id, Map<String, Object> map) {
 		${className} ${instanceName} = ${instanceName}Service.get(id);

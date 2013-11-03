@@ -41,7 +41,7 @@
 
 	<div class="panelBar">
 		<ul class="toolBar">
-			<shiro:hasPermission name="${className}:look">
+			<shiro:hasPermission name="${className}:view">
 				<li><a iconClass="magnifier" target="dialog" mask="true" width="530" height="250" href="${r"${contextPath }"}/${requestMapping}/view/{slt_uid}"><span>查看${functionName}</span></a></li>
 			</shiro:hasPermission>		
 			<shiro:hasPermission name="${className}:save">
