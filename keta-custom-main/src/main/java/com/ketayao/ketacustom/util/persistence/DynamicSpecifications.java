@@ -4,8 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -44,10 +46,11 @@ public class DynamicSpecifications {
 	
 	public static <T> Specification<T> bySearchFilter(ServletRequest request, final Class<T> entityClazz, SearchFilter...searchFilters) {
 		Collection<SearchFilter> filters = genSearchFilter(request);
-		for (SearchFilter searchFilter : filters) {
-			filters.add(searchFilter);
+		Set<SearchFilter> set = new HashSet<SearchFilter>(filters);
+		for (SearchFilter searchFilter : searchFilters) {
+			set.add(searchFilter);
 		}
-		return bySearchFilter(filters, entityClazz);
+		return bySearchFilter(set, entityClazz);
 	}
 
 	public static <T> Specification<T> bySearchFilter(final Collection<SearchFilter> filters, final Class<T> entityClazz) {
