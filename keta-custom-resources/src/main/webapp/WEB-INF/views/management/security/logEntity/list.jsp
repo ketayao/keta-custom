@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 
 <dwz:paginationForm action="${contextPath }/management/security/logEntity/list" page="${page }">
-	<input type="hidden" name="search_EQ_username" value="${param.search_LIKE_username }"/>
+	<input type="hidden" name="search_LIKE_username" value="${param.search_LIKE_username }"/>
 	<input type="hidden" name="search_EQ_ipAddress" value="${param.search_EQ_ipAddress }"/>
 	<input type="hidden" name="search_EQ_logLevel" value="${param.search_EQ_logLevel }"/>
 	<input type="hidden" name="search_GTE_createTime" value="${param.search_GTE_createTime}"/>
