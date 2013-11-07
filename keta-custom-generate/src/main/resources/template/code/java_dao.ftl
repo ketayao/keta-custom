@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ${pknEntity}.${className};
 
 public interface ${className}DAO extends JpaRepository<${className}, Long> {
-	Page<${className}> findBy${indexName?cap_first}Containing(String title, Pageable pageable);
+	Page<${className}> findBy${indexName?cap_first}Containing(String ${indexName}, Pageable pageable);
 }
