@@ -42,10 +42,11 @@ public class DynamicSpecifications {
 		return bySearchFilter(genSearchFilter(request), entityClazz);
 	}
 	
-	public static <T> Specification<T> bySearchFilter(ServletRequest request, Map<String, Object> extractSearchParams, final Class<T> entityClazz) {
+	public static <T> Specification<T> bySearchFilter(ServletRequest request, final Class<T> entityClazz, SearchFilter...searchFilters) {
 		Collection<SearchFilter> filters = genSearchFilter(request);
-		Map<String, SearchFilter> exFilters = SearchFilter.parse(extractSearchParams);
-		filters.addAll(exFilters.values());
+		for (SearchFilter searchFilter : filters) {
+			filters.add(searchFilter);
+		}
 		return bySearchFilter(filters, entityClazz);
 	}
 
