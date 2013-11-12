@@ -12,6 +12,8 @@ public enum JavaType {
 	VARCHAR2("String"),
 	LONGVARCHAR("String"),
 	TEXT("String"), 
+	MEDIUMTEXT("String"),
+	LONGTEXT("String"),
 	NUMERIC("java.math.BigDecimal"), 
 	DECIMAL("java.math.BigDecimal"), 
 	BIT("Boolean"), 
