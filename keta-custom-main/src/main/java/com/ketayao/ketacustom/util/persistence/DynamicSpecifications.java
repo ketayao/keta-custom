@@ -35,13 +35,16 @@ public class DynamicSpecifications {
 	private static final String TIME = "mm:HH:ss";
 	
 	public static Collection<SearchFilter> genSearchFilter(ServletRequest request) {
-		Map<String, Object> searchParams = ServletUtils.getParametersStartingWith(request, SecurityConstants.SEARCH_PREFIX);
-		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
-		return filters.values();
+		if (request != null) {
+			Map<String, Object> searchParams = ServletUtils.getParametersStartingWith(request, SecurityConstants.SEARCH_PREFIX);
+			Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
+			return filters.values();
+		}
+		return new HashSet<SearchFilter>(0);
 	}
 	
-	public static <T> Specification<T> bySearchFilter(ServletRequest request, final Class<T> entityClazz) {
-		return bySearchFilter(genSearchFilter(request), entityClazz);
+	public static <T> Specification<T> bySearchFilter(final Class<T> entityClazz, SearchFilter...searchFilters) {
+		return bySearchFilter(null, entityClazz, searchFilters);
 	}
 	
 	public static <T> Specification<T> bySearchFilter(ServletRequest request, final Class<T> entityClazz, SearchFilter...searchFilters) {
@@ -50,10 +53,10 @@ public class DynamicSpecifications {
 		for (SearchFilter searchFilter : searchFilters) {
 			set.add(searchFilter);
 		}
-		return bySearchFilter(set, entityClazz);
+		return bySearchFilter(entityClazz, set);
 	}
 
-	public static <T> Specification<T> bySearchFilter(final Collection<SearchFilter> filters, final Class<T> entityClazz) {
+	public static <T> Specification<T> bySearchFilter(final Class<T> entityClazz, final Collection<SearchFilter> filters) {
 		return new Specification<T>() {
 			@SuppressWarnings({ "rawtypes", "unchecked" })
 			@Override
