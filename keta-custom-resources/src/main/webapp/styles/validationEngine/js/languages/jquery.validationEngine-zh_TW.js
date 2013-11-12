@@ -6,10 +6,10 @@
             $.validationEngineLanguage.allRules = {
                 "required": { // Add your regex rules here, you can take telephone as an example
                     "regex": "none",
-                    "alertText": "* 此欄位不可空白",
+                    "alertText": "* 此處不可空白",
                     "alertTextCheckboxMultiple": "* 請選擇一個項目",
-                    "alertTextCheckboxe": "* 您必需勾選此欄位",
-                    "alertTextDateRange": "* 日期範圍欄位都不可空白"
+                    "alertTextCheckboxe": "* 您必須鉤選此欄",
+                    "alertTextDateRange": "* 日期範圍不可空白"
                 },
                 "requiredInFunction": { 
                     "func": function(field, rules, i, options){
@@ -30,12 +30,12 @@
                 "minSize": {
                     "regex": "none",
                     "alertText": "* 最少 ",
-                    "alertText2": " 個字元"
+                    "alertText2": " 個字符"
                 },
                 "maxSize": {
                     "regex": "none",
                     "alertText": "* 最多 ",
-                    "alertText2": " 個字元"
+                    "alertText2": " 個字符"
                 },
 				"groupRequired": {
                     "regex": "none",
@@ -64,16 +64,16 @@
                 },
                 "minCheckbox": {
                     "regex": "none",
-                    "alertText": "* 請選取 ",
+                    "alertText": "* 請選擇 ",
                     "alertText2": " 個項目"
                 },
                 "equals": {
                     "regex": "none",
-                    "alertText": "* 欄位內容不相符"
+                    "alertText": "* 請輸入與上面相同的密碼"
                 },
                 "creditCard": {
                     "regex": "none",
-                    "alertText": "* 无效的信用卡号码"
+                    "alertText": "* 無效的信用卡號碼"
                 },
                 "phone": {
                     // credit: jquery.h5validate.js / orefalo
@@ -83,11 +83,11 @@
                 "email": {
                     // Shamelessly lifted from Scott Gonzalez via the Bassistance Validation plugin http://projects.scottsplayground.com/email_address_validation/
                     "regex": /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i,
-                    "alertText": "* Invalid email address"
+                    "alertText": "* 無效的郵件地址"
                 },
                 "integer": {
                     "regex": /^[\-\+]?\d+$/,
-                    "alertText": "* 不是有效的整數"
+                    "alertText": "* 無效的整數"
                 },
                 "number": {
                     // Number, including positive, negative, and floating decimal. credit: orefalo
@@ -100,11 +100,11 @@
                 },
                 "ipv4": {
                     "regex": /^((([01]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))[.]){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))$/,
-                    "alertText": "* 無效的 IP 位址"
+                    "alertText": "* 無效的 IP地址"
                 },
                 "url": {
                     "regex": /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i,
-                    "alertText": "* Invalid URL"
+                    "alertText": "* 無效的URL"
                 },
                 "onlyNumberSp": {
                     "regex": /^[0-9\ ]+$/,
@@ -116,14 +116,14 @@
                 },
                 "onlyLetterNumber": {
                     "regex": /^[0-9a-zA-Z]+$/,
-                    "alertText": "* 不接受特殊字元"
+                    "alertText": "* 不接受特殊字符"
                 },
                 // --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
                 "ajaxUserCall": {
                     "url": "ajaxValidateFieldUser",
                     // you may want to pass extra data on the ajax call
                     "extraData": "name=eric",
-                    "alertText": "* 此名稱已經被其他人使用",
+                    "alertText": "* 此名稱已被其他人使用",
                     "alertTextLoad": "* 正在確認名稱是否有其他人使用，請稍等。"
                 },
 				"ajaxUserCallPhp": {
@@ -132,7 +132,7 @@
                     "extraData": "name=eric",
                     // if you provide an "alertTextOk", it will show as a green prompt when the field validates
                     "alertTextOk": "* 此帳號名稱可以使用",
-                    "alertText": "* 此帳號名稱已經被其他人使用",
+                    "alertText": "* 此名稱已被其他人使用",
                     "alertTextLoad": "* 正在確認帳號名稱是否有其他人使用，請稍等。"
                 },
                 "ajaxNameCall": {
@@ -141,7 +141,7 @@
                     // error
                     "alertText": "* 此名稱可以使用",
                     // if you provide an "alertTextOk", it will show as a green prompt when the field validates
-                    "alertTextOk": "* 此名稱已經被其他人使用",
+                    "alertTextOk": "* 此名稱已被其他人使用",
                     // speaks by itself
                     "alertTextLoad": "* 正在確認名稱是否有其他人使用，請稍等。"
                 },
@@ -149,7 +149,7 @@
 	                    // remote json service location
 	                    "url": "phpajax/ajaxValidateFieldName.php",
 	                    // error
-	                    "alertText": "* 此名稱已經被其他人使用",
+	                    "alertText": "* 此名稱已被其他人使用",
 	                    // speaks by itself
 	                    "alertTextLoad": "* 正在確認名稱是否有其他人使用，請稍等。"
 	                },
