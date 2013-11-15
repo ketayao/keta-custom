@@ -48,7 +48,7 @@ $(document).ready(function(){
 </script>
 
 <div class="pageContent">
-<form onsubmit="return validateCallback(this, navTabAjaxDone);" class="required-validate pageForm" action="/keta-custom/management/security/role/create" method="post">
+<form method="post" action="${contextPath }/management/security/role/create" class="required-validate pageForm" onsubmit="return validateCallback(this, navTabAjaxDone);">
 	<div layouth="56" class="pageFormContent">
 	<dl>
 		<dt>角色名称：</dt>
