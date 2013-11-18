@@ -39,7 +39,7 @@ public interface ModuleDAO extends JpaRepository<Module, Long> {
 	
 	@QueryHints(value={
 			@QueryHint(name="org.hibernate.cacheable",value="true"),
-			@QueryHint(name="org.hibernate.cacheRegion",value="com.ketayao.ketacustom.entity.main")
+			@QueryHint(name="org.hibernate.cacheRegion",value="com.ketayao.ketacustom.entity.main.Module")
 		}
 	)
 	@Query("from Module m order by m.priority ASC")

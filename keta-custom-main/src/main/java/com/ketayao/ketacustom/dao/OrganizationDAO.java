@@ -39,7 +39,7 @@ public interface OrganizationDAO extends JpaRepository<Organization, Long>{
 	
 	@QueryHints(value={
 			@QueryHint(name="org.hibernate.cacheable",value="true"),
-			@QueryHint(name="org.hibernate.cacheRegion",value="com.ketayao.ketacustom.entity.main")
+			@QueryHint(name="org.hibernate.cacheRegion",value="com.ketayao.ketacustom.entity.main.Organization")
 		}
 	)
 	@Query("from Organization")
