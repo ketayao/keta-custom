@@ -88,6 +88,10 @@ public abstract class AbstractGenerate {
 			
 			// 代码模板配置
 			cfg = new Configuration();
+			cfg.setDefaultEncoding("UTF-8");
+			cfg.setDateFormat("yyyy-MM-dd HH:mm:ss");
+			cfg.setNumberFormat("#0.#");
+			
 			cfg.setDirectoryForTemplateLoading(new File(tplPath));
 
 			// 定义模板变量

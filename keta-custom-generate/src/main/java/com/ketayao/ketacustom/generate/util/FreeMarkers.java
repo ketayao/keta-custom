@@ -19,11 +19,19 @@ import freemarker.template.Template;
  * @since   2013年10月24日 上午9:59:25
  */
 public class FreeMarkers {
+	
+	private static Configuration configuration = new Configuration();
+	
+	static {
+		configuration.setDefaultEncoding("UTF-8");
+		configuration.setDateFormat("yyyy-MM-dd HH:mm:ss");
+		configuration.setNumberFormat("#0.#");
+	}
 
 	public static String renderString(String templateString, Map<String, ?> model) {
 		try {
 			StringWriter result = new StringWriter();
-			Template t = new Template("name", new StringReader(templateString), new Configuration());
+			Template t = new Template("name", new StringReader(templateString), configuration);
 			t.process(model, result);
 			return result.toString();
 		} catch (Exception e) {

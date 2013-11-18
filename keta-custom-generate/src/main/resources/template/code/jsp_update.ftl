@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<#if hasDate == true>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+</#if>
 
 <c:set var="contextPath" value="${r"${pageContext.request.contextPath}"}"/>
 <div class="pageContent">
@@ -14,7 +17,12 @@
 		<#else>
 		<label>${column.fieldName}：</label>
 		</#if>
-		<input type="text" name="${column.fieldName}" size="32" maxlength="${column.size}" value="${r"${"}${instanceName}.${column.fieldName}}"/>
+		<#if column.javaType == "Date">
+		<input type="text" name="${column.fieldName}" class="date<#if column.nullable != true> validate[required]</#if>" readonly="readonly" style="float:left;" value="<fmt:formatDate value="${r"${"}${instanceName}.${column.fieldName}}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
+		<a class="inputDateButton" href="javascript:;" style="float:left;">选择</a>
+		<#else>
+		<input type="text" name="${column.fieldName}" size="32" maxlength="${column.size}" value="${r"${"}${instanceName}.${column.fieldName}}" <#if column.nullable != true>class="required validate[required]"</#if>/>
+		</#if>		
 	</p>
 	</#list>
 	</div>

@@ -13,7 +13,12 @@
 		<#else>
 		<label>${column.fieldName}：</label>
 		</#if>
-		<input type="text" name="${column.fieldName}" size="32" maxlength="${column.size}" alt="请输入${column.comment}"/>
+		<#if column.javaType == "Date">
+		<input type="text" name="${column.fieldName}" class="date<#if column.nullable != true> validate[required]</#if>" readonly="readonly" style="float:left;"/>
+		<a class="inputDateButton" href="javascript:;" style="float:left;">选择</a>
+		<#else>
+		<input type="text" name="${column.fieldName}" size="32" maxlength="${column.size}" alt="请输入${column.comment}" <#if column.nullable != true>class="required validate[required]"</#if>/>
+		</#if>
 	</p>	
 	</#list>
 	</div>

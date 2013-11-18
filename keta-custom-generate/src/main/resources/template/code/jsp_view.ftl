@@ -10,7 +10,7 @@
 		<#else>
 		<label>${column.fieldName}：</label>
 		</#if>
-		<input type="text" name="${column.fieldName}" size="32" readOnly=readOnly maxlength="${column.size}" value="${r"${"}${instanceName}.${column.fieldName}}"/>
+		<input type="text" name="${column.fieldName}" size="32" readOnly=readOnly maxlength="${column.size}" value="${r"${"}${instanceName}.${column.fieldName}}" <#if column.nullable != true>class="required validate[required]"</#if>/>
 	</p>
 	</#list>
 	</div>

@@ -5,7 +5,9 @@ import java.util.List;
 import com.ketayao.ketacustom.generate.util.FileType;
 import com.ketayao.ketacustom.generate.util.FileUtils;
 import com.ketayao.ketacustom.generate.util.FreeMarkers;
+import com.ketayao.ketacustom.generate.util.JavaType;
 import com.ketayao.ketacustom.generate.util.Resources;
+import com.ketayao.ketacustom.generate.vo.Column;
 import com.ketayao.ketacustom.generate.vo.Table;
 
 import freemarker.template.Template;
@@ -30,6 +32,9 @@ public class GenerateCode extends AbstractGenerate implements Generate {
 	public void generate(Table table) throws Exception {
 		model.put("tableName", table.getTableName().toLowerCase());
 		model.put("columns", table.getColumns());
+		
+		// 特殊类型处理
+		handleSpecial(table.getColumns());
 
 		Template template = cfg.getTemplate("code" + separator + fileType.getTemplate());
 		String content = FreeMarkers.renderTemplate(template, model);
@@ -57,4 +62,23 @@ public class GenerateCode extends AbstractGenerate implements Generate {
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * 特殊类型处理
+	 * @param columns
+	 */
+	private void handleSpecial(List<Column> columns) {
+		boolean hasDate = false;
+		boolean hasBigDecimal = false; 
+		for (Column column : columns) {
+			System.out.println(column.getJavaType() + "----" + JavaType.NUMBER.getTypeName());
+			if (column.getJavaType().equals("Date")) {
+				hasDate = true;
+			} else if (column.getJavaType().equals("BigDecimal")) {
+				hasBigDecimal = true;
+			}
+		}
+		
+		model.put("hasDate", hasDate);
+		model.put("hasBigDecimal", hasBigDecimal);
+	}
 }

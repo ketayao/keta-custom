@@ -3,12 +3,23 @@
  */
 package ${pknEntity};
 
+<#if hasDate == true>
+import java.util.Date;
+</#if>
+<#if hasBigDecimal == true>
+import java.math.BigDecimal;
+</#if>
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+<#if hasDate == true>
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+</#if>
 
 import com.ketayao.ketacustom.entity.Idable;
 
@@ -21,13 +32,21 @@ public class ${className} implements Idable<Long>{
     
     <#list columns as column>
 	/**
-	 *${column.comment}
+	 * ${column.comment}
 	 */
     @Column(<#if column.nullable == false>nullable=false, </#if>length=${column.size})
-    private ${column.javaType} ${column.fieldName};	
+    <#if column.type == "DATE">
+	@Temporal(TemporalType.DATE)
+	<#elseif column.type == "DATETIME">
+	@Temporal(TemporalType.TIMESTAMP)
+	<#elseif column.type == "TIME">
+	@Temporal(TemporalType.TIME)
+	<#elseif column.type == "TIMESTAMP">
+	@Temporal(TemporalType.TIMESTAMP)
+	</#if>
+    private ${column.javaType} ${column.fieldName};
     
-	</#list>
-
+    </#list>
     /**
 	 * @return the id
 	 */
@@ -56,6 +75,5 @@ public class ${className} implements Idable<Long>{
     public ${column.javaType} ${column.getMethod}(){
        return this.${column.fieldName};
     }
-    	
 	</#list>
 }

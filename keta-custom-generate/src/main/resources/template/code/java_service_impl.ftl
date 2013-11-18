@@ -6,6 +6,7 @@ package	${pknServiceImpl};
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,19 +24,10 @@ public class ${className}ServiceImpl implements ${className}Service {
 	private ${className}DAO ${instanceName}DAO;
 
 	/**   
-	 * @param ${instanceName}  
-	 * @see ${pknService}.${className}Service#save(${pknEntity}.${className})  
-	 */
-	@Override
-	public void save(${className} ${instanceName}) {
-		${instanceName}DAO.save(${instanceName});
-	}
-
-	/**   
 	 * @param id
 	 * @return  
 	 * @see ${pknService}.${className}Service#get(java.lang.Long)  
-	 */
+	 */ 
 	@Override
 	public ${className} get(Long id) {
 		return ${instanceName}DAO.findOne(id);
@@ -43,10 +35,10 @@ public class ${className}ServiceImpl implements ${className}Service {
 
 	/**   
 	 * @param ${instanceName}  
-	 * @see ${pknService}.${className}Service#update(${pknEntity}.${className})  
+	 * @see ${pknService}.${className}Service#saveOrUpdate(${pknEntity}.${className})  
 	 */
 	@Override
-	public void update(${className} ${instanceName}) {
+	public void saveOrUpdate(${className} ${instanceName}) {
 		${instanceName}DAO.save(${instanceName});
 	}
 
@@ -61,25 +53,40 @@ public class ${className}ServiceImpl implements ${className}Service {
 	
 	/**   
 	 * @param page
-	 * @param ${indexName}
-	 * @return  
-	 * @see ${pknService}.${className}Service#find(com.ketayao.ketacustom.util.dwz.Page, java.lang.String)  
-	 */
-	@Override
-	public List<${className}> find(Page page, String ${indexName}) {
-		org.springframework.data.domain.Page<${className}> springDataPage = ${instanceName}DAO.findBy${indexName?cap_first}Containing(${indexName}, PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
-		return springDataPage.getContent();
-	}
-
-	/**   
-	 * @param page
 	 * @return  
 	 * @see ${pknService}.${className}Service#findAll(com.ketayao.ketacustom.util.dwz.Page)  
 	 */
 	@Override
 	public List<${className}> findAll(Page page) {
 		org.springframework.data.domain.Page<${className}> springDataPage = ${instanceName}DAO.findAll(PageUtils.createPageable(page));
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
+	}
+	
+	/**   
+	 * @param page
+	 * @param ${indexName}
+	 * @return  
+	 * @see ${pknService}.${className}Service#findBy${indexName?cap_first}(com.ketayao.ketacustom.util.dwz.Page, java.lang.String)  
+	 */
+	@Override
+	public List<${className}> findBy${indexName?cap_first}(Page page, String ${indexName}) {
+		org.springframework.data.domain.Page<${className}> springDataPage = ${instanceName}DAO.findBy${indexName?cap_first}Containing(${indexName}, PageUtils.createPageable(page));
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
+	}
+	
+	/**
+	 * 
+	 * @param specification
+	 * @param page
+	 * @return
+	 * @see ${pknService}.${className}Service#findByExample(org.springframework.data.jpa.domain.Specification, com.ketayao.ketacustom.util.dwz.Page)	
+	 */
+	@Override
+	public List<${className}> findByExample(
+			Specification<${className}> specification, Page page) {
+		org.springframework.data.domain.Page<${className}> springDataPage = ${instanceName}DAO.findAll(specification, PageUtils.createPageable(page));
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}

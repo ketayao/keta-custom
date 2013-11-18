@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<#if hasDate == true>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+</#if>
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <%@ taglib prefix="dwz" uri="http://www.ketayao.com/dwz"%>
 
@@ -15,16 +18,16 @@
 		<div class="searchBar">
 			<ul class="searchContent">
 				<li>
-				<#list columns as column>
-					<#if column.fieldName == indexName>
-						<#if column.comment != ''>
-						<label>${column.comment}：</label>
-						<#else>
-						<label>${column.fieldName}：</label>
-						</#if>
-						<#break>
+			<#list columns as column>
+				<#if column.fieldName == indexName>
+					<#if column.comment != ''>
+					<label>${column.comment}：</label>
+					<#else>
+					<label>${column.fieldName}：</label>
 					</#if>
-				</#list>				
+					<#break>
+				</#if>
+			</#list>				
 					<input type="text" name="keywords" value="${r"${keywords}"}"/>
 				</li>
 			</ul>
@@ -60,13 +63,13 @@
 		<thead>
 			<tr>
 				<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
-				<#list columns as column>
-					<#if column.comment != ''>
-					<th>${column.comment}</th>
-					<#else>
-					<th>${column.fieldName}</th>
-					</#if>
-				</#list>
+			<#list columns as column>
+				<#if column.comment != ''>
+				<th>${column.comment}</th>
+				<#else>
+				<th>${column.fieldName}</th>
+				</#if>
+			</#list>
 			</tr>
 		</thead>
 		<tbody>
@@ -74,7 +77,11 @@
 			<tr target="slt_uid" rel="${r"${item.id}"}">
 				<td><input name="ids" value="${r"${item.id}"}" type="checkbox"></td>
 				<#list columns as column>
+				<#if column.javaType == "Date">
+				<td><fmt:formatDate value="${r"${item."}${column.fieldName}}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<#else>
 				<td>${r"${item."}${column.fieldName}}</td>
+				</#if>
 				</#list>
 			</tr>
 			</c:forEach>

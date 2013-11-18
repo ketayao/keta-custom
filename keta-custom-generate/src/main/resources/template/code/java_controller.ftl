@@ -6,17 +6,29 @@ package ${pknController};
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+<#if hasDate == true>
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+</#if>
 
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+<#if hasDate == true>
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+</#if>
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 import com.ketayao.ketacustom.util.dwz.Page;
@@ -38,6 +50,15 @@ public class ${className}Controller {
 	private static final String LIST = "${requestMapping}/list";
 	private static final String VIEW = "${requestMapping}/view";
 	
+	<#if hasDate == true>
+	@InitBinder
+	public void dataBinder(WebDataBinder dataBinder) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		dataBinder.registerCustomEditor(Date.class, 
+				new CustomDateEditor(df, true));
+	}
+	</#if>
+	
 	@RequiresPermissions("${className}:save")
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public String preCreate(Map<String, Object> map) {
@@ -48,10 +69,19 @@ public class ${className}Controller {
 	@RequiresPermissions("${className}:save")
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public @ResponseBody String create(@Valid ${className} ${instanceName}) {
-		${instanceName}Service.save(${instanceName});
+		${instanceName}Service.saveOrUpdate(${instanceName});
 
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{${instanceName}.getId()}));
 		return AjaxObject.newOk("${functionName}添加成功！").toString();
+	}
+	
+	@ModelAttribute("preload${className}")
+	public ${className} preload(@RequestParam(value = "id", required = false) Long id) {
+		if (id != null) {
+			${className} ${instanceName} = ${instanceName}Service.get(id);
+			return ${instanceName};
+		}
+		return null;
 	}
 	
 	@RequiresPermissions("${className}:edit")
@@ -65,8 +95,8 @@ public class ${className}Controller {
 	@Log(message="修改了id={0}${functionName}的信息。")
 	@RequiresPermissions("${className}:edit")
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public @ResponseBody String update(@Valid ${className} ${instanceName}) {
-		${instanceName}Service.update(${instanceName});
+	public @ResponseBody String update(@Valid @ModelAttribute("preload${className}")${className} ${instanceName}) {
+		${instanceName}Service.saveOrUpdate(${instanceName});
 
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{${instanceName}.getId()}));
 		return AjaxObject.newOk("${functionName}修改成功！").toString();
@@ -100,7 +130,7 @@ public class ${className}Controller {
 	public String list(Page page, String keywords, Map<String, Object> map) {
 		List<${className}> ${instanceName}s = null;
 		if (StringUtils.isNotBlank(keywords)) {
-			${instanceName}s = ${instanceName}Service.find(page, keywords);
+			${instanceName}s = ${instanceName}Service.findBy${indexName?cap_first}(page, keywords);
 		} else {
 			${instanceName}s = ${instanceName}Service.findAll(page);
 		}

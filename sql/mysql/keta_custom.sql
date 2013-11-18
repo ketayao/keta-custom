@@ -111,7 +111,7 @@ INSERT INTO `security_module` VALUES ('3', '', '用户管理', '99', 'User', '/m
 INSERT INTO `security_module` VALUES ('4', '', '角色管理', '99', 'Role', '/management/security/role/list', '2');
 INSERT INTO `security_module` VALUES ('5', '', '模块管理', '99', 'Module', '/management/security/module/tree_list', '2');
 INSERT INTO `security_module` VALUES ('10', '一个开发使用的简单示例。', '开发实例', '99', 'Sample', '#', '1');
-INSERT INTO `security_module` VALUES ('14', '', '简单任务实例', '99', 'Task', '/management/demo/task', '10');
+INSERT INTO `security_module` VALUES ('14', '', '简单任务实例', '99', 'Task', '/management/demo/task/list', '10');
 INSERT INTO `security_module` VALUES ('18', '', '组织管理', '99', 'Organization', '/management/security/organization/tree_list', '2');
 INSERT INTO `security_module` VALUES ('24', '', '缓存管理', '99', 'CacheManage', '/management/security/cacheManage/index', '2');
 INSERT INTO `security_module` VALUES ('38', '测试下', '测试模块', '99', 'sdfs', '测试下', '1');

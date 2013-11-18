@@ -17,10 +17,13 @@ public class ConvertHandler {
 	 * @throws Exception
 	 */
 	public static void tableHandle(Table table) throws Exception {
-		if (table == null || table.getTableName() == null || "".equals(table.getTableName()))
-			throw new Exception(ConvertHandler.class.getName() + ": 参数  Table 不能为null.");
+		if (table == null || table.getTableName() == null
+				|| "".equals(table.getTableName()))
+			throw new Exception(ConvertHandler.class.getName()
+					+ ": 参数  Table 不能为null.");
 		if (table.getColumns() == null || table.getColumns().size() == 0)
-			throw new Exception(ConvertHandler.class.getName() + ":  表：[ " + table.getTableName() + " ] ,不包含任何列信息...");
+			throw new Exception(ConvertHandler.class.getName() + ":  表：[ "
+					+ table.getTableName() + " ] ,不包含任何列信息...");
 		/************** 生成类名 *******************/
 		String clazzName = Resources.TPL_CLASS_NAME;// 配置文件中该表对应的类名
 		if (StringUtils.isBlank(clazzName))
@@ -30,7 +33,8 @@ public class ConvertHandler {
 		for (Column col : table.getColumns()) {
 			columnHandler(col);
 			if (col.getFieldName() == null)
-				throw new Exception(ConvertHandler.class.getName() + ": 转换column为field时出错,column:[" + col.getName() + "].");
+				throw new Exception(ConvertHandler.class.getName()
+						+ ": 转换column为field时出错,column:[" + col.getName() + "].");
 		}
 
 		/************** 验证主键 *******************/
@@ -50,8 +54,9 @@ public class ConvertHandler {
 		// column转换变量
 		column.setFieldName(column2field(column.getName()));
 		// get set方法
-		String filedName = column.getFieldName();//table2clazzName(column.getFieldName());
-		String methodName = filedName.substring(0,1).toUpperCase()+filedName.substring(1,filedName.length());
+		String filedName = column.getFieldName();// table2clazzName(column.getFieldName());
+		String methodName = filedName.substring(0, 1).toUpperCase()
+				+ filedName.substring(1, filedName.length());
 		column.setSetMethod("set" + methodName);
 		if (column.getJavaType().equalsIgnoreCase("boolean"))
 			column.setGetMethod("is" + methodName);
@@ -86,7 +91,8 @@ public class ConvertHandler {
 		String[] arrs = str.split("_");
 		StringBuilder sb = new StringBuilder();
 		for (String s : arrs) {
-			sb.append(Character.toUpperCase(s.charAt(0))).append(s.substring(1).toLowerCase());
+			sb.append(Character.toUpperCase(s.charAt(0))).append(
+					s.substring(1).toLowerCase());
 		}
 		return sb.toString();
 	}
@@ -125,7 +131,8 @@ public class ConvertHandler {
 	 */
 	public static String getEntityInstance(String entityName) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(Character.toLowerCase(entityName.charAt(0))).append(entityName.substring(1));
+		sb.append(Character.toLowerCase(entityName.charAt(0))).append(
+				entityName.substring(1));
 		return sb.toString();
 	}
 
