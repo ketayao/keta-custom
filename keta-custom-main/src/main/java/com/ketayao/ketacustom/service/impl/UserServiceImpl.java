@@ -171,6 +171,22 @@ public class UserServiceImpl implements UserService {
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.UserService#resetPwd(com.ketayao.ketacustom.entity.main.User, java.lang.String)
+	 */
+	@Override
+	public void resetPwd(User user, String newPwd) {
+		if (newPwd == null) {
+			newPwd = "123456";
+		}
+		
+		HashPassword hashPassword = ShiroDbRealm.encryptPassword(newPwd);
+		user.setSalt(hashPassword.salt);
+		user.setPassword(hashPassword.password);
+		
+		userDAO.save(user);
+	}
 
 	/**
 	 * 判断是否超级管理员.

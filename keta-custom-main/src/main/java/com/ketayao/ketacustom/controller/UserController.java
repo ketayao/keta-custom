@@ -189,8 +189,7 @@ public class UserController {
 		ajaxObject.setCallbackType("");
 		
 		if (type.equals("password")) {
-			user.setPlainPassword("123456");
-			
+			userService.resetPwd(user, "123456");
 			ajaxObject.setMessage("重置密码成功，默认为123456！");
 		} else if (type.equals("status")) {
 			if (user.getStatus().equals("enabled")) {
@@ -200,9 +199,9 @@ public class UserController {
 			}
 			
 			ajaxObject.setMessage("更新状态成功，当前为" + (user.getStatus().equals("enabled")?"可用":"不可用"));
+			
+			userService.update(user);
 		}
-		
-		userService.update(user);
 		
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{user.getUsername(), ajaxObject.getMessage()}));
 		return ajaxObject.toString();

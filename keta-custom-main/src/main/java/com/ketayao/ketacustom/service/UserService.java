@@ -36,6 +36,8 @@ public interface UserService {
 	void update(User user);
 	
 	void updatePwd(User user, String newPwd) throws ServiceException;
+	
+	void resetPwd(User user, String newPwd);
 
 	void save(User user) throws ExistedException;
 
