@@ -34,4 +34,8 @@ public interface RolePermissionService {
 	void delete(Long id);
 
 	List<RolePermission> findByRoleId(Long roleId);
+	
+	void save(Iterable<RolePermission> entities);
+	
+	void deleteInBatch(Iterable<RolePermission> entities);
 }

@@ -13,6 +13,7 @@
  
 package com.ketayao.ketacustom.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,7 @@ import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.log.LogMessageObject;
 import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.ModuleService;
+import com.ketayao.ketacustom.service.RolePermissionService;
 import com.ketayao.ketacustom.service.RoleService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 import com.ketayao.ketacustom.util.dwz.Page;
@@ -52,6 +54,9 @@ public class RoleController {
 
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private RolePermissionService rolePermissionService;
 	
 	@Autowired
 	private ModuleService moduleService;
@@ -112,28 +117,26 @@ public class RoleController {
 		oldRole.setName(role.getName());
 		oldRole.setDescription(role.getDescription());
 		
+		List<RolePermission> newRList = new ArrayList<RolePermission>();
+		List<RolePermission> delRList = new ArrayList<RolePermission>();
+		
+		List<RolePermission> hasRolePermissions = rolePermissionService.findByRoleId(role.getId());
 		for (RolePermission rolePermission : role.getRolePermissions()) {
-			if (rolePermission.getPermission() != null && rolePermission.getPermission().getId() != null) {
-				if (rolePermission.getId() == null) {
-					rolePermission.setRole(oldRole);
-					oldRole.getRolePermissions().add(rolePermission);
-					
-				}
-			} else {
-				if (rolePermission.getId() != null) {
-					for (RolePermission oldRolePermission : oldRole.getRolePermissions()) {
-						if (oldRolePermission.getId().equals(rolePermission.getId())) {
-							oldRolePermission.setRole(null);
-							rolePermission = oldRolePermission;
-							
-							break;
-						}
+			if (rolePermission.getId() == null && rolePermission.getPermission() != null) {
+				rolePermission.setRole(oldRole);
+				newRList.add(rolePermission);
+			} else if (rolePermission.getId() != null && rolePermission.getPermission() == null) {
+				for (RolePermission rp : hasRolePermissions) {
+					if (rp.getId().equals(rolePermission.getId())) {
+						delRList.add(rp);
+						break;
 					}
-					oldRole.getRolePermissions().remove(rolePermission);
 				}
 			}
 		}
 		
+		rolePermissionService.save(newRList);
+		rolePermissionService.deleteInBatch(delRList);
 		roleService.update(oldRole);
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldRole.getName()}));
 		return AjaxObject.newOk("修改角色成功！").toString();
