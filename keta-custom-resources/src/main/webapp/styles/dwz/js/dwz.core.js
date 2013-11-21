@@ -205,8 +205,8 @@ var DWZ = {
 					} 
 					
 					if (json.statusCode==DWZ.statusCode.forbidden){
-					    if ($.pdialog) $.pdialog.closeCurrent();
-					    if (navTab) navTab.closeCurrentTab();
+					    if ($.pdialog) $.pdialog.forbidden();
+					    if (navTab) navTab.forbidden();
 					        
 					    alertMsg.error(json.message || DWZ.msg("forbidden"), {okCall:function(){
 					        // 确认权限不足后，其他的操作。

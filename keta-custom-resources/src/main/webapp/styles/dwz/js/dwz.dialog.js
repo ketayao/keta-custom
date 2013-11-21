@@ -305,6 +305,11 @@
 			var json = DWZ.jsonEval($conetnt.html());
 			if (json && json.statusCode == DWZ.statusCode.timeout) this.closeCurrent();
 		},
+		forbidden:function(){
+			var $conetnt = $(".dialogContent", $.pdialog._current);
+			var json = DWZ.jsonEval($conetnt.html());
+			if (json && json.statusCode == DWZ.statusCode.forbidden) this.closeCurrent();
+		},
 		maxsize:function(dialog) {
 			$(dialog).data("original",{
 				top:$(dialog).css("top"),

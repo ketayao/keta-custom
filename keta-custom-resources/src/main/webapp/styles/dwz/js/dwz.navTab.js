@@ -330,6 +330,10 @@ var navTab = {
 		var json = DWZ.jsonEval(this.getCurrentPanel().html());
 		if (json && json.statusCode == DWZ.statusCode.timeout) this.closeCurrentTab();
 	},
+	forbidden:function(){
+		var json = DWZ.jsonEval(this.getCurrentPanel().html());
+		if (json && json.statusCode == DWZ.statusCode.forbidden) this.closeCurrentTab();
+	},
 	openExternal:function(url, $panel){
 		var ih = navTab._panelBox.height();
 		$panel.html(DWZ.frag["externalFrag"].replaceAll("{url}", url).replaceAll("{height}", ih+"px"));
