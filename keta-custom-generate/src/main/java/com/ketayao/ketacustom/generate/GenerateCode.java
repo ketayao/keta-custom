@@ -5,7 +5,6 @@ import java.util.List;
 import com.ketayao.ketacustom.generate.util.FileType;
 import com.ketayao.ketacustom.generate.util.FileUtils;
 import com.ketayao.ketacustom.generate.util.FreeMarkers;
-import com.ketayao.ketacustom.generate.util.JavaType;
 import com.ketayao.ketacustom.generate.util.Resources;
 import com.ketayao.ketacustom.generate.vo.Column;
 import com.ketayao.ketacustom.generate.vo.Table;
@@ -70,7 +69,6 @@ public class GenerateCode extends AbstractGenerate implements Generate {
 		boolean hasDate = false;
 		boolean hasBigDecimal = false; 
 		for (Column column : columns) {
-			System.out.println(column.getJavaType() + "----" + JavaType.NUMBER.getTypeName());
 			if (column.getJavaType().equals("Date")) {
 				hasDate = true;
 			} else if (column.getJavaType().equals("BigDecimal")) {
