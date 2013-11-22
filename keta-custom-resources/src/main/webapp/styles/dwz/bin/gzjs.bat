@@ -36,13 +36,13 @@ type ..\js\dwz.combox.js >> dwzESC.js
 type ..\js\dwz.history.js >> dwzESC.js
 type ..\js\dwz.print.js >> dwzESC.js
 
-cscript ESC.wsf -l 1 -ow dwzESC1.js dwzESC.js
-cscript ESC.wsf -l 2 -ow dwzESC2.js dwzESC1.js
-cscript ESC.wsf -l 3 -ow dwzESC3.js dwzESC2.js
+REM cscript ESC.wsf -l 1 -ow dwzESC1.js dwzESC.js
+REM cscript ESC.wsf -l 2 -ow dwzESC2.js dwzESC1.js
+REM cscript ESC.wsf -l 3 -ow dwzESC3.js dwzESC2.js
 
-type dwzESC2.js > ../js/dwz.min.js
-#gzip -f dwz.min.js
-#copy dwz.min.js.gz dwz.min.gzjs /y
+REM type dwzESC2.js > ../js/dwz.min.js
+REM #gzip -f dwz.min.js
+REM #copy dwz.min.js.gz dwz.min.gzjs /y
 
-del dwzESC*.js
-del dwz.min.js.gz
+REM del dwzESC*.js
+REM del dwz.min.js.gz
