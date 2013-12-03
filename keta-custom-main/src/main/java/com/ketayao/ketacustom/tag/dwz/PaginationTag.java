@@ -19,7 +19,7 @@ public class PaginationTag extends SimpleTagSupport {
 	private int begin = 10;
 	private int end = 50;
 	private int step = 5;
-	private String target = "navTab";
+	private String targetType = "navTab";
 	private String onchange = "navTabPageBreak({numPerPage:this.value})";
 	private String rel;
 	
@@ -46,11 +46,11 @@ public class PaginationTag extends SimpleTagSupport {
 		builder.append("	</div>\n");
 		
 		if (rel != null) {
-			builder.append("<div rel=\"" + rel + "\" class=\"pagination\" targetType=\"" + target + 
+			builder.append("<div rel=\"" + rel + "\" class=\"pagination\" targetType=\"" + targetType + 
 					"\" totalCount=\"" + page.getTotalCount() + "\" numPerPage=\"" + page.getNumPerPage() + "\" pageNumShown=\"" 
 					+ pageNumShown+ "\" currentPage=\"" + page.getPageNum() + "\"></div>\n");
 		} else {
-			builder.append("<div class=\"pagination\" targetType=\"" + target + 
+			builder.append("<div class=\"pagination\" targetType=\"" + targetType + 
 					"\" totalCount=\"" + page.getTotalCount() + "\" numPerPage=\"" + page.getNumPerPage() + "\" pageNumShown=\"" 
 					+ pageNumShown+ "\" currentPage=\"" + page.getPageNum() + "\"></div>\n");
 		}
@@ -96,10 +96,10 @@ public class PaginationTag extends SimpleTagSupport {
 	}
 
 	/**
-	 * @param target the target to set
+	 * @param targetType the targetType to set
 	 */
-	public void setTarget(String target) {
-		this.target = target;
+	public void setTargetType(String targetType) {
+		this.targetType = targetType;
 	}
 
 	/**
