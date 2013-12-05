@@ -12,11 +12,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 </#if>
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.validation.Valid;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 <#if hasDate == true>
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.persistence.DynamicSpecifications;
 import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.log.LogMessageObject;
 import com.ketayao.ketacustom.log.impl.LogUitl;
@@ -127,17 +130,12 @@ public class ${className}Controller {
 
 	@RequiresPermissions("${className}:view")
 	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(Page page, String keywords, Map<String, Object> map) {
-		List<${className}> ${instanceName}s = null;
-		if (StringUtils.isNotBlank(keywords)) {
-			${instanceName}s = ${instanceName}Service.findBy${indexName?cap_first}(page, keywords);
-		} else {
-			${instanceName}s = ${instanceName}Service.findAll(page);
-		}
-
+	public String list(HttpServletRequest request, Page page, Map<String, Object> map) {
+		Specification<${className}> specification = DynamicSpecifications.bySearchFilter(request, ${className}.class);
+		List<${className}> ${instanceName}s = ${instanceName}Service.findByExample(specification, page);
+		
 		map.put("page", page);
 		map.put("${instanceName}s", ${instanceName}s);
-		map.put("keywords", keywords);
 
 		return LIST;
 	}

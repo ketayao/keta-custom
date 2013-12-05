@@ -10,7 +10,7 @@
 <c:set var="contextPath" value="${r"${pageContext.request.contextPath}"}"/>
 
 <dwz:paginationForm action="${r"${contextPath }"}/${requestMapping}/list" page="${r"${page }"}">
-	<input type="hidden" name="keywords" value="${r"${keywords}"}"/>
+	<input type="hidden" name="search_LIKE_${indexName}" value="${r"${param.search_LIKE_"}${indexName}}"/>
 </dwz:paginationForm>
 
 <form method="post" action="${r"${contextPath }"}/${requestMapping}/list" onsubmit="return navTabSearch(this)">
@@ -27,8 +27,8 @@
 					</#if>
 					<#break>
 				</#if>
-			</#list>				
-					<input type="text" name="keywords" value="${r"${keywords}"}"/>
+			</#list>
+					<input type="text" name="search_LIKE_${indexName}" value="${r"${param.search_LIKE_"}${indexName}}"/>			
 				</li>
 			</ul>
 			<div class="subBar">

@@ -8,8 +8,6 @@ import java.util.Map;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 
-import com.ketayao.utils.Exceptions;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
@@ -35,7 +33,7 @@ public class FreeMarkers {
 			t.process(model, result);
 			return result.toString();
 		} catch (Exception e) {
-			throw Exceptions.unchecked(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -45,7 +43,7 @@ public class FreeMarkers {
 			template.process(model, result);
 			return result.toString();
 		} catch (Exception e) {
-			throw Exceptions.unchecked(e);
+			throw new RuntimeException(e);
 		}
 	}
 
