@@ -77,11 +77,11 @@
 	<bean id="decoratedPaster" class="com.octo.captcha.component.image.textpaster.DecoratedRandomTextPaster">
 		<!--最大字符长度-->
 		<constructor-arg type="java.lang.Integer" index="0">
-			<value>6</value>
+			<value>4</value>
 		</constructor-arg>
 		<!--最小字符长度-->
 		<constructor-arg type="java.lang.Integer" index="1">
-			<value>6</value>
+			<value>4</value>
 		</constructor-arg>
 		<!--文本颜色-->
 		<constructor-arg index="2">
