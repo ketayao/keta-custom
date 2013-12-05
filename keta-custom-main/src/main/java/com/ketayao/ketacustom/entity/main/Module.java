@@ -58,6 +58,12 @@ public class Module implements Comparable<Module>, Idable<Long> {
 	private String name;
 	
 	/**
+	 * 对应的模块全类名
+	 */
+	@Column(length=128)
+	private String className;
+	
+	/**
 	 * 模块的入口地址
 	 */
 	@NotBlank
@@ -122,6 +128,20 @@ public class Module implements Comparable<Module>, Idable<Long> {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * @return the className
+	 */
+	public String getClassName() {
+		return className;
+	}
+
+	/**
+	 * @param className the className to set
+	 */
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
 	/**  
@@ -235,7 +255,7 @@ public class Module implements Comparable<Module>, Idable<Long> {
 	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
 	}
-
+	
 	/*
 	 * 
 	 */

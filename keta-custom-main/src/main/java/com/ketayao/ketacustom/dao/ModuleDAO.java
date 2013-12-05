@@ -45,11 +45,5 @@ public interface ModuleDAO extends JpaRepository<Module, Long> {
 	@Query("from Module m order by m.priority ASC")
 	List<Module> findAllWithCache();
 	
-	/**
-	 * 根据sn，查找Module
-	 * 描述
-	 * @param sn
-	 * @return
-	 */
-	List<Module> findBySn(String sn);
+	Module getBySn(String sn);
 }

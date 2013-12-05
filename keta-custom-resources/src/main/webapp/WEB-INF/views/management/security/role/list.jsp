@@ -40,6 +40,9 @@
 			<shiro:hasPermission name="Role:delete">
 				<li><a iconClass="shield_delete" target="ajaxTodo" href="${contextPath }/management/security/role/delete/{slt_uid}" title="确认要删除该角色?"><span>删除角色</span></a></li>
 			</shiro:hasPermission>
+			<shiro:hasPermission name="Role:assign">
+				<li><a iconClass="database_go" target="navTab" href="${contextPath }/management/security/role/assign/{slt_uid}"><span>分配数据权限</span></a></li>
+			</shiro:hasPermission>			
 		</ul>
 	</div>
 	

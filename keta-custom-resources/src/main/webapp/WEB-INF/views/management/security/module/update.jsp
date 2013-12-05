@@ -80,12 +80,16 @@ jQuery(document).ready(function(){
 		</p>		
 		<p>
 			<label>URL：</label>
-			<input type="text" name="url" class="validate[required,maxSize[255]] required" size="32" maxlength="255" alt="以/或者http开头" value="${module.url }"/>
+			<input type="text" name="url" class="validate[required,maxSize[255]] required" size="32" maxlength="255" alt="以#、/或者http开头" value="${module.url }"/>
 		</p>		
 		<p>
 			<label>授权名称：</label>
 			<input type="text" name="sn" class="validate[required,maxSize[32]] required" size="32" maxlength="32" alt="授权名称" value="${module.sn }" readOnly=readOnly/>
-		</p>		
+		</p>
+		<p>
+			<label>模块类名：</label>
+			<input type="text" name="className" size="32" maxlength="128" alt="模块类名" value="${module.className }"/>
+		</p>				
 		<p>
 			<label>描述：</label>
 			<input type="text" name="description" class="validate[maxSize[255]]" size="32" maxlength="255" alt="描述" value="${module.description }"/>

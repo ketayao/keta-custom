@@ -55,7 +55,7 @@
 			<tr>
 				<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>			
 				<th width="100">登录名称</th>
-				<th width="100">真实名字</th>
+				<th width="100">真实姓名</th>
 				<th width="200">邮箱地址</th>
 				<th width="100">电话</th>
 				<th width="150" orderField=organization.name class="${page.orderField eq 'organization.name' ? page.orderDirection : ''}">所在组织</th>

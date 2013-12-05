@@ -42,7 +42,7 @@ public class ModuleServiceImpl implements ModuleService {
 	
 	@Override
 	public void save(Module module) throws ExistedException {
-		if (moduleDAO.findBySn(module.getSn()).size() > 0) {
+		if (moduleDAO.getBySn(module.getSn()) != null) {
 			throw new ExistedException("已存在sn=" + module.getSn() + "的模块。");
 		}
 		moduleDAO.save(module);
@@ -51,6 +51,14 @@ public class ModuleServiceImpl implements ModuleService {
 	@Override
 	public Module get(Long id) {
 		return moduleDAO.findOne(id);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.ModuleService#getBySn(java.lang.String)
+	 */
+	@Override
+	public Module getBySn(String sn) {
+		return moduleDAO.getBySn(sn);
 	}
 
 	@Override

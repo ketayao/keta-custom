@@ -33,7 +33,7 @@
 			<li><a iconClass="application_add" target="dialog" width="540" height="500" mask="true" href="${contextPath }/management/security/module/create/${parentModuleId}" title="添加模块"><span>添加模块</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Module:edit">
-			<li><a iconClass="application_edit" target="dialog" rel="lookupParent2module_edit" width="540" height="500" mask="true" href="${contextPath }/management/security/module/update/{slt_uid}" title="编辑模块"><span>编辑模块</span></a></li>
+			<li><a iconClass="application_edit" target="dialog" rel="lookupParent2module_edit" width="540" height="530" mask="true" href="${contextPath }/management/security/module/update/{slt_uid}" title="编辑模块"><span>编辑模块</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Module:delete">
 			<li><a iconClass="application_delete" target="ajaxTodo" callback="dialogReloadRel2Module" href="${contextPath }/management/security/module/delete/{slt_uid}" title="确认要删除该模块?"><span>删除模块</span></a></li>

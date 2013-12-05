@@ -37,7 +37,7 @@ import com.ketayao.ketacustom.log.LogMessageObject;
 import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.ModuleService;
 import com.ketayao.ketacustom.service.UserService;
-import com.ketayao.ketacustom.shiro.ShiroDbRealm;
+import com.ketayao.ketacustom.shiro.ShiroDbRealm.ShiroUser;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 
 /** 
@@ -65,7 +65,7 @@ public class IndexController {
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String index(HttpServletRequest request) {
 		Subject subject = SecurityUtils.getSubject();
-		ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser)subject.getPrincipal();
+		ShiroUser shiroUser = (ShiroUser)subject.getPrincipal();
 		// 加入ipAddress
 		shiroUser.setIpAddress(request.getRemoteAddr());
 		
@@ -91,7 +91,7 @@ public class IndexController {
 		for (Module m1 : module.getChildren()) {
 			// 只加入拥有view权限的Module
 			if (subject.isPermitted(m1.getSn() + ":"
-					+ Permission.PERMISSION_READ)) {
+					+ Permission.PERMISSION_SHOW)) {
 				check(m1, subject);
 				list1.add(m1);
 			}

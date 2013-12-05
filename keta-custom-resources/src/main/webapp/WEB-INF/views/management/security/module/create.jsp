@@ -79,12 +79,16 @@ jQuery(document).ready(function(){
 		</p>		
 		<p>
 			<label>URL：</label>
-			<input type="text" name="url" class="validate[required,maxSize[255]] required" size="32" maxlength="255" alt="以/或者http开头"/>
+			<input type="text" name="url" class="validate[required,maxSize[255]] required" size="32" maxlength="255" alt="以#、/或者http开头"/>
 		</p>		
 		<p>
 			<label>授权名称：</label>
 			<input type="text" name="sn" class="validate[required,maxSize[32]] required" size="32" maxlength="32" alt="授权名称"/>
-		</p>		
+		</p>
+		<p>
+			<label>模块类名：</label>
+			<input type="text" name="className" size="32" maxlength="128" alt="模块类名"/>
+		</p>				
 		<p>
 			<label>描述：</label>
 			<input type="text" name="description" class="validate[maxSize[255]]" size="32" maxlength="255" alt="描述"/>
@@ -93,6 +97,8 @@ jQuery(document).ready(function(){
 		<fieldset>
 		<legend>自定义授权</legend>
 			<div class="toNewPermission">
+			看(show)<input type="checkbox" name="permissions[4].shortName" value="show" checked="checked" rel="4"/>&nbsp;&nbsp;
+	         <input type="hidden" name="permissions[4].name" value="看" rel="4"/>			
 			增(save)<input type="checkbox" name="permissions[0].shortName" value="save" checked="checked" rel="0"/>&nbsp;&nbsp;
 	         <input type="hidden" name="permissions[0].name" value="增" rel="0"/>
 			删(delete)<input type="checkbox" name="permissions[1].shortName" value="delete" checked="checked" rel="1"/>&nbsp;&nbsp;

@@ -29,6 +29,7 @@
 		<selenium.version>2.31.0</selenium.version>
 		<jetty.version>7.6.10.v20130312</jetty.version>
 		<jcaptcha.version>1.0-RC6</jcaptcha.version>
+		<jackson.version>2.2.3</jackson.version>
 
 		<!-- 文件上传 -->
 		<commons-fileupload.version>1.2.2</commons-fileupload.version>
@@ -204,6 +205,24 @@
 				<version>1.2</version>
 			</dependency>
 			<!-- WEB end -->
+			
+			<!-- JSON begin -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.module</groupId>
+				<artifactId>jackson-module-jaxb-annotations</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<!-- JSON end -->
 
 			<!-- SECURITY begin -->
 			<dependency>

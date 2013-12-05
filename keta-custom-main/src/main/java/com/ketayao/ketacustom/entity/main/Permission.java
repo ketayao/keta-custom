@@ -46,13 +46,12 @@ import com.ketayao.ketacustom.entity.Idable;
 @Table(name="security_permission")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.Permission")
 public class Permission implements Idable<Long> {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
 	/**
 	 * 操作
 	 */
+	// 用于菜单显示
+	public final static String PERMISSION_SHOW = "show";
+	
 	public final static String PERMISSION_CREATE = "save";
 	
 	public final static String PERMISSION_READ = "view";
@@ -60,7 +59,11 @@ public class Permission implements Idable<Long> {
 	public final static String PERMISSION_UPDATE = "edit";
 	
 	public final static String PERMISSION_DELETE = "delete";
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
 	@NotBlank
 	@Length(min=1, max=32)
 	@Column(nullable=false, length=32)
@@ -169,7 +172,7 @@ public class Permission implements Idable<Long> {
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
 	}
-
+	
 	/**   
 	 * @param arg0
 	 * @return  

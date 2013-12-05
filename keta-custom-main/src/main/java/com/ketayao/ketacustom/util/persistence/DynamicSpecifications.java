@@ -15,6 +15,7 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -30,24 +31,36 @@ import com.ketayao.utils.ServletUtils;
 public class DynamicSpecifications {
 	private static final Logger logger = LoggerFactory.getLogger(DynamicSpecifications.class);
 	
+	// 用于存储每个线程的request请求
+	private static final ThreadLocal<HttpServletRequest> LOCAL_REQUEST = new ThreadLocal<HttpServletRequest>();
+	
 	private static final String SHORT_DATE = "yyyy-MM-dd";
 	private static final String LONG_DATE = "yyyy-MM-dd mm:HH:ss";
 	private static final String TIME = "mm:HH:ss";
 	
+	public static void putRequest(HttpServletRequest request) {
+		LOCAL_REQUEST.set(request);
+	}
+	
+	public static HttpServletRequest getRequest() {
+		return LOCAL_REQUEST.get();
+	}
+	
+	public static void removeRequest() {
+		LOCAL_REQUEST.remove();
+	}
+	
 	public static Collection<SearchFilter> genSearchFilter(ServletRequest request) {
-		if (request != null) {
-			Map<String, Object> searchParams = ServletUtils.getParametersStartingWith(request, SecurityConstants.SEARCH_PREFIX);
-			Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
-			return filters.values();
-		}
-		return new HashSet<SearchFilter>(0);
+		Map<String, Object> searchParams = ServletUtils.getParametersStartingWith(request, SecurityConstants.SEARCH_PREFIX);
+		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
+		return filters.values();
 	}
 	
-	public static <T> Specification<T> bySearchFilter(final Class<T> entityClazz, SearchFilter...searchFilters) {
-		return bySearchFilter(null, entityClazz, searchFilters);
+	public static <T> Specification<T> bySearchFilter(ServletRequest request, final Class<T> entityClazz, final Collection<SearchFilter> searchFilters) {
+		return bySearchFilter(request, entityClazz, searchFilters.toArray(new SearchFilter[]{}));
 	}
 	
-	public static <T> Specification<T> bySearchFilter(ServletRequest request, final Class<T> entityClazz, SearchFilter...searchFilters) {
+	public static <T> Specification<T> bySearchFilter(ServletRequest request, final Class<T> entityClazz, final SearchFilter...searchFilters) {
 		Collection<SearchFilter> filters = genSearchFilter(request);
 		Set<SearchFilter> set = new HashSet<SearchFilter>(filters);
 		for (SearchFilter searchFilter : searchFilters) {
@@ -56,14 +69,33 @@ public class DynamicSpecifications {
 		return bySearchFilter(entityClazz, set);
 	}
 
-	public static <T> Specification<T> bySearchFilter(final Class<T> entityClazz, final Collection<SearchFilter> filters) {
+	@SuppressWarnings("unchecked")
+	public static <T> Specification<T> bySearchFilter(final Class<T> entityClazz, final Collection<SearchFilter> searchFilters) {
+		final Set<SearchFilter> filterSet = new HashSet<SearchFilter>();
+		HttpServletRequest request = getRequest();
+		if (request != null) {
+			// 数据权限中的filter
+			Collection<SearchFilter> nestFilters = 
+					(Collection<SearchFilter>)request.getAttribute(SecurityConstants.NEST_DYNAMIC_SEARCH);
+			if (nestFilters != null && !nestFilters.isEmpty()) {
+				for (SearchFilter searchFilter : nestFilters) {
+					filterSet.add(searchFilter);
+				}
+			}
+		}
+		
+		// 自定义
+		for (SearchFilter searchFilter : searchFilters) {
+			filterSet.add(searchFilter);
+		}
+		
 		return new Specification<T>() {
-			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@SuppressWarnings({ "rawtypes"})
 			@Override
 			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-				if (filters != null && !filters.isEmpty()) {
+				if (filterSet != null && !filterSet.isEmpty()) {
 					List<Predicate> predicates = Lists.newArrayList();
-					for (SearchFilter filter : filters) {
+					for (SearchFilter filter : filterSet) {
 						// nested path translate, 如Task的名为"user.name"的filedName, 转换为Task.user.name属性
 						String[] names = StringUtils.split(filter.getFieldName(), ".");
 						Path expression = root.get(names[0]);
@@ -98,6 +130,9 @@ public class DynamicSpecifications {
 							break;
 						case LTE:
 							predicates.add(builder.lessThanOrEqualTo(expression, (Comparable) filter.getValue()));
+							break;
+						case IN:
+							predicates.add(builder.and(expression.in((Object[])filter.getValue())));
 							break;
 						}
 					}

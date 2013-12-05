@@ -9,7 +9,7 @@
 			<input type="text" name="username" class="validate[required,maxSize[32]] required" size="20" maxlength="32" readonly="readonly" value="${user.username }"/>
 		</p>
 		<p>
-			<label>真实名字：</label>
+			<label>真实姓名：</label>
 			<input type="text" name="realname" class="validate[required,maxSize[32]] required" size="20" maxlength="32" readonly="readonly" value="${user.realname }"/>
 		</p>		
 		<p>

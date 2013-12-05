@@ -33,6 +33,8 @@ public interface ModuleService {
 	
 	Module get(Long id);
 	
+	Module getBySn(String sn);
+	
 	void update(Module module);
 	
 	void delete(Long id) throws ServiceException;

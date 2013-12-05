@@ -17,11 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -31,16 +33,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.ketayao.ketacustom.entity.main.DataControl;
+import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.entity.main.Role;
 import com.ketayao.ketacustom.entity.main.RolePermission;
+import com.ketayao.ketacustom.entity.main.RolePermissionDataControl;
 import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.log.LogMessageObject;
 import com.ketayao.ketacustom.log.impl.LogUitl;
+import com.ketayao.ketacustom.service.DataControlService;
 import com.ketayao.ketacustom.service.ModuleService;
+import com.ketayao.ketacustom.service.RolePermissionDataControlService;
 import com.ketayao.ketacustom.service.RolePermissionService;
 import com.ketayao.ketacustom.service.RoleService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.persistence.DynamicSpecifications;
 
 /** 
  * 	
@@ -59,12 +68,20 @@ public class RoleController {
 	private RolePermissionService rolePermissionService;
 	
 	@Autowired
+	private RolePermissionDataControlService rolePermissionDataControlService;
+	
+	@Autowired
 	private ModuleService moduleService;
+	
+	@Autowired
+	private DataControlService dataControlService;
 	
 	private static final String CREATE = "management/security/role/create";
 	private static final String UPDATE = "management/security/role/update";
 	private static final String LIST = "management/security/role/list";
 	private static final String VIEW = "management/security/role/view";
+	private static final String ASSIGN_DATA_CONTROL = "management/security/role/assign_data_control";
+	private static final String LOOKUP_DATA_CONTROL = "management/security/role/lookup_data_control";
 	
 	@InitBinder
 	public void initListBinder(WebDataBinder binder) {
@@ -178,5 +195,103 @@ public class RoleController {
 		map.put("role", role);
 		return VIEW;
 	}
+	
+	@RequiresPermissions("Role:assign")
+	@RequestMapping(value="/assign/{id}", method=RequestMethod.GET)
+	public String preAssign(@PathVariable Long id, Map<String, Object> map) {
+		Role role = roleService.get(id);
+		
+		Map<Module, List<RolePermission>> mpMap = Maps.newLinkedHashMap(); 
+		for (RolePermission rp : role.getRolePermissions()) {
+			Module module = rp.getPermission().getModule();
+			
+			List<RolePermission> rps = mpMap.get(module);
+			if (rps == null) {
+				rps = Lists.newArrayList();
+				
+				mpMap.put(module, rps);
+			}
+			
+			rps.add(rp);
+		}
+		
+		map.put("role", role);
+		map.put("mpMap", mpMap);
+		return ASSIGN_DATA_CONTROL;
+	}
+	
+	@Log(message="修改了{0}角色的数据权限。")
+	@RequiresPermissions("Role:assign")
+	@RequestMapping(value="/assign", method=RequestMethod.POST)
+	public @ResponseBody String assign(Role role) {
+		List<RolePermissionDataControl> newRList = new ArrayList<RolePermissionDataControl>();
+		List<RolePermissionDataControl> delRList = new ArrayList<RolePermissionDataControl>();
+		
+		List<RolePermissionDataControl> hasRpdcs = rolePermissionDataControlService.findByRoleId(role.getId());
+		
+		if (role.getRolePermissions().isEmpty()) {
+			delRList = hasRpdcs;
+		}
+		
+		for (RolePermission rolePermission : role.getRolePermissions()) {
+			// 新增
+			for (RolePermissionDataControl rpdc : rolePermission.getRolePermissionDataControls()) {
+				boolean isHas = false;
+				for (RolePermissionDataControl hasRpdc : hasRpdcs) {
+					if (rpdc.getDataControl().getId().equals(hasRpdc.getDataControl().getId())
+							&& rpdc.getRolePermission().getId().equals(hasRpdc.getRolePermission().getId())) {
+						isHas = true;
+						hasRpdcs.remove(hasRpdc);
+						break;
+					}
+				}
+				
+				if (!isHas) {
+					newRList.add(rpdc);
+				}
+			}
+		}
+		
+		// 删除
+		for (RolePermissionDataControl hasRpdc : hasRpdcs) {
+			boolean isDelete = true;
+			for (RolePermission rolePermission : role.getRolePermissions()) {
+				for (RolePermissionDataControl rpdc : rolePermission.getRolePermissionDataControls()) {
+					if (rpdc.getDataControl().getId().equals(hasRpdc.getDataControl().getId())
+							&& rpdc.getRolePermission().getId().equals(hasRpdc.getRolePermission().getId())) {
+						isDelete = false;
+						break;
+					}
+				}
+				
+				if (!isDelete) {
+					break;
+				}
+			}
+			
+			if (isDelete) {
+				delRList.add(hasRpdc);
+			}
+		}
+		
+		rolePermissionDataControlService.save(newRList);
+		rolePermissionDataControlService.deleteInBatch(delRList);
+		
+		Role oldRole = roleService.get(role.getId());
+		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldRole.getName()}));
+		return AjaxObject.newOk("分配数据权限成功！").toString();
+	}
+	
+	@RequiresPermissions(value={"Role:assign"})
+	@RequestMapping(value="/lookup", method={RequestMethod.GET, RequestMethod.POST})
+	public String list(HttpServletRequest request, Page page, Map<String, Object> map) {
+		Specification<DataControl> specification = DynamicSpecifications.bySearchFilter(request, DataControl.class);
+		List<DataControl> dataControls = dataControlService.findByExample(specification, page);
+		
+		map.put("page", page);
+		map.put("dataControls", dataControls);
 
+		return LOOKUP_DATA_CONTROL;
+	}
+	
 }

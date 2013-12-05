@@ -156,7 +156,7 @@ public class Role implements Idable<Long> {
 	public void setRolePermissions(List<RolePermission> rolePermissions) {
 		this.rolePermissions = rolePermissions;
 	}
-	
+
 	/**   
 	 * @param arg0
 	 * @return  

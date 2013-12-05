@@ -13,19 +13,23 @@
  
 package com.ketayao.ketacustom.entity.main;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.entity.Idable;
 
 /** 
@@ -42,13 +46,16 @@ public class RolePermission implements Idable<Long> {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="roleId")
 	private Role role;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="permissionId")
 	private Permission permission;
+	
+	@OneToMany(mappedBy="rolePermission", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+	private List<RolePermissionDataControl> rolePermissionDataControls = Lists.newArrayList();
 	
 	public Long getId() {
 		return id;
@@ -88,6 +95,21 @@ public class RolePermission implements Idable<Long> {
 	 */
 	public void setPermission(Permission permission) {
 		this.permission = permission;
+	}
+	
+	/**
+	 * @return the rolePermissionDataControls
+	 */
+	public List<RolePermissionDataControl> getRolePermissionDataControls() {
+		return rolePermissionDataControls;
+	}
+
+	/**
+	 * @param rolePermissionDataControls the rolePermissionDataControls to set
+	 */
+	public void setRolePermissionDataControls(
+			List<RolePermissionDataControl> rolePermissionDataControls) {
+		this.rolePermissionDataControls = rolePermissionDataControls;
 	}
 
 	/**   

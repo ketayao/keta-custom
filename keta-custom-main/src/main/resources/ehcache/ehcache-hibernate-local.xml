@@ -61,5 +61,17 @@
 		maxEntriesLocalHeap="1000" 
 		eternal="false" 
 		overflowToDisk="true"
-		maxEntriesLocalDisk="10000" />										
+		maxEntriesLocalDisk="10000" />
+	<cache 
+		name="com.ketayao.ketacustom.entity.main.DataControl"
+		maxEntriesLocalHeap="1000" 
+		eternal="false" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />	
+	<cache 
+		name="com.ketayao.ketacustom.entity.main.RolePermissionDataControl"
+		maxEntriesLocalHeap="1000" 
+		eternal="false" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />																	
 </ehcache>

@@ -38,12 +38,14 @@ import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.entity.main.OrganizationRole;
 import com.ketayao.ketacustom.entity.main.Permission;
 import com.ketayao.ketacustom.entity.main.Role;
 import com.ketayao.ketacustom.entity.main.RolePermission;
+import com.ketayao.ketacustom.entity.main.RolePermissionDataControl;
 import com.ketayao.ketacustom.entity.main.User;
 import com.ketayao.ketacustom.entity.main.UserRole;
 import com.ketayao.ketacustom.service.ModuleService;
@@ -163,21 +165,19 @@ public class ShiroDbRealm extends AuthorizingRealm {
 				Collection<String> stringPermissions = Sets.newHashSet();
 				
 				List<Module> modules = moduleService.findAll();
+				StringBuilder builder = new StringBuilder();
 				for (Module module : modules) {
-					List<Permission> permissions = module.getPermissions();
-					// 默认构造CRUD权限
-					stringPermissions.add(module.getSn() + ":" + Permission.PERMISSION_CREATE);
-					stringPermissions.add(module.getSn() + ":" + Permission.PERMISSION_READ);
-					stringPermissions.add(module.getSn() + ":" + Permission.PERMISSION_UPDATE);
-					stringPermissions.add(module.getSn() + ":" + Permission.PERMISSION_DELETE);
-					
-					for (Permission permission : permissions) {
-						stringPermissions.add(module.getSn() + ":" + permission.getShortName());
-					}
+					builder.append(module.getSn() + ",");
 				}
 				
-				log.info("使用了超级管理员:" + shiroUser.getLoginName() + "登录了系统。At " + new Date());
-				log.info(shiroUser.getLoginName() + "拥有的权限:" + stringPermissions);
+				if (builder.length() > 0) {
+					stringPermissions.add(builder.substring(0, builder.length() - 1));
+				}
+				
+				if (log.isInfoEnabled()) {
+					log.info("使用了超级管理员:" + shiroUser.getLoginName() + "登录了系统。At " + new Date());
+					log.info(shiroUser.getLoginName() + "拥有的权限:" + stringPermissions);
+				}
 				return stringPermissions;
 			}
 		}
@@ -191,18 +191,34 @@ public class ShiroDbRealm extends AuthorizingRealm {
 			roles.add(organizationRole.getRole());
 		}
 		
-		Collection<String> stringPermissions = Sets.newHashSet();
+		Collection<String> stringPermissions = Lists.newArrayList();
 		for (Role role : roles) {
 			List<RolePermission> rolePermissions = role.getRolePermissions();
 			for (RolePermission rolePermission : rolePermissions) {
 				Permission permission = rolePermission.getPermission();
-				if (permission.getModule() != null) {//避免脏数据
-					stringPermissions.add(permission.getModule().getSn() + ":" + permission.getShortName());
+				
+				String resource = permission.getModule().getSn();
+				String operate = permission.getShortName();
+		
+				StringBuilder builder = new StringBuilder();
+				builder.append(resource + ":" + operate);
+				
+				StringBuilder dcBuilder = new StringBuilder();
+				for (RolePermissionDataControl rpdc : rolePermission.getRolePermissionDataControls()) {
+					dcBuilder.append(rpdc.getDataControl().getName() + ",");
 				}
+				
+				if (dcBuilder.length() > 0) {
+					builder.append(":" + dcBuilder.substring(0, dcBuilder.length() - 1));
+				}
+				
+				stringPermissions.add(builder.toString());
 			}
 		}
-		
-		log.info(shiroUser.getLoginName() + "拥有的权限:" + stringPermissions);
+
+		if (log.isInfoEnabled()) {
+			log.info(shiroUser.getLoginName() + "拥有的权限:" + stringPermissions);
+		}
 		return stringPermissions;
 	}
 	
@@ -303,7 +319,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	public void setImageCaptchaService(ImageCaptchaService imageCaptchaService) {
 		this.imageCaptchaService = imageCaptchaService;
 	}
-
+	
 	/**
 	 * 自定义Authentication对象，使得Subject除了携带用户的登录名外还可以携带更多信息.
 	 */

@@ -81,9 +81,9 @@ public class UserServiceImpl implements UserService {
 			throw new ExistedException("用户添加失败，登录名：" + user.getUsername() + "已存在。");
 		}
 		
-		if (userDAO.findByRealname(user.getRealname()) != null) {
-			throw new ExistedException("用户添加失败，真实名：" + user.getRealname() + "已存在。");
-		}
+//		if (userDAO.findByRealname(user.getRealname()) != null) {
+//			throw new ExistedException("用户添加失败，真实名：" + user.getRealname() + "已存在。");
+//		}
 		
 		//设定安全的密码，使用passwordService提供的salt并经过1024次 sha-1 hash
 		if (StringUtils.isNotBlank(user.getPlainPassword()) && shiroRealm != null) {

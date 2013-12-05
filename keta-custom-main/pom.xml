@@ -10,6 +10,14 @@
 
 	<!-- 依赖项定义 -->
 	<dependencies>
+		<dependency>
+			<groupId>com.ketayao</groupId>
+			<artifactId>keta-custom-generate</artifactId>
+			<scope>test</scope>
+			<version>3.2</version>
+			<type>jar</type>
+		</dependency>
+	
 		<!-- SPRING basic begin(一般不需要显式定义) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -141,6 +149,17 @@
 			<artifactId>servlet-api</artifactId>
 		</dependency>
 		<!-- WEB end -->
+
+		<!-- JSON begin -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>		
+		<!-- JSON end -->
 
 		<!-- SECURITY begin -->
 		<dependency>
