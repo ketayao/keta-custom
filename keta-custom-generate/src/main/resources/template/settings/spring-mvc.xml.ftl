@@ -34,13 +34,19 @@
 			<bean class="com.ketayao.ketacustom.spring.ExecuteTimeInterceptor" />
 		</mvc:interceptor>
 		 -->	
+		<!-- 日志拦截记录 -->	
 		<mvc:interceptor>
 			<mvc:mapping path="/management/**" />
 			<mvc:mapping path="/login/timeout/success"/>
 			<bean class="com.ketayao.ketacustom.log.spring.LogInterceptor" >
 				<property name="logAPI" ref="log4JDBCImpl"/>
 			</bean>
-		</mvc:interceptor>		
+		</mvc:interceptor>
+		<!-- 数据权限验证 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.ketayao.ketacustom.spring.DataControlInterceptor" />
+		</mvc:interceptor>	
 	</mvc:interceptors>
 	
 	<mvc:annotation-driven>
