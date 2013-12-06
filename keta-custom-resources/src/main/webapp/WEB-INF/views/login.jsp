@@ -62,7 +62,7 @@
 					</p>
 					<p>
 						<label>验证码:</label>
-						<input type="text" id="captcha_key" style="width: 70px;float:left;" name="captcha_key" class="login_input validate[required,maxSize[6]]" size="6" />
+						<input type="text" id="captcha_key" style="width: 70px;float:left;" name="captcha_key" class="login_input validate[required,maxSize[4]]" size="6" />
 						<span><img src="${contextPath}/Captcha.jpg" alt="点击刷新验证码" width="75" height="24" id="captcha"/></span>
 					</p>
 					<p>

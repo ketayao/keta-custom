@@ -15,7 +15,6 @@
 			<artifactId>keta-custom-generate</artifactId>
 			<scope>test</scope>
 			<version>3.2</version>
-			<type>jar</type>
 		</dependency>
 	
 		<!-- SPRING basic begin(一般不需要显式定义) -->
@@ -149,6 +148,13 @@
 			<artifactId>servlet-api</artifactId>
 		</dependency>
 		<!-- WEB end -->
+
+	    <!-- freemarker engine -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
+		</dependency> 
 
 		<!-- JSON begin -->
 		<dependency>
