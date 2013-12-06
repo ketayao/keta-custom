@@ -190,6 +190,29 @@ function initUI(_box){
 		});
 	});
 	
+	// 从当前navTab中打开新的navTab，并且添加pTabid
+	$("a[target=navTab2]", $p).each(function(){
+		$(this).click(function(event){
+			var $this = $(this);
+			var title = $this.attr("title") || $this.text();
+			var tabid = $this.attr("rel") || "_blank";
+			
+			var pTabid = navTab.getCurrentNavTab().attr("tabid");
+			
+			var fresh = eval($this.attr("fresh") || "true");
+			var external = eval($this.attr("external") || "false");
+			var url = unescape($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
+			DWZ.debug(url);
+			if (!url.isFinishedTm()) {
+				alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+				return false;
+			}
+			navTab.openTab(tabid, url,{title:title, fresh:fresh, external:external, data:{pTabid:pTabid}});
+
+			event.preventDefault();
+		});
+	});
+	
 	//dialogs
 	$("a[target=dialog]", $p).each(function(){
 		$(this).click(function(event){

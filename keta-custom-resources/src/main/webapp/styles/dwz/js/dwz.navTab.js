@@ -348,9 +348,13 @@ var navTab = {
 		var op = $.extend({title:"New Tab", data:{}, fresh:true, external:false}, options);
 
 		var iOpenIndex = this._indexTabId(tabid);
-
+		
 		if (iOpenIndex >= 0){
 			var $tab = this._getTabs().eq(iOpenIndex);
+			// 添加pTabid属性，方便子navTab拿到父navTab的id
+			if (op.data.pTabid) {
+				$tab.attr("pTabid", op.data.pTabid);
+			} 
 			var span$ = $tab.attr("tabid") == this._op.mainTabId ? "> span > span" : "> span";
 			$tab.find(">a").attr("title", op.title).find(span$).text(op.title);
 			var $panel = this._getPanels().eq(iOpenIndex);
@@ -370,8 +374,14 @@ var navTab = {
 			}
 			this._currentIndex = iOpenIndex;
 		} else {
-			var tabFrag = '<li tabid="#tabid#"><a href="javascript:" title="#title#" class="#tabid#"><span>#title#</span></a><a href="javascript:;" class="close">close</a></li>';
-			this._tabBox.append(tabFrag.replaceAll("#tabid#", tabid).replaceAll("#title#", op.title));
+			var tabFrag = '<li tabid="#tabid#"#pTabid#><a href="javascript:" title="#title#" class="#tabid#"><span>#title#</span></a><a href="javascript:;" class="close">close</a></li>';
+			// 添加pTabid属性，方便子navTab拿到父navTab的id
+			if (op.data.pTabid) {
+				this._tabBox.append(tabFrag.replaceAll("#tabid#", tabid).replaceAll("#title#", op.title).replaceAll('#pTabid#', ' pTabid="' + op.data.pTabid +'"'));
+			} else {
+				this._tabBox.append(tabFrag.replaceAll("#tabid#", tabid).replaceAll("#title#", op.title).replaceAll('#pTabid#', ''));
+			}
+			
 			this._panelBox.append('<div class="page unitBox"></div>');
 			this._moreBox.append('<li><a href="javascript:" title="#title#">#title#</a></li>'.replaceAll("#title#", op.title));
 			
@@ -408,5 +418,8 @@ var navTab = {
 		this._scrollCurrent();
 		
 		this._getTabs().eq(this._currentIndex).attr("url", url);
-	}
+	},
+	getCurrentNavTab:function(){
+		return this._tabBox.find("li[class='selected']");
+	},
 };

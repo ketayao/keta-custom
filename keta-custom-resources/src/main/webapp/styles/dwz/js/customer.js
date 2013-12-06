@@ -1,12 +1,4 @@
 /**
- * 得到当前活动的navtab
- * @returns
- */
-function getCurrentNavtab(){
-	return $("ul.navTab-tab li.selected");
-}
-
-/**
  * 得到当前活动的navtab的局部区域
  * @returns
  */
@@ -25,7 +17,7 @@ function getCurrentNavtabRel(){
  */
 function dialogReloadNavTab(json){
 	DWZ.ajaxDone(json);
-	var tabId = getCurrentNavtab().attr("tabid");
+	var tabId = navTab.getCurrentNavTab().attr("tabid");
 	if (json.statusCode == DWZ.statusCode.ok){
 		if (json.navTabId || tabId!=null){
 			navTab.reload(json.forwardUrl, {navTabId: json.navTabId});
@@ -120,4 +112,16 @@ function dialogReloadRel2Module(json){
 	}
 	
 	dialogReloadRel(json);
+}
+
+/**
+ * 根据父pTabid刷新navTab
+ * @param json
+ */
+function navTabReloadParent(json){
+	var pTabid = navTab.getCurrentNavTab().attr("pTabid");
+	if (json.navTabId == "") {
+		json.navTabId = pTabid;
+	}
+	navTabAjaxDone(json);
 }

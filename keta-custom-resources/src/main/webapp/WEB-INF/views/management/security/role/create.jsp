@@ -48,7 +48,7 @@ $(document).ready(function(){
 </script>
 
 <div class="pageContent">
-<form method="post" action="${contextPath }/management/security/role/create" class="required-validate pageForm" onsubmit="return validateCallback(this, navTabAjaxDone);">
+<form method="post" action="${contextPath }/management/security/role/create" class="required-validate pageForm" onsubmit="return validateCallback(this, navTabReloadParent);">
 	<div layouth="56" class="pageFormContent">
 	<dl>
 		<dt>角色名称：</dt>

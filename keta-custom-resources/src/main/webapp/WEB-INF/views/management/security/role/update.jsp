@@ -73,7 +73,7 @@ $(document).ready(function(){
 //-->
 </script>
 <div class="pageContent">
-<form method="post" action="${contextPath }/management/security/role/update" class="required-validate pageForm" onsubmit="return validateCallback(this, navTabAjaxDone);">
+<form method="post" action="${contextPath }/management/security/role/update" class="required-validate pageForm" onsubmit="return validateCallback(this, navTabReloadParent);">
 	<input type="hidden" name="id" value="${role.id }">
 	<div class="pageFormContent" layoutH="56">
 	<dl>
