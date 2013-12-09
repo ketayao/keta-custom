@@ -56,7 +56,7 @@
 			<fragment>true</fragment>
 		</attribute>
 		<attribute>
-			<name>target</name>
+			<name>targetType</name>
 			<fragment>true</fragment>
 		</attribute>
 		<attribute>
