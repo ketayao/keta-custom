@@ -49,6 +49,10 @@ public class MenuAccordionTag extends SimpleTagSupport {
 			//打开内部链接
 			builder.append("<a href=\"" + urlPrefix + module.getUrl() + "\" target=\"navTab\"  rel=\"" + 
 					module.getSn() + "_" + module.getId() + "\">" + module.getName() + "</a>\n");
+		} else if (module.getUrl().endsWith("#")) {
+			//当前链接
+			builder.append("<a href=\"" + module.getUrl() + "\" target=\"navTab\"  rel=\"" + 
+					module.getSn() + "_" + module.getId() + "\">" + module.getName() + "</a>\n");
 		} else {
 			//打开内部链接，自动补齐'/'
 			builder.append("<a href=\"" + urlPrefix + "/" + module.getUrl() + "\" target=\"navTab\"  rel=\"" + 

@@ -345,6 +345,11 @@ var navTab = {
 	 * @param {Object} params: title, data, fresh
 	 */
 	openTab: function(tabid, url, options){ //if found tabid replace tab, else create a new tab.
+		// 假如url为#，则不打开navTab
+		if (url == '#') {
+			return;
+		}
+		
 		var op = $.extend({title:"New Tab", data:{}, fresh:true, external:false}, options);
 
 		var iOpenIndex = this._indexTabId(tabid);
