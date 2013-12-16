@@ -15,6 +15,8 @@ package com.ketayao.ketacustom.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.domain.Specification;
+
 import com.ketayao.ketacustom.entity.main.User;
 import com.ketayao.ketacustom.exception.ExistedException;
 import com.ketayao.ketacustom.exception.ServiceException;
@@ -46,4 +48,6 @@ public interface UserService {
 	void delete(Long id) throws ServiceException;
 
 	List<User> findAll(Page page);
+
+	List<User> findByExample(Specification<User> specification, Page page);
 }

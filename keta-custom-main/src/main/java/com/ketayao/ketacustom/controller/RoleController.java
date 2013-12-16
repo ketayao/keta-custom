@@ -284,7 +284,7 @@ public class RoleController {
 	
 	@RequiresPermissions(value={"Role:assign"})
 	@RequestMapping(value="/lookup", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(HttpServletRequest request, Page page, Map<String, Object> map) {
+	public String lookup(HttpServletRequest request, Page page, Map<String, Object> map) {
 		Specification<DataControl> specification = DynamicSpecifications.bySearchFilter(request, DataControl.class);
 		List<DataControl> dataControls = dataControlService.findByExample(specification, page);
 		

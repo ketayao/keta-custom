@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.ketayao.ketacustom.entity.main.User;
 
-public interface UserDAO extends JpaRepository<User, Long> {
+public interface UserDAO extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 	// 根据登录名查找用户
 	User findByUsername(String Username);
 	

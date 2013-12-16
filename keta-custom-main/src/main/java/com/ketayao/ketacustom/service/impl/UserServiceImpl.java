@@ -20,6 +20,7 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -186,6 +187,16 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(hashPassword.password);
 		
 		userDAO.save(user);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.UserService#findByExample(org.springframework.data.jpa.domain.Specification, com.ketayao.ketacustom.util.dwz.Page)
+	 */
+	@Override
+	public List<User> findByExample(Specification<User> specification, Page page) {
+		org.springframework.data.domain.Page<User> springDataPage = userDAO.findAll(specification, PageUtils.createPageable(page));
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
 	}
 
 	/**
