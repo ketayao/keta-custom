@@ -526,7 +526,6 @@ fieldset legend:hover {background-color: #dddddd;}
 .dialog .pageFormContent, .dialog .viewInfo { border-style:solid; border-width:1px 0 0 0;}
 .dialog .formBar { border-style:solid; border-width:1px 0;}
 
-
 .combox { float:left; margin-right:3px; background-position:100% -25px;}
 .combox select { display:none}
 .combox .select { float:left;}
@@ -614,3 +613,14 @@ a.btnAttach{background-position: -183px 0}
 
 .sortDragPlaceholder {border:1px dashed #ccc;}
 #printBox {display:none}
+
+/* input type=file */
+.type-file-box{ position:relative;width:170px}
+.type-file-text{ height:18px; border:1px solid #cdcdcd; width:165px;}
+.type-file-button{ background-color:#FFF; border:1px solid #CDCDCD;height:24px; width:70px;}
+.type-file-file{ position:absolute; top:0; right:0; height:24px; filter:alpha(opacity:0);opacity: 0;width:170px }
+/* input textarea */
+.input-small {width: 120px;}
+.input-medium {width: 160px;}
+.input-large {width: 240px;}
+.textarea-scroll {overflow:auto;}
