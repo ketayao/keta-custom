@@ -18,14 +18,13 @@ import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 
 import com.google.common.collect.Maps;
 import com.ketayao.ketacustom.entity.main.LogEntity;
 import com.ketayao.ketacustom.log.LogLevel;
 import com.ketayao.ketacustom.service.LogEntityService;
-import com.ketayao.ketacustom.shiro.ShiroDbRealm;
+import com.ketayao.ketacustom.shiro.ShiroUser;
+import com.ketayao.utils.SecurityUtils;
 
 /** 
  * 全局日志等级<包日志等级<类和方法日志等级
@@ -58,8 +57,7 @@ public class Log4JDBCImpl extends LogAdapter {
 			return;
 		}
 		
-		Subject subject = SecurityUtils.getSubject();
-		ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser)subject.getPrincipal();
+		ShiroUser shiroUser = SecurityUtils.getShiroUser();
 		
 		//result = shiroUser.toString() + ":" + result;
 		

@@ -6,7 +6,7 @@ package com.ketayao.utils;
 import org.apache.shiro.subject.Subject;
 
 import com.ketayao.ketacustom.entity.main.User;
-import com.ketayao.ketacustom.shiro.ShiroDbRealm.ShiroUser;
+import com.ketayao.ketacustom.shiro.ShiroUser;
 
 /**
  * @author KETAYAO

@@ -31,7 +31,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
@@ -43,8 +42,6 @@ import com.ketayao.ketacustom.SecurityConstants;
 import com.ketayao.ketacustom.entity.main.DataControl;
 import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.entity.main.User;
-import com.ketayao.ketacustom.service.DataControlService;
-import com.ketayao.ketacustom.service.ModuleService;
 import com.ketayao.ketacustom.util.persistence.DynamicSpecifications;
 import com.ketayao.ketacustom.util.persistence.SearchFilter;
 import com.ketayao.ketacustom.util.persistence.SearchFilter.Operator;
@@ -74,12 +71,6 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 	
 	@PersistenceContext
 	private EntityManager em;
-	
-	@Autowired
-	private ModuleService moduleService;
-	
-	@Autowired
-	private DataControlService dataControlService;
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
 	
@@ -171,7 +162,8 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 		for (String sn : m) {
 			String[] d = dataControlString.split(PERMISSION_DIVIDER_TOKEN);
 			for (String name : d) {
-				DataControl dataControl = dataControlService.getByName(name);
+				
+				DataControl dataControl = SecurityUtils.getShiroUser().getHasDataControls().get(name); 
 				if (dataControl == null) {
 					continue;
 				}
@@ -204,7 +196,7 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 				Map<String, SearchFilter> searchFilters = SearchFilter.parse(controlMap);
 				Set<SearchFilter> filterSet = new HashSet<SearchFilter>(searchFilters.values());
 				try {
-					Module module = moduleService.getBySn(sn);
+					Module module = SecurityUtils.getShiroUser().getHasModules().get(sn);
 					
 					boolean handleResult = true;
 					if (method.getName().startsWith(SHOW_METHOD_PREFIX)) {
@@ -217,7 +209,7 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 						return false;
 					}
 				} catch (Exception e) {
-					throw new IllegalArgumentException("数据权限方法处理错误：" + method.getName());
+					throw new IllegalArgumentException("数据权限方法处理错误：" + method.getName(), e);
 				}
 			}
 

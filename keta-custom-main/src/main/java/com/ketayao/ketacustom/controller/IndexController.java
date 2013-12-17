@@ -17,7 +17,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +36,9 @@ import com.ketayao.ketacustom.log.LogMessageObject;
 import com.ketayao.ketacustom.log.impl.LogUitl;
 import com.ketayao.ketacustom.service.ModuleService;
 import com.ketayao.ketacustom.service.UserService;
-import com.ketayao.ketacustom.shiro.ShiroDbRealm.ShiroUser;
+import com.ketayao.ketacustom.shiro.ShiroUser;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
+import com.ketayao.utils.SecurityUtils;
 
 /** 
  * 	
@@ -64,12 +64,11 @@ public class IndexController {
 	@RequiresUser 
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String index(HttpServletRequest request) {
-		Subject subject = SecurityUtils.getSubject();
-		ShiroUser shiroUser = (ShiroUser)subject.getPrincipal();
+		ShiroUser shiroUser = SecurityUtils.getShiroUser();
 		// 加入ipAddress
 		shiroUser.setIpAddress(request.getRemoteAddr());
 		
-		Module menuModule = getMenuModule(subject);
+		Module menuModule = getMenuModule(SecurityUtils.getSubject());
 
 		// 这个是放入user还是shiroUser呢？
 		request.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());

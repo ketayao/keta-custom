@@ -102,7 +102,7 @@ public class BaseFormAuthenticationFilter extends FormAuthenticationFilter {
 		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse)response;
 		
-		ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser)subject.getPrincipal();
+		ShiroUser shiroUser = (ShiroUser)subject.getPrincipal();
 		// 加入ipAddress
 		shiroUser.setIpAddress(request.getRemoteAddr());
 		
