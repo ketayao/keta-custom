@@ -122,6 +122,7 @@ public class ModuleController {
 		oldModule.setSn(module.getSn());
 		oldModule.setUrl(module.getUrl());
 		oldModule.setParent(module.getParent());
+		oldModule.setClassName(module.getClassName());
 		
 		// 模块自定义权限，删除过后新增报错，会有validate的验证错误。hibernate不能copy到permission的值，导致。
 		for (Permission permission : module.getPermissions()) {

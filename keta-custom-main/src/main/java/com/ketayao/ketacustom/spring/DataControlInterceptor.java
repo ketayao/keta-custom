@@ -127,6 +127,8 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 				}
 			
 				try {
+					// 把内部动态查询参数常量，logical放入request
+					request.setAttribute(SecurityConstants.NEST_DYNAMIC_SEARCH_LOGICAL, logical);
 					boolean checkResult = (check(request, response, method, v[0], v[2]) == true) ? true : false;
 					if (!checkResult) {
 						throw new UnauthorizedException("数据权限验证失败！");
@@ -221,9 +223,21 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 	/**
 	 * 处理分页显示的方法
 	 */
+	@SuppressWarnings("unchecked")
 	protected boolean handleList(HttpServletRequest request, Set<SearchFilter> filterSet, 
 			Method method, DataControl dataControl, Module module) {
-		request.setAttribute(SecurityConstants.NEST_DYNAMIC_SEARCH, filterSet);
+		Logical logical = (Logical)request.getAttribute(SecurityConstants.NEST_DYNAMIC_SEARCH_LOGICAL);
+		if (logical.equals(Logical.AND)) {
+			Set<SearchFilter> pre = (Set<SearchFilter>)request.getAttribute(SecurityConstants.NEST_DYNAMIC_SEARCH);
+			if (pre == null) {
+				pre = new HashSet<SearchFilter>();
+				request.setAttribute(SecurityConstants.NEST_DYNAMIC_SEARCH, pre);
+			}
+				
+			pre.addAll(filterSet);
+		} else {
+			request.setAttribute(SecurityConstants.NEST_DYNAMIC_SEARCH, filterSet);
+		}
 		
 		return true;
 	}

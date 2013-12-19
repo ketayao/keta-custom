@@ -46,4 +46,9 @@ public interface SecurityConstants {
 	 * 内部动态查询参数常量
 	 */
 	public final static String NEST_DYNAMIC_SEARCH = "$nest_dynamic_search$";
+	
+	/**
+	 * 内部动态查询参数常量，logical
+	 */
+	public final static String NEST_DYNAMIC_SEARCH_LOGICAL = "$nest_dynamic_search_logical$";
 }
