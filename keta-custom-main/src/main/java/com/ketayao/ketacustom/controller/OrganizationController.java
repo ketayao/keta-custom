@@ -86,6 +86,11 @@ public class OrganizationController {
 		if (parentOrganization == null) {
 			return AjaxObject.newError("添加组织失败：id=" + organization.getParent().getId() + "的父组织不存在！").toString();
 		}
+		
+		if (organizationService.getByName(organization.getName()) != null) {
+			return AjaxObject.newError("添加组织失败：" + organization.getName() + "已存在！").toString();
+		}
+		
 		organizationService.save(organization);
 		
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));

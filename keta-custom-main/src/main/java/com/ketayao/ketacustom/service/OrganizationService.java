@@ -41,4 +41,6 @@ public interface OrganizationService {
 	void update(Organization organization);
 
 	void delete(Long id) throws ServiceException;
+	
+	Organization getByName(String name);
 }

@@ -23,7 +23,7 @@ public interface RolePermissionDataControlService {
 	
 	void save(Iterable<RolePermissionDataControl> entities);
 	
-	void deleteInBatch(Iterable<RolePermissionDataControl> entities);
+	void delete(Iterable<RolePermissionDataControl> entities);
 
 	List<RolePermissionDataControl> findByRolePermissionId(Long rolePermissionId);
 	

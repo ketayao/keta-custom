@@ -90,12 +90,13 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	public void save(Iterable<RolePermission> entities) {
 		rolePermissionDAO.save(entities);
 	}
-
+	
 	/* (non-Javadoc)
-	 * @see com.ketayao.ketacustom.service.RolePermissionService#deleteInBatch(java.lang.Iterable)
+	 * @see com.ketayao.ketacustom.service.RolePermissionService#delete(java.lang.Iterable)
 	 */
 	@Override
-	public void deleteInBatch(Iterable<RolePermission> entities) {
-		rolePermissionDAO.deleteInBatch(entities);
+	public void delete(Iterable<RolePermission> entities) {
+		rolePermissionDAO.delete(entities);
 	}
+	
 }

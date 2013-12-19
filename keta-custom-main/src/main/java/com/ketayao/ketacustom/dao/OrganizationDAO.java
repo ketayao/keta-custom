@@ -44,4 +44,6 @@ public interface OrganizationDAO extends JpaRepository<Organization, Long>{
 	)
 	@Query("from Organization")
 	List<Organization> findAllWithCache();
+	
+	Organization getByName(String name);
 }

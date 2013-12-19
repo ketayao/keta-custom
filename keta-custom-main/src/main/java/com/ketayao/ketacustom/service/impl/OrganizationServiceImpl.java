@@ -110,6 +110,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return springDataPage.getContent();
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.OrganizationService#getByName(java.lang.String)
+	 */
+	@Override
+	public Organization getByName(String name) {
+		return organizationDAO.getByName(name);
+	}
+
 	/**
 	 * 判断是否是根组织.
 	 */

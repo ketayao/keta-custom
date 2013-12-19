@@ -52,7 +52,7 @@ public class Organization implements Idable<Long> {
 	
 	@NotBlank
 	@Length(min=1, max=64)
-	@Column(nullable=false, length=64)
+	@Column(nullable=false, length=64, unique=true)
 	private String name;
 	
 	@Length(max=255)

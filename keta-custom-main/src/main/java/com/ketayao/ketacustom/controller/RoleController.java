@@ -153,7 +153,7 @@ public class RoleController {
 		}
 		
 		rolePermissionService.save(newRList);
-		rolePermissionService.deleteInBatch(delRList);
+		rolePermissionService.delete(delRList);
 		roleService.update(oldRole);
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldRole.getName()}));
 		return AjaxObject.newOk("修改角色成功！").toString();
@@ -275,7 +275,7 @@ public class RoleController {
 		}
 		
 		rolePermissionDataControlService.save(newRList);
-		rolePermissionDataControlService.deleteInBatch(delRList);
+		rolePermissionDataControlService.delete(delRList);
 		
 		Role oldRole = roleService.get(role.getId());
 		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldRole.getName()}));

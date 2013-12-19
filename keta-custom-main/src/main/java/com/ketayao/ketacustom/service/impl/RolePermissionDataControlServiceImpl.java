@@ -85,12 +85,12 @@ public class RolePermissionDataControlServiceImpl implements RolePermissionDataC
 	public void save(Iterable<RolePermissionDataControl> entities) {
 		rolePermissionDataControlDAO.save(entities);
 	}
-
+	
 	/* (non-Javadoc)
-	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#deleteInBatch(java.lang.Iterable)
+	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#delete(java.lang.Iterable)
 	 */
 	@Override
-	public void deleteInBatch(Iterable<RolePermissionDataControl> entities) {
+	public void delete(Iterable<RolePermissionDataControl> entities) {
 		rolePermissionDataControlDAO.delete(entities);
 	}
 

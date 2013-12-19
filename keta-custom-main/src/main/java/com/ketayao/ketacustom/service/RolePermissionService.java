@@ -37,5 +37,5 @@ public interface RolePermissionService {
 	
 	void save(Iterable<RolePermission> entities);
 	
-	void deleteInBatch(Iterable<RolePermission> entities);
+	void delete(Iterable<RolePermission> entities);
 }

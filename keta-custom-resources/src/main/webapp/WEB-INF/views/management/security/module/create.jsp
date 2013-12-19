@@ -97,16 +97,16 @@ jQuery(document).ready(function(){
 		<fieldset>
 		<legend>自定义授权</legend>
 			<div class="toNewPermission">
-			看(show)<input type="checkbox" name="permissions[4].shortName" value="show" checked="checked" rel="4"/>&nbsp;&nbsp;
-	         <input type="hidden" name="permissions[4].name" value="看" rel="4"/>			
-			增(save)<input type="checkbox" name="permissions[0].shortName" value="save" checked="checked" rel="0"/>&nbsp;&nbsp;
-	         <input type="hidden" name="permissions[0].name" value="增" rel="0"/>
-			删(delete)<input type="checkbox" name="permissions[1].shortName" value="delete" checked="checked" rel="1"/>&nbsp;&nbsp;
-			<input type="hidden" name="permissions[1].name" value="删" rel="1"/>
-			查(view)<input type="checkbox" name="permissions[2].shortName" value="view" checked="checked" rel="2"/>&nbsp;&nbsp;
-			<input type="hidden" name="permissions[2].name" value="查" rel="2"/>
-			改(edit)<input type="checkbox" name="permissions[3].shortName" value="edit" checked="checked" rel="3"/>&nbsp;&nbsp;
-			<input type="hidden" name="permissions[3].name" value="改" rel="3"/>
+			看(show)<input type="checkbox" name="permissions[0].shortName" value="show" checked="checked" rel="0"/>&nbsp;&nbsp;
+	         <input type="hidden" name="permissions[0].name" value="看" rel="0"/>			
+			增(save)<input type="checkbox" name="permissions[1].shortName" value="save" checked="checked" rel="1"/>&nbsp;&nbsp;
+	         <input type="hidden" name="permissions[1].name" value="增" rel="1"/>
+			删(delete)<input type="checkbox" name="permissions[2].shortName" value="delete" checked="checked" rel="2"/>&nbsp;&nbsp;
+			<input type="hidden" name="permissions[2].name" value="删" rel="2"/>
+			查(view)<input type="checkbox" name="permissions[3].shortName" value="view" checked="checked" rel="3"/>&nbsp;&nbsp;
+			<input type="hidden" name="permissions[3].name" value="查" rel="3"/>
+			改(edit)<input type="checkbox" name="permissions[4].shortName" value="edit" checked="checked" rel="4"/>&nbsp;&nbsp;
+			<input type="hidden" name="permissions[4].name" value="改" rel="4"/>
 			</div>		
 		</fieldset>
 		<fieldset id="newPermissonInput">
