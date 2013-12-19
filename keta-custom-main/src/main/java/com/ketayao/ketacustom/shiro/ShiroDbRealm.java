@@ -162,6 +162,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		shiroUser.getHasDataControls().clear();
 		shiroUser.getHasModules().clear();
 		
+		// 更新User
+		shiroUser.setUser(userService.get(shiroUser.getId()));
+		
 		// 是否启用超级管理员 
 		if (activeRoot) {
 			// id==1为超级管理员，构造所有权限 

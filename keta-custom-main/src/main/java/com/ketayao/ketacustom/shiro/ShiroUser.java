@@ -74,6 +74,13 @@ public class ShiroUser implements Serializable {
 	public User getUser() {
 		return user;
 	}
+	
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	/**
 	 * 本函数输出将作为默认的<shiro:principal/>输出.
