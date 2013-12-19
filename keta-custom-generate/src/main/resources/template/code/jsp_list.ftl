@@ -45,13 +45,13 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<shiro:hasPermission name="${className}:view">
-				<li><a iconClass="magnifier" target="dialog" mask="true" width="530" height="250" href="${r"${contextPath }"}/${requestMapping}/view/{slt_uid}"><span>查看${functionName}</span></a></li>
+				<li><a iconClass="magnifier" target="dialog" mask="true" width="530" height="250" rel="${className}_view" href="${r"${contextPath }"}/${requestMapping}/view/{slt_uid}"><span>查看${functionName}</span></a></li>
 			</shiro:hasPermission>		
 			<shiro:hasPermission name="${className}:save">
-				<li><a class="add" target="dialog" mask="true" width="530" height="250" href="${r"${contextPath }"}/${requestMapping}/create"><span>添加${functionName}</span></a></li>
+				<li><a class="add" target="dialog" mask="true" width="530" height="250" rel="${className}_save" href="${r"${contextPath }"}/${requestMapping}/create"><span>添加${functionName}</span></a></li>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="${className}:edit">
-				<li><a class="edit" target="dialog" mask="true" width="530" height="250" href="${r"${contextPath }"}/${requestMapping}/update/{slt_uid}"><span>编辑${functionName}</span></a></li>
+				<li><a class="edit" target="dialog" mask="true" width="530" height="250" rel="${className}_edit" href="${r"${contextPath }"}/${requestMapping}/update/{slt_uid}"><span>编辑${functionName}</span></a></li>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="${className}:delete">
 				<li><a class="delete" target="selectedTodo" rel="ids" href="${r"${contextPath }"}/${requestMapping}/delete" title="确认要删除选定${functionName}?"><span>删除${functionName}</span></a></li>

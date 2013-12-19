@@ -17,7 +17,6 @@ public class DbConnection {
 		try {
 			Class.forName(Resources.JDBC_DRIVER).newInstance();
 			conn = DriverManager.getConnection(Resources.JDBC_URL, Resources.JDBC_USERNAME, Resources.JDBC_PASSWORD);
-			System.out.println(conn);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

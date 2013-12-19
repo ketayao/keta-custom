@@ -48,9 +48,14 @@ public abstract class AbstractGenerate {
 			// 获取工程路径
 			File projectPath = new DefaultResourceLoader().getResource("").getFile();
 			
-			while (!new File(projectPath.getPath() + separator + "src" + separator + "main").exists()) {
+//			while (!new File(projectPath.getPath() + separator + "src" + separator + "main").exists()) {
+//				projectPath = projectPath.getParentFile();
+//			}
+			
+			while (!new File(projectPath.getPath() + separator + "pom.xml").exists()) {
 				projectPath = projectPath.getParentFile();
 			}
+			
 			logger.info("Project Path: {}", projectPath);
 			
 			// 项目名称

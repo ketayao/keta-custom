@@ -29,7 +29,6 @@ public class Oracle extends DataSource {
 		try {
 			Class.forName(Resources.JDBC_DRIVER).newInstance();
 			conn = DriverManager.getConnection(Resources.JDBC_URL,props);
-			System.out.println(conn);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

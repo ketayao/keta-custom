@@ -18,10 +18,10 @@
 		<label>${column.fieldName}：</label>
 		</#if>
 		<#if column.javaType == "Date">
-		<input type="text" name="${column.fieldName}" class="date<#if column.nullable != true> validate[required]</#if>" readonly="readonly" style="float:left;" value="<fmt:formatDate value="${r"${"}${instanceName}.${column.fieldName}}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
+		<input type="text" name="${column.fieldName}" class="input-medium date<#if column.nullable != true> validate[required]</#if>" readonly="readonly" style="float:left;" value="<fmt:formatDate value="${r"${"}${instanceName}.${column.fieldName}}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
 		<a class="inputDateButton" href="javascript:;" style="float:left;">选择</a>
 		<#else>
-		<input type="text" name="${column.fieldName}" size="32" maxlength="${column.size}" value="${r"${"}${instanceName}.${column.fieldName}}" <#if column.nullable != true>class="required validate[required]"</#if>/>
+		<input type="text" name="${column.fieldName}" maxlength="${column.size}" value="${r"${"}${instanceName}.${column.fieldName}}" <#if column.nullable != true>class="input-medium required validate[required]"<#else>class="input-medium"</#if>/>
 		</#if>		
 	</p>
 	</#list>
