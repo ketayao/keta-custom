@@ -204,6 +204,13 @@
 				<artifactId>jstl</artifactId>
 				<version>1.2</version>
 			</dependency>
+			
+		    <!-- freemarker engine -->
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>${freemarker.version}</version>
+			</dependency> 			
 			<!-- WEB end -->
 			
 			<!-- JSON begin -->

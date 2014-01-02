@@ -67,10 +67,10 @@ jQuery(document).ready(function(){
 					<td>${item.name}</td>
 					<td>
 						<select id="priority_${item.id}" name="priority" class="required combox">
-							<c:forEach begin="1" end="98" step="1" varStatus="s">
+							<c:forEach begin="1" end="998" step="1" varStatus="s">
 								<option value="${s.index}">${s.index}</option>
 							</c:forEach>
-							<option value="99" selected>99</option>
+							<option value="999" selected>999</option>
 						</select>
 						<div class="button"><div class="buttonContent"><button id="submit_${item.id}" class="assignRole">分配</button></div></div>
 					</td>

@@ -3,6 +3,7 @@ package com.ketayao.ketacustom.generate;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.DefaultResourceLoader;
 
-import com.google.common.collect.Maps;
 import com.ketayao.ketacustom.generate.util.Resources;
 
 import freemarker.template.Configuration;
@@ -100,7 +100,7 @@ public abstract class AbstractGenerate {
 			cfg.setDirectoryForTemplateLoading(new File(tplPath));
 
 			// 定义模板变量
-			model = Maps.newHashMap();
+			model = new HashMap<String, Object>();
 			model.put("packageName", Resources.TPL_PACKAGE_NAME);
 			model.put("className", Resources.TPL_CLASS_NAME);
 			model.put("instanceName", StringUtils.uncapitalize(Resources.TPL_CLASS_NAME));

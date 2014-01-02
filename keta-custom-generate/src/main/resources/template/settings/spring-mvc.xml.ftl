@@ -16,7 +16,7 @@
 	
 	<!-- 系统日志跟踪功能 -->
 	<bean id="log4JDBCImpl" class="com.ketayao.ketacustom.log.impl.Log4JDBCImpl" >
-		<property name="logEntityService" ref="logEntityServiceImpl"/>
+		<property name="logInfoService" ref="logInfoServiceImpl"/>
 		<property name="rootLogLevel" value="ERROR"/>
 		<property name="customLogLevel">
            <map>
@@ -71,7 +71,7 @@
 	    <property name="maxInMemorySize">  
 	        <value>4096</value>  
 	    </property>  
-	</bean>	
+	</bean>
 	
 	<!-- 定义JSP文件的位置 --> 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

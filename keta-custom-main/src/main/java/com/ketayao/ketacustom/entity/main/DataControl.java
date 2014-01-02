@@ -3,6 +3,7 @@
  */
 package com.ketayao.ketacustom.entity.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.entity.Idable;
 
 /**
@@ -28,7 +28,7 @@ import com.ketayao.ketacustom.entity.Idable;
  *
  */
 @Entity
-@Table(name="security_data_control")
+@Table(name="keta_data_control")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.DataControl")
 public class DataControl implements Idable<Long> {
 	@Id
@@ -36,20 +36,20 @@ public class DataControl implements Idable<Long> {
 	private Long id;
 	
 	@NotBlank
-	@Length(max=32)
-	@Column(nullable=false, length=32, unique=true, updatable=false)
+	@Length(max=64)
+	@Column(length=64, nullable=false, unique=true, updatable=false)
 	private String name;
 	
-	@Length(max=255)
-	@Column(length=255)
+	@Length(max=256)
+	@Column(length=256)
 	private String description;
 	
-	@Length(max=255)
-	@Column(length=255)
+	@Length(max=10240)
+	@Column(length=10240)
 	private String control;
 	
 	@OneToMany(mappedBy="dataControl", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
-	private List<RolePermissionDataControl> rolePermissionDataControls = Lists.newArrayList();
+	private List<RolePermissionDataControl> rolePermissionDataControls = new ArrayList<RolePermissionDataControl>();
 	
 	/* (non-Javadoc)
 	 * @see com.ketayao.ketacustom.entity.Idable#getId()

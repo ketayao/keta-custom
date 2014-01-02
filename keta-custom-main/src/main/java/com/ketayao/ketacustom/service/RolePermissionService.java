@@ -1,41 +1,36 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.ketacustom.service.RolePermission.java
- * Class:			RolePermission
- * Date:			2013-4-16
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          2.0.0
- * Description:		
- *
- * </pre>
- **/
- 
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
 package com.ketayao.ketacustom.service;
 
 import java.util.List;
 
-import com.ketayao.ketacustom.entity.main.RolePermission;
+import org.springframework.data.jpa.domain.Specification;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  2.0.0
- * @since   2013-4-16 下午2:11:48 
- */
+import com.ketayao.ketacustom.entity.main.RolePermission;
+import com.ketayao.ketacustom.util.dwz.Page;
 
 public interface RolePermissionService {
-	void save(RolePermission rolePermission);
-	
 	RolePermission get(Long id);
-	
-	void update(RolePermission rolePermission);
-	
-	void delete(Long id);
 
-	List<RolePermission> findByRoleId(Long roleId);
+	void saveOrUpdate(RolePermission rolePermission);
+
+	void delete(Long id);
 	
-	void save(Iterable<RolePermission> entities);
+	List<RolePermission> findAll(Page page);
 	
-	void delete(Iterable<RolePermission> entities);
+	List<RolePermission> findByExample(Specification<RolePermission> specification, Page page);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	List<RolePermission> findByRoleId(Long id);
+
+	/**
+	 * @param newRList
+	 */
+	void save(List<RolePermission> newRList);
+	
+	void delete(List<RolePermission> delRList);
 }

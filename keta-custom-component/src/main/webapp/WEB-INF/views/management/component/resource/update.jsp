@@ -8,7 +8,7 @@
 	<div class="pageFormContent" layoutH="58">
 	<p>
 		<label>文件名称：</label>
-		<input type="text" name="name" class="required" size="32" maxlength="32" value="${name }"/><span class="info">.${resource.type }</span>
+		<input type="text" name="name" class="input-medium required" maxlength="32" value="${name }"/><span class="info">.${resource.type }</span>
 	</p>
 	</div>
 	

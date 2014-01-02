@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 <a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="${contextPath}/management/security/organization/tree" style="display:none;"></a>
 <dwz:paginationForm action="${contextPath}/management/security/organization/list/${parentOrganizationId}" page="${page }" onsubmit="return divSearch(this, 'jbsxBox2organizationList');">
-	<input type="hidden" name="keywords" value="${keywords}"/>
+	<input type="hidden" name=search_LIKE_name value="${param.search_LIKE_name }"/>
 </dwz:paginationForm>
 
 <form method="post" action="${contextPath }/management/security/organization/list/${parentOrganizationId}" onsubmit="return divSearch(this, 'jbsxBox2organizationList');">
@@ -11,7 +11,7 @@
 			<ul class="searchContent">
 				<li>
 					<label>组织名称：</label>
-					<input type="text" name="keywords" value="${keywords}"/>
+					<input type="text" name=search_LIKE_name value="${param.search_LIKE_name }"/>
 				</li>
 			</ul>
 			<div class="subBar">
@@ -27,10 +27,10 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 		<shiro:hasPermission name="Organization:save">
-			<li><a iconClass="group_add" target="dialog" mask="true" width="530" height="250" href="${contextPath}/management/security/organization/create/${parentOrganizationId}"><span>添加组织</span></a></li>
+			<li><a iconClass="group_add" target="dialog" mask="true" width="530" height="260" href="${contextPath}/management/security/organization/create/${parentOrganizationId}"><span>添加组织</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Organization:edit">
-			<li><a iconClass="group_edit" target="dialog" mask="true" rel="lookupParent2org_edit" width="530" height="250" href="${contextPath}/management/security/organization/update/{slt_uid}"><span>编辑组织</span></a></li>
+			<li><a iconClass="group_edit" target="dialog" mask="true" rel="lookupParent2org_edit" width="530" height="260" href="${contextPath}/management/security/organization/update/{slt_uid}"><span>编辑组织</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Organization:delete">
 			<li><a iconClass="group_delete" target="ajaxTodo" callback="dialogReloadRel2Org" href="${contextPath}/management/security/organization/delete/{slt_uid}" title="确认要删除该组织?"><span>删除组织</span></a></li>
@@ -47,6 +47,7 @@
 			<tr>
 				<th width="150">名称</th>
 				<th width="200">拥有角色</th>
+				<th width="60">优先级</th>
 				<th>描述</th>
 				<th width="150">父组织</th>
 			</tr>
@@ -60,6 +61,7 @@
 						${oRole.role.name}&nbsp;&nbsp;
 					</c:forEach>
 				</td>
+				<td>${item.priority}</td>
 				<td>${item.description}</td>
 				<td>${item.parent.name}</td>
 			</tr>

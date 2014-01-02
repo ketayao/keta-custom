@@ -15,7 +15,7 @@
 //-->
 </script>
 <dwz:paginationForm action="${contextPath }/management/component/resource/list" page="${page }">
-	<input type="hidden" name="name" value="${name}"/>
+	<input type="hidden" name="search_EQ_name" value="${param.search_EQ_name }"/>
 </dwz:paginationForm>
 
 <form method="post" action="${contextPath }/management/component/resource/list" onsubmit="return navTabSearch(this)">
@@ -24,7 +24,7 @@
 			<ul class="searchContent">
 				<li>
 					<label>资源名称：</label>
-					<input type="text" name="name" value="${name}"/>
+					<input type="text" name="search_EQ_name" value="${param.search_EQ_name }"/>
 				</li>
 			</ul>
 			<div class="subBar">

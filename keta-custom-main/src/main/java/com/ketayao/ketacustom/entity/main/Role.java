@@ -26,13 +26,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.entity.Idable;
 
 /** 
@@ -42,7 +42,7 @@ import com.ketayao.ketacustom.entity.Idable;
  * @since   2012-6-7 上午11:07:45 
  */
 @Entity
-@Table(name="security_role")
+@Table(name="keta_role")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.Role")
 public class Role implements Idable<Long> {
 	@Id
@@ -50,24 +50,24 @@ public class Role implements Idable<Long> {
 	private Long id;
 	
 	@NotBlank
-	@Length(min=1, max=32)
-	@Column(nullable=false, length=32)
+	@Length(max=64)
+	@Column(length=64, nullable=false)
 	private String name;
 	
-	@Length(max=255)
-	@Column(length=255)
+	@Length(max=256)
+	@Column(length=256)
 	private String description;
 	
 	@OneToMany(mappedBy="role", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
 	@OrderBy("priority ASC")
-	private List<UserRole> userRoles = new ArrayList<UserRole>(0);
+	private List<UserRole> userRoles = new ArrayList<UserRole>();
 	
 	@OneToMany(mappedBy="role", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
 	@OrderBy("priority ASC")
-	private List<OrganizationRole> organizationRoles = Lists.newArrayList();
+	private List<OrganizationRole> organizationRoles = new ArrayList<OrganizationRole>();
 	
 	@OneToMany(mappedBy="role", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
-	private List<RolePermission> rolePermissions = Lists.newArrayList();
+	private List<RolePermission> rolePermissions = new ArrayList<RolePermission>();
 	
 	public Long getId() {
 		return id;
@@ -164,21 +164,7 @@ public class Role implements Idable<Long> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		
-		if (obj == this) {
-			return true;
-		}
-		
-		if (obj instanceof Role) { 
-			Role that = (Role) obj; 
-            return Objects.equal(id, that.getId()) 
-                    && Objects.equal(name, that.getName());
-        } 
-
-        return false; 
+		return EqualsBuilder.reflectionEquals(this, obj, false);
 	}
 
 	/**   
@@ -187,6 +173,6 @@ public class Role implements Idable<Long> {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(id, name);
+		return HashCodeBuilder.reflectionHashCode(this, false);
 	}
 }

@@ -17,15 +17,15 @@ jQuery(document).ready(function(){
 		<div class="pageFormContent" layoutH="58">
 			<p>
 				<label>用户名:</label>
-				<input type="text" name="username" id="username" maxlength="32" class="validate[required] required"/>
+				<input type="text" name="username" id="username" maxlength="32" class="input-medium validate[required] required"/>
 			</p>
 			<p>
 				<label>密&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
-				<input type="password" name="password" id="password" maxlength="32" class="validate[required] required"/>
+				<input type="password" name="password" id="password" maxlength="32" class="input-medium validate[required] required"/>
 			</p>
 			<p>
 				<label>验证码:</label>
-				<input type="text" id="captcha_key" name="captcha_key" class="code validate[required,maxSize[6]]" size="6" />&nbsp;&nbsp;
+				<input type="text" id="captcha_key" name="captcha_key" maxlength="4" class="validate[required]" style="width: 85px;"/>&nbsp;&nbsp;
 				<span><img src="${contextPath }/Captcha.jpg" alt="点击刷新验证码" width="75" height="24" id="captcha"/></span>
 			</p>			
 		</div>

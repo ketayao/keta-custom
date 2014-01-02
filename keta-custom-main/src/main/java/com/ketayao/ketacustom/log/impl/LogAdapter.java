@@ -13,9 +13,9 @@
  
 package com.ketayao.ketacustom.log.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import com.google.common.collect.Maps;
 import com.ketayao.ketacustom.log.LogAPI;
 import com.ketayao.ketacustom.log.LogLevel;
 
@@ -64,6 +64,6 @@ public class LogAdapter implements LogAPI {
 	 */
 	@Override
 	public Map<String, LogLevel> getCustomLogLevel() {
-		return Maps.newHashMap();
+		return new HashMap<String, LogLevel>();
 	}
 }

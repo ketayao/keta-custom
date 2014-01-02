@@ -13,7 +13,7 @@
  
 package com.ketayao.ketacustom.test.text;
 
-import java.text.Format;
+import java.text.ChoiceFormat;
 import java.text.MessageFormat;
 
 import org.junit.Test;
@@ -28,10 +28,16 @@ import org.junit.Test;
 public class MessageFormatTest {
 	@Test
 	public void test() {
-		String msg = "this is {0}, not {1}";
-	
-		MessageFormat mFormat = new MessageFormat(msg);
-		Format[] formats = mFormat.getFormats();
-		System.out.println(formats);
+		MessageFormat form = new MessageFormat("The disk \"{1}\" contains {0}.");
+		 double[] filelimits = {0,1,2};
+		 String[] filepart = {"no files","one file","{0,number} files"};
+		 ChoiceFormat fileform = new ChoiceFormat(filelimits, filepart);
+		 form.setFormatByArgumentIndex(0, fileform);
+
+		 int fileCount = 1273;
+		 String diskName = "MyDisk";
+		 Object[] testArgs = {new Long(fileCount), diskName};
+
+		 System.out.println(form.format(testArgs));
 	}
 }

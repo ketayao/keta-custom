@@ -1,86 +1,83 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.ketacustom.service.impl.OrganizationRoleServiceImpl.java
- * Class:			OrganizationRoleServiceImpl
- * Date:			2013-4-15
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          2.0.0
- * Description:		
- *
- * </pre>
- **/
- 
-package com.ketayao.ketacustom.service.impl;
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
+package	com.ketayao.ketacustom.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ketayao.ketacustom.dao.OrganizationRoleDAO;
+import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.PageUtils;
 import com.ketayao.ketacustom.entity.main.OrganizationRole;
+import com.ketayao.ketacustom.dao.OrganizationRoleDAO;
 import com.ketayao.ketacustom.service.OrganizationRoleService;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  2.0.0
- * @since   2013-4-15 下午4:16:04 
- */
 @Service
 @Transactional
 public class OrganizationRoleServiceImpl implements OrganizationRoleService {
 	
-	private OrganizationRoleDAO organizationRoleDAO;
-	
-	/**
-	 * 
-	 * 构造函数
-	 * @param organizationRoleDAO
-	 */
 	@Autowired
-	public OrganizationRoleServiceImpl(OrganizationRoleDAO organizationRoleDAO) {
-		this.organizationRoleDAO = organizationRoleDAO;
-	}
-	
-	/**   
-	 * @param id
-	 * @return  
+	private OrganizationRoleDAO organizationRoleDAO;
+
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#get(java.lang.Long)  
-	 */
+	 */ 
 	@Override
 	public OrganizationRole get(Long id) {
 		return organizationRoleDAO.findOne(id);
 	}
 
-	/**   
-	 * @param organizationId
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#find(java.lang.Long)  
+	/*
+	 * (non-Javadoc) 
+	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#saveOrUpdate(com.ketayao.ketacustom.entity.main.OrganizationRole)  
 	 */
 	@Override
-	public List<OrganizationRole> find(Long organizationId) {
-		return organizationRoleDAO.findByOrganizationId(organizationId);
-	}
-
-	/**   
-	 * @param organizationRole  
-	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#save(com.ketayao.ketacustom.entity.main.OrganizationRole)  
-	 */
-	@Override
-	public void save(OrganizationRole organizationRole) {
+	public void saveOrUpdate(OrganizationRole organizationRole) {
 		organizationRoleDAO.save(organizationRole);
 	}
 
-	/**   
-	 * @param organizationRoleId  
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#delete(java.lang.Long)  
 	 */
 	@Override
-	public void delete(Long organizationRoleId) {
-		organizationRoleDAO.delete(organizationRoleId);
+	public void delete(Long id) {
+		organizationRoleDAO.delete(id);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#findAll(com.ketayao.ketacustom.util.dwz.Page)  
+	 */
+	@Override
+	public List<OrganizationRole> findAll(Page page) {
+		org.springframework.data.domain.Page<OrganizationRole> springDataPage = organizationRoleDAO.findAll(PageUtils.createPageable(page));
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#findByExample(org.springframework.data.jpa.domain.Specification, com.ketayao.ketacustom.util.dwz.Page)	
+	 */
+	@Override
+	public List<OrganizationRole> findByExample(
+			Specification<OrganizationRole> specification, Page page) {
+		org.springframework.data.domain.Page<OrganizationRole> springDataPage = organizationRoleDAO.findAll(specification, PageUtils.createPageable(page));
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.OrganizationRoleService#findByOrganizationId(java.lang.Long)
+	 */
+	@Override
+	public List<OrganizationRole> findByOrganizationId(Long organizationId) {
+		return organizationRoleDAO.findByOrganizationId(organizationId);
+	}
 }

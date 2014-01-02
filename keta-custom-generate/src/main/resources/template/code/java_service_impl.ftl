@@ -23,9 +23,8 @@ public class ${className}ServiceImpl implements ${className}Service {
 	@Autowired
 	private ${className}DAO ${instanceName}DAO;
 
-	/**   
-	 * @param id
-	 * @return  
+	/*
+	 * (non-Javadoc)
 	 * @see ${pknService}.${className}Service#get(java.lang.Long)  
 	 */ 
 	@Override
@@ -33,8 +32,8 @@ public class ${className}ServiceImpl implements ${className}Service {
 		return ${instanceName}DAO.findOne(id);
 	}
 
-	/**   
-	 * @param ${instanceName}  
+	/*
+	 * (non-Javadoc) 
 	 * @see ${pknService}.${className}Service#saveOrUpdate(${pknEntity}.${className})  
 	 */
 	@Override
@@ -42,8 +41,8 @@ public class ${className}ServiceImpl implements ${className}Service {
 		${instanceName}DAO.save(${instanceName});
 	}
 
-	/**   
-	 * @param id  
+	/*
+	 * (non-Javadoc)
 	 * @see ${pknService}.${className}Service#delete(java.lang.Long)  
 	 */
 	@Override
@@ -51,9 +50,8 @@ public class ${className}ServiceImpl implements ${className}Service {
 		${instanceName}DAO.delete(id);
 	}
 	
-	/**   
-	 * @param page
-	 * @return  
+	/*
+	 * (non-Javadoc)
 	 * @see ${pknService}.${className}Service#findAll(com.ketayao.ketacustom.util.dwz.Page)  
 	 */
 	@Override
@@ -63,24 +61,8 @@ public class ${className}ServiceImpl implements ${className}Service {
 		return springDataPage.getContent();
 	}
 	
-	/**   
-	 * @param page
-	 * @param ${indexName}
-	 * @return  
-	 * @see ${pknService}.${className}Service#findBy${indexName?cap_first}(com.ketayao.ketacustom.util.dwz.Page, java.lang.String)  
-	 */
-	@Override
-	public List<${className}> findBy${indexName?cap_first}(Page page, String ${indexName}) {
-		org.springframework.data.domain.Page<${className}> springDataPage = ${instanceName}DAO.findBy${indexName?cap_first}Containing(${indexName}, PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
-		return springDataPage.getContent();
-	}
-	
-	/**
-	 * 
-	 * @param specification
-	 * @param page
-	 * @return
+	/*
+	 * (non-Javadoc)
 	 * @see ${pknService}.${className}Service#findByExample(org.springframework.data.jpa.domain.Specification, com.ketayao.ketacustom.util.dwz.Page)	
 	 */
 	@Override

@@ -1,34 +1,23 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.ketacustom.service.PermissionService.java
- * Class:			PermissionService
- * Date:			2013-4-16
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          2.0.0
- * Description:		
- *
- * </pre>
- **/
- 
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
 package com.ketayao.ketacustom.service;
 
-import com.ketayao.ketacustom.entity.main.Permission;
+import java.util.List;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  2.0.0
- * @since   2013-4-16 下午2:11:41 
- */
+import org.springframework.data.jpa.domain.Specification;
+
+import com.ketayao.ketacustom.entity.main.Permission;
+import com.ketayao.ketacustom.util.dwz.Page;
 
 public interface PermissionService {
-	
-	void save(Permission permission);
-	
 	Permission get(Long id);
-	
-	void update(Permission permission);
-	
+
+	void saveOrUpdate(Permission permission);
+
 	void delete(Long id);
+	
+	List<Permission> findAll(Page page);
+	
+	List<Permission> findByExample(Specification<Permission> specification, Page page);
 }

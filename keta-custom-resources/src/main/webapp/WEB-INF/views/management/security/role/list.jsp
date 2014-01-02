@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 
 <dwz:paginationForm action="${contextPath }/management/security/role/list" page="${page }">
-	<input type="hidden" name="keywords" value="${keywords}"/>
+	<input type="hidden" name="search_LIKE_name" value="${param.search_LIKE_name}"/>
 </dwz:paginationForm>
 
 <form method="post" action="${contextPath }/management/security/role/list" onsubmit="return navTabSearch(this)">
@@ -12,7 +12,7 @@
 			<ul class="searchContent">
 				<li>
 					<label>角色名称：</label>
-					<input type="text" name="keywords" value="${keywords}"/>
+					<input type="text" name=search_LIKE_name value="${param.search_LIKE_name }"/>
 				</li>
 			</ul>
 			<div class="subBar">

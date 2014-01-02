@@ -1,127 +1,106 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ketayao.ketacustom.service.impl.ModuleServiceImpl.java
- * Class:			ModuleServiceImpl
- * Date:			2012-8-6
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          1.1.0
- * Description:		
- *
- * </pre>
- **/
- 
-package com.ketayao.ketacustom.service.impl;
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
+package	com.ketayao.ketacustom.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ketayao.ketacustom.dao.ModuleDAO;
 import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.exception.ExistedException;
-import com.ketayao.ketacustom.exception.ServiceException;
+import com.ketayao.ketacustom.exception.NotDeletedException;
 import com.ketayao.ketacustom.service.ModuleService;
 import com.ketayao.ketacustom.util.dwz.Page;
 import com.ketayao.ketacustom.util.dwz.PageUtils;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  1.1.0
- * @since   2012-8-6 上午9:45:28 
- */
 @Service
 @Transactional
 public class ModuleServiceImpl implements ModuleService {
+	
 	@Autowired
 	private ModuleDAO moduleDAO;
-	
-	@Override
-	public void save(Module module) throws ExistedException {
-		if (moduleDAO.getBySn(module.getSn()) != null) {
-			throw new ExistedException("已存在sn=" + module.getSn() + "的模块。");
-		}
-		moduleDAO.save(module);
-	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.ModuleService#get(java.lang.Long)  
+	 */ 
 	@Override
 	public Module get(Long id) {
 		return moduleDAO.findOne(id);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.ketayao.ketacustom.service.ModuleService#getBySn(java.lang.String)
+
+	/*
+	 * (non-Javadoc) 
+	 * @see com.ketayao.ketacustom.service.ModuleService#saveOrUpdate(com.ketayao.ketacustom.entity.main.Module)  
 	 */
 	@Override
-	public Module getBySn(String sn) {
-		return moduleDAO.getBySn(sn);
-	}
+	public void saveOrUpdate(Module module) {
+		if (module.getId() == null) {
+			if (moduleDAO.getBySn(module.getSn()) != null) {
+				throw new ExistedException("已存在sn=" + module.getSn() + "的模块。");
+			}
+		}
 
-	@Override
-	public void update(Module module) {
 		moduleDAO.save(module);
 	}
 
-	/**   
-	 * @param id
-	 * @throws ServiceException  
-	 * @see com.ketayao.ketacustom.service.ModuleService#delete(int)  
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.ModuleService#delete(java.lang.Long)  
 	 */
-	public void delete(Long id) throws ServiceException {
+	@Override
+	public void delete(Long id) {
 		if (isRoot(id)) {
-			throw new ServiceException("不允许删除根模块。");
+			throw new NotDeletedException("不允许删除根模块。");
 		}
 		
 		Module module = this.get(id);
 		
 		//先判断是否存在子模块，如果存在子模块，则不允许删除
 		if(module.getChildren().size() > 0){
-			throw new ServiceException(module.getName() + "模块下存在子模块，不允许删除。");
+			throw new NotDeletedException(module.getName() + "模块下存在子模块，不允许删除。");
 		}
 		
 		moduleDAO.delete(module);
 	}
-
-	/**   
-	 * @param parentId
-	 * @param page
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.ModuleService#find(java.lang.Long, com.ketayao.ketacustom.util.dwz.Page)  
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.ModuleService#findAll(com.ketayao.ketacustom.util.dwz.Page)  
 	 */
-	public List<Module> find(Long parentId, Page page) {
-		org.springframework.data.domain.Page<Module> springDataPage = 
-				moduleDAO.findByParentId(parentId, PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
-		return springDataPage.getContent();
-	}
-
-	/**   
-	 * @param parentId
-	 * @param name
-	 * @param page
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.ModuleService#find(java.lang.Long, java.lang.String, com.ketayao.ketacustom.util.dwz.Page)  
-	 */
-	public List<Module> find(Long parentId, String name, Page page) {
-		org.springframework.data.domain.Page<Module> springDataPage = 
-				moduleDAO.findByParentIdAndNameContaining(parentId, name, PageUtils.createPageable(page));
+	@Override
+	public List<Module> findAll(Page page) {
+		org.springframework.data.domain.Page<Module> springDataPage = moduleDAO.findAll(PageUtils.createPageable(page));
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 	
-	/**   
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.ModuleService#findAll()  
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.ModuleService#findByExample(org.springframework.data.jpa.domain.Specification, com.ketayao.ketacustom.util.dwz.Page)	
+	 */
+	@Override
+	public List<Module> findByExample(
+			Specification<Module> specification, Page page) {
+		org.springframework.data.domain.Page<Module> springDataPage = moduleDAO.findAll(specification, PageUtils.createPageable(page));
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.ModuleService#findAll()
 	 */
 	@Override
 	public List<Module> findAll() {
 		return moduleDAO.findAll();
 	}
-
+	
 	/**
 	 * 判断是否是根模块.
 	 */
@@ -179,5 +158,4 @@ public class ModuleServiceImpl implements ModuleService {
 		
 		makeChildren(tmp, children);
 	}
-	
 }

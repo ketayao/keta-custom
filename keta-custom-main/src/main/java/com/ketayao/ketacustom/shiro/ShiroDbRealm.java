@@ -13,8 +13,10 @@
 
 package com.ketayao.ketacustom.shiro;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,8 +39,6 @@ import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.ketayao.ketacustom.entity.main.DataControl;
 import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.entity.main.OrganizationRole;
@@ -118,15 +118,16 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		} 
 		
 		UsernamePasswordToken token = (UsernamePasswordToken)authcToken;
-		User user = userService.get(token.getUsername());
+		User user = userService.getByUsername(token.getUsername());
 		if (user != null) {
-			if (user.getStatus().equals("disabled")) {
+			if (user.getStatus().equals(User.STATUS_DISABLED)) {
 				throw new DisabledAccountException();
 			}
 			
 			byte[] salt = Encodes.decodeHex(user.getSalt());
 			
-			ShiroUser shiroUser = new ShiroUser(user.getId(), user.getUsername(), user);
+			ShiroUser shiroUser = new ShiroUser(user.getId(), user.getUsername());
+			
 			// 这里可以缓存认证
 			return new SimpleAuthenticationInfo(shiroUser, user.getPassword(),
 					ByteSource.Util.bytes(salt), getName());
@@ -145,11 +146,14 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		if (CollectionUtils.isEmpty(collection)) {
 			return null;
 		}
-		ShiroUser shiroUser = (ShiroUser) collection.iterator().next();
 		
-		List<UserRole> userRoles = userRoleService.find(shiroUser.getId());
+		ShiroUser shiroUser = (ShiroUser) collection.iterator().next();
+		// 设置、更新User
+		shiroUser.setUser(userService.get(shiroUser.getId()));
+		
+		List<UserRole> userRoles = userRoleService.findByUserId(shiroUser.getId());
 		List<OrganizationRole> organizationRoles = organizationRoleService
-				.find(shiroUser.getUser().getOrganization().getId());
+				.findByOrganizationId(shiroUser.getUser().getOrganization().getId());
 		
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		info.addStringPermissions(makePermissions(userRoles, organizationRoles, shiroUser));
@@ -157,19 +161,17 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		return info;
 	}
 	
-	private Collection<String> makePermissions(List<UserRole> userRoles, List<OrganizationRole> organizationRoles, ShiroUser shiroUser) {
+	private Collection<String> makePermissions(List<UserRole> userRoles, List<OrganizationRole> organizationRoles, 
+			ShiroUser shiroUser) {
 		// 清空shiroUser中map
 		shiroUser.getHasDataControls().clear();
 		shiroUser.getHasModules().clear();
-		
-		// 更新User
-		shiroUser.setUser(userService.get(shiroUser.getId()));
 		
 		// 是否启用超级管理员 
 		if (activeRoot) {
 			// id==1为超级管理员，构造所有权限 
 			if (shiroUser.getId() == 1) {
-				Collection<String> stringPermissions = Sets.newHashSet();
+				Collection<String> stringPermissions = new HashSet<String>();
 				
 				List<Module> modules = moduleService.findAll();
 				StringBuilder builder = new StringBuilder();
@@ -182,14 +184,14 @@ public class ShiroDbRealm extends AuthorizingRealm {
 				}
 				
 				if (log.isInfoEnabled()) {
-					log.info("使用了超级管理员:" + shiroUser.getLoginName() + "登录了系统。At " + new Date());
+					log.info("使用了" + shiroUser.getLoginName() + "的超级管理员权限:" + "。At " + new Date());
 					log.info(shiroUser.getLoginName() + "拥有的权限:" + stringPermissions);
 				}
 				return stringPermissions;
 			}
 		}
 		
-		Set<Role> roles = Sets.newHashSet();
+		Set<Role> roles = new HashSet<Role>();
 		for (UserRole userRole : userRoles) {
 			roles.add(userRole.getRole());
 		}
@@ -198,14 +200,14 @@ public class ShiroDbRealm extends AuthorizingRealm {
 			roles.add(organizationRole.getRole());
 		}
 		
-		Collection<String> stringPermissions = Lists.newArrayList();
+		Collection<String> stringPermissions = new ArrayList<String>();
 		for (Role role : roles) {
 			List<RolePermission> rolePermissions = role.getRolePermissions();
 			for (RolePermission rolePermission : rolePermissions) {
 				Permission permission = rolePermission.getPermission();
 				
 				String resource = permission.getModule().getSn();
-				String operate = permission.getShortName();
+				String operate = permission.getSn();
 		
 				StringBuilder builder = new StringBuilder();
 				builder.append(resource + ":" + operate);
@@ -262,12 +264,25 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		String oldPassword = Encodes.encodeHex(hashPassword);
 		return password.equals(oldPassword);
 	}
+	
+	/* 
+	 * 覆盖父类方法，设置AuthorizationCacheKey为ShiroUser的loginName，这样才能顺利删除shiro中的缓存。
+	 * 因为shiro默认的AuthorizationCacheKey为PrincipalCollection的对象。
+	 * @see org.apache.shiro.realm.AuthorizingRealm#getAuthorizationCacheKey(org.apache.shiro.subject.PrincipalCollection)
+	 */
+	@Override
+	protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
+		ShiroUser shiroUser = (ShiroUser)principals.getPrimaryPrincipal();
+		return shiroUser.getLoginName();
+	}
 
 	/**
 	 * 更新用户授权信息缓存.
 	 */
-	public void clearCachedAuthorizationInfo(String principal) {
-		SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
+	public void clearCachedAuthorizationInfo(String loginName) {
+		ShiroUser shiroUser = new ShiroUser(loginName);
+		
+		SimplePrincipalCollection principals = new SimplePrincipalCollection(shiroUser, getName());
 		clearCachedAuthorizationInfo(principals);
 	}
 

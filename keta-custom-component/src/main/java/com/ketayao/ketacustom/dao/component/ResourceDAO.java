@@ -13,9 +13,8 @@
  
 package com.ketayao.ketacustom.dao.component;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.ketayao.ketacustom.entity.component.Resource;
 
@@ -26,8 +25,6 @@ import com.ketayao.ketacustom.entity.component.Resource;
  * @since   2013-6-28 上午10:18:10 
  */
 
-public interface ResourceDAO extends JpaRepository<Resource, Long> {
+public interface ResourceDAO extends JpaRepository<Resource, Long>, JpaSpecificationExecutor<Resource>{
 	Resource getByUuid(String uuid);
-	
-	Page<Resource> findByNameContaining(Pageable pageable, String name); 
 }

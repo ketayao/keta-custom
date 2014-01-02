@@ -36,24 +36,24 @@ import com.ketayao.ketacustom.log.LogLevel;
  * @since   2013-5-3 下午4:43:44 
  */
 @Entity
-@Table(name="security_log_entity")
-public class LogEntity implements Idable<Long> {
+@Table(name="keta_log_info")
+public class LogInfo implements Idable<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
-	@Column(length=255)
-	private String message;
 	
 	@Column(length=32)
 	private String username;
-	
-	@Column
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createTime;
+
+	@Column(length=256)
+	private String message;
 	
 	@Column(length=16)
 	private String ipAddress;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(updatable=false)
+	private Date createTime;
 	
 	@Column(length=16)
 	@Enumerated(EnumType.STRING)

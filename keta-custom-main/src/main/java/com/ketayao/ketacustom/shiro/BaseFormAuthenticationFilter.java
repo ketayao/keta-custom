@@ -25,7 +25,6 @@ import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ketayao.ketacustom.SecurityConstants;
 import com.ketayao.utils.Exceptions;
 
 /** 
@@ -105,9 +104,6 @@ public class BaseFormAuthenticationFilter extends FormAuthenticationFilter {
 		ShiroUser shiroUser = (ShiroUser)subject.getPrincipal();
 		// 加入ipAddress
 		shiroUser.setIpAddress(request.getRemoteAddr());
-		
-		// 这个是放入user还是shiroUser呢？
-		httpServletRequest.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());
 		
 		if (!"XMLHttpRequest".equalsIgnoreCase(httpServletRequest.getHeader("X-Requested-With")) 
 				|| request.getParameter("ajax") == null) {// 不是ajax请求

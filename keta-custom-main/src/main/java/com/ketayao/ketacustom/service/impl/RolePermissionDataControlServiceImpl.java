@@ -23,9 +23,8 @@ public class RolePermissionDataControlServiceImpl implements RolePermissionDataC
 	@Autowired
 	private RolePermissionDataControlDAO rolePermissionDataControlDAO;
 
-	/**   
-	 * @param id
-	 * @return  
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#get(java.lang.Long)  
 	 */ 
 	@Override
@@ -33,8 +32,8 @@ public class RolePermissionDataControlServiceImpl implements RolePermissionDataC
 		return rolePermissionDataControlDAO.findOne(id);
 	}
 
-	/**   
-	 * @param rolePermissionDataControl  
+	/*
+	 * (non-Javadoc) 
 	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#saveOrUpdate(com.ketayao.ketacustom.entity.main.RolePermissionDataControl)  
 	 */
 	@Override
@@ -42,8 +41,8 @@ public class RolePermissionDataControlServiceImpl implements RolePermissionDataC
 		rolePermissionDataControlDAO.save(rolePermissionDataControl);
 	}
 
-	/**   
-	 * @param id  
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#delete(java.lang.Long)  
 	 */
 	@Override
@@ -51,9 +50,8 @@ public class RolePermissionDataControlServiceImpl implements RolePermissionDataC
 		rolePermissionDataControlDAO.delete(id);
 	}
 	
-	/**   
-	 * @param page
-	 * @return  
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#findAll(com.ketayao.ketacustom.util.dwz.Page)  
 	 */
 	@Override
@@ -63,11 +61,8 @@ public class RolePermissionDataControlServiceImpl implements RolePermissionDataC
 		return springDataPage.getContent();
 	}
 	
-	/**
-	 * 
-	 * @param specification
-	 * @param page
-	 * @return
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#findByExample(org.springframework.data.jpa.domain.Specification, com.ketayao.ketacustom.util.dwz.Page)	
 	 */
 	@Override
@@ -79,36 +74,27 @@ public class RolePermissionDataControlServiceImpl implements RolePermissionDataC
 	}
 
 	/* (non-Javadoc)
-	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#save(java.lang.Iterable)
+	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#save(java.util.List)
 	 */
 	@Override
-	public void save(Iterable<RolePermissionDataControl> entities) {
-		rolePermissionDataControlDAO.save(entities);
+	public void save(List<RolePermissionDataControl> newRList) {
+		rolePermissionDataControlDAO.save(newRList);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#delete(java.util.List)
+	 */
+	@Override
+	public void delete(List<RolePermissionDataControl> delRList) {
+		rolePermissionDataControlDAO.delete(delRList);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#findByRolePermissionRoleId(java.lang.Long)
+	 */
+	@Override
+	public List<RolePermissionDataControl> findByRolePermissionRoleId(Long id) {
+		return rolePermissionDataControlDAO.findByRolePermissionRoleId(id);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#delete(java.lang.Iterable)
-	 */
-	@Override
-	public void delete(Iterable<RolePermissionDataControl> entities) {
-		rolePermissionDataControlDAO.delete(entities);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#findByRolePermissionId(java.lang.Long)
-	 */
-	@Override
-	public List<RolePermissionDataControl> findByRolePermissionId(
-			Long rolePermissionId) {
-		return rolePermissionDataControlDAO.findByRolePermissionId(rolePermissionId);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.ketayao.ketacustom.service.RolePermissionDataControlService#findByRoleId(java.lang.Long)
-	 */
-	@Override
-	public List<RolePermissionDataControl> findByRoleId(Long roleId) {
-		return rolePermissionDataControlDAO.findByRolePermissionRoleId(roleId);
-	}
-
 }

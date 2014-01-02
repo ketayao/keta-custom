@@ -1,16 +1,6 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ketayao.ketacustom.dao.ModuleDao.java
- * Class:			ModuleDao
- * Date:			2012-8-6
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          1.1.0
- * Description:		
- *
- * </pre>
- **/
- 
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
 package com.ketayao.ketacustom.dao;
 
 import java.util.List;
@@ -20,22 +10,14 @@ import javax.persistence.QueryHint;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 
 import com.ketayao.ketacustom.entity.main.Module;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  1.1.0
- * @since   2012-8-6 上午9:31:03 
- */
-
-public interface ModuleDAO extends JpaRepository<Module, Long> {
+public interface ModuleDAO extends JpaRepository<Module, Long>, JpaSpecificationExecutor<Module> {
 	Page<Module> findByParentId(Long parentId, Pageable pageable);
-	
-	Page<Module> findByParentIdAndNameContaining(Long parentId, String name, Pageable pageable);
 	
 	@QueryHints(value={
 			@QueryHint(name="org.hibernate.cacheable",value="true"),

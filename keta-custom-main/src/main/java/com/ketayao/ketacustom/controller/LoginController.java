@@ -15,7 +15,7 @@ package com.ketayao.ketacustom.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletRequest;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.DisabledAccountException;
@@ -54,14 +54,12 @@ public class LoginController {
 	}
 	
 	@RequestMapping(method = {RequestMethod.GET}, params="ajax=true")
-	public @ResponseBody
-	String loginDialog2AJAX() {
+	public @ResponseBody String loginDialog2AJAX() {
 		return loginDialog();
 	}
 		
 	@RequestMapping(method = {RequestMethod.GET}, headers = "X-Requested-With=XMLHttpRequest")
-	public @ResponseBody
-	String loginDialog() {
+	public @ResponseBody String loginDialog() {
 		return AjaxObject.newTimeout("会话超时，请重新登录。").toString();
 	}
 
@@ -72,15 +70,14 @@ public class LoginController {
 
 	@Log(message="会话超时， 该用户重新登录系统。")
 	@RequestMapping(value = "/timeout/success", method = {RequestMethod.GET})
-	public @ResponseBody
-	String timeoutSuccess() {
+	public @ResponseBody String timeoutSuccess() {
 		return AjaxObject.newOk("登录成功。").toString();
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String fail(
 			@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username,
-			Map<String, Object> map, HttpServletRequest request) {
+			Map<String, Object> map, ServletRequest request) {
 
 		String msg = parseException(request);
 		
@@ -90,9 +87,8 @@ public class LoginController {
 		return LOGIN_PAGE;
 	}
 
-	@RequestMapping(method = { RequestMethod.POST}, headers = "x-requested-with=XMLHttpRequest")
-	public @ResponseBody
-	String failDialog(HttpServletRequest request) {
+	@RequestMapping(method = {RequestMethod.POST}, headers = "x-requested-with=XMLHttpRequest")
+	public @ResponseBody String failDialog(ServletRequest request) {
 		String msg = parseException(request);
 		
 		AjaxObject ajaxObject = new AjaxObject(msg);
@@ -102,7 +98,7 @@ public class LoginController {
 		return ajaxObject.toString();
 	}
 
-	private String parseException(HttpServletRequest request) {
+	private String parseException(ServletRequest request) {
 		String errorString = (String)request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
 		Class<?> error = null;
 		try {
@@ -126,6 +122,7 @@ public class LoginController {
 			else if (error.equals(DisabledAccountException.class))
 				msg = "账号被冻结！";
 		}
+
 		return "登录失败，" + msg;
 	}
 }

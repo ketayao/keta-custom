@@ -5,18 +5,19 @@
 <form method="post" action="${contextPath }/management/security/organization/create" class="required-validate pageForm" onsubmit="return validateCallback(this, dialogReloadRel2Org);">
 	<input type="hidden" name="parent.id" value="${parentOrganizationId }"/>
 	<div class="pageFormContent" layoutH="58">
-		<dl>
-			<dt>名称：</dt>
-			<dd>
-				<input type="text" name="name" class="validate[required,maxSize[64]] required" size="32" maxlength="64" alt="请输入组织名称"/>
-			</dd>
-		</dl>		
-		<dl>
-			<dt>描述：</dt>
-			<dd>
-				<textarea name="description" cols="28" rows="3" maxlength="255"></textarea>
-			</dd>
-		</dl>	
+		<p>
+			<label>名称：</label>
+			<input type="text" name="name" class="input-medium validate[required,maxSize[64]] required" maxlength="64"/>
+		</p>	
+		<p>
+			<label>优先级：</label>
+			<input type="text" name="priority" class="validate[required,custom[integer],min[1],max[999]] required" value="999" maxlength="3" style="width: 80px;"/>
+			<span class="info">（越小越靠前）</span>
+		</p>				
+		<p class="nowrap">
+			<label>描述：</label>
+			<textarea name="description" cols="29" rows="3" maxlength="256" class="input-medium textarea-scroll"></textarea>
+		</p>	
 	</div>
 			
 	<div class="formBar">

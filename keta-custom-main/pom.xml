@@ -65,7 +65,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		<!-- SPRING basic end -->
 
 		<!-- AOP begin -->
@@ -76,7 +75,6 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<!-- AOP end -->
 
@@ -112,22 +110,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-		</dependency>
 
 		<!-- optional datasource pool -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- jdbc driver -->
-		<dependency>
-			<groupId>${jdbc.driver.groupId}</groupId>
-			<artifactId>${jdbc.driver.artifactId}</artifactId>
 		</dependency>
 		<!-- PERSISTENCE end -->
 
@@ -142,18 +129,12 @@
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 
-		<!-- j2ee web spec -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-		</dependency>
 		<!-- WEB end -->
 
 	    <!-- freemarker engine -->
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>${freemarker.version}</version>
 		</dependency> 
 
 		<!-- JSON begin -->
@@ -211,21 +192,18 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>log4j-over-slf4j</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- common-logging 实际调用slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- java.util.logging 实际调用slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<!-- LOGGING end -->
 
@@ -234,33 +212,17 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
-
-		<!-- google java library -->
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-		</dependency>
+		</dependency>		
 		<!-- OTHER TOOLS begin -->
 
 		<!-- JSR303 BeanValidator -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-		</dependency>
-
-		<!-- fileupload -->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
 		</dependency>
 		<!-- OTHER TOOLS end -->
 

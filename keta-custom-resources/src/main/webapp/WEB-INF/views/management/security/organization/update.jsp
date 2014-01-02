@@ -6,26 +6,25 @@
 	<input type="hidden" name="id" value="${organization.id }"/>
 	<input type="hidden" name="parent.id" value="${organization.parent.id }"/>
 	<div class="pageFormContent" layoutH="58">
-		<dl>
-			<dt>名称：</dt>
-			<dd>
-				<input type="text" name="name" class="validate[required,maxSize[64]] required" size="32" maxlength="64" value="${organization.name }" alt="请输入组织名称"/>
-			</dd>
-		</dl>
-		<dl>
-			<dt>父组织：</dt>
-			<dd>
-				<input name="parent.id" value="${organization.parent.id }" type="hidden"/>
-				<input class="validate[required] required" name="parent.name" type="text" readonly="readonly" value="${organization.parent.name }"/>
-				<a class="btnLook" href="${contextPath}/management/security/organization/lookupParent/${organization.id}" lookupGroup="parent" mask="true" title="更改父组织" width="400">查找带回</a>
-			</dd>
-		</dl>			
-		<dl>
-			<dt>描述：</dt>
-			<dd>
-				<textarea name="description" cols="28" rows="3" maxlength="255">${organization.description }</textarea>
-			</dd>
-		</dl>	
+		<p>
+			<label>父组织：</label>
+			<input name="parent.id" value="${organization.parent.id }" type="hidden"/>
+			<input class="validate[required] required" name="parent.name" type="text" readonly="readonly" value="${organization.parent.name }" style="width: 140px;"/>
+			<a class="btnLook" href="${contextPath}/management/security/organization/lookupParent/${organization.id}" lookupGroup="parent" mask="true" title="更改父组织" width="400">查找带回</a>
+		</p>
+		<p>
+			<label>名称：</label>
+			<input type="text" name="name" class="input-medium validate[required,maxSize[64]] required" maxlength="64" value="${organization.name }"/>
+		</p>	
+		<p>
+			<label>优先级：</label>
+			<input type="text" name="priority" class="validate[required,custom[integer],min[1],max[999]] required" value="${organization.priority }" maxlength="3" style="width: 80px;"/>
+			<span class="info">（越小越靠前）</span>
+		</p>				
+		<p class="nowrap">
+			<label>描述：</label>
+			<textarea name="description" cols="29" rows="3" maxlength="256" class="input-medium textarea-scroll">${organization.description }</textarea>
+		</p>			
 	</div>
 			
 	<div class="formBar">

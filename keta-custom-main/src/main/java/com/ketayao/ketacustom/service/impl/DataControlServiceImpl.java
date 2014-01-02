@@ -10,11 +10,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ketayao.ketacustom.dao.DataControlDAO;
-import com.ketayao.ketacustom.entity.main.DataControl;
-import com.ketayao.ketacustom.service.DataControlService;
 import com.ketayao.ketacustom.util.dwz.Page;
 import com.ketayao.ketacustom.util.dwz.PageUtils;
+import com.ketayao.ketacustom.entity.main.DataControl;
+import com.ketayao.ketacustom.dao.DataControlDAO;
+import com.ketayao.ketacustom.service.DataControlService;
 
 @Service
 @Transactional
@@ -23,32 +23,26 @@ public class DataControlServiceImpl implements DataControlService {
 	@Autowired
 	private DataControlDAO dataControlDAO;
 
-	/**   
-	 * @param id
-	 * @return  
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.DataControlService#get(java.lang.Long)  
 	 */ 
 	@Override
 	public DataControl get(Long id) {
 		return dataControlDAO.findOne(id);
 	}
-	
-	@Override
-	public DataControl getByName(String name) {
-		return dataControlDAO.getByName(name);
-	}
 
-	/**   
-	 * @param dataControl  
-	 * @see com.ketayao.ketacustom.service.DataControlService#saveOrUpdate(com.ketayao.ketacustom.entity.DataControl)  
+	/*
+	 * (non-Javadoc) 
+	 * @see com.ketayao.ketacustom.service.DataControlService#saveOrUpdate(com.ketayao.ketacustom.entity.main.DataControl)  
 	 */
 	@Override
 	public void saveOrUpdate(DataControl dataControl) {
 		dataControlDAO.save(dataControl);
 	}
 
-	/**   
-	 * @param id  
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.DataControlService#delete(java.lang.Long)  
 	 */
 	@Override
@@ -56,9 +50,8 @@ public class DataControlServiceImpl implements DataControlService {
 		dataControlDAO.delete(id);
 	}
 	
-	/**   
-	 * @param page
-	 * @return  
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.DataControlService#findAll(com.ketayao.ketacustom.util.dwz.Page)  
 	 */
 	@Override
@@ -68,11 +61,8 @@ public class DataControlServiceImpl implements DataControlService {
 		return springDataPage.getContent();
 	}
 	
-	/**
-	 * 
-	 * @param specification
-	 * @param page
-	 * @return
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.DataControlService#findByExample(org.springframework.data.jpa.domain.Specification, com.ketayao.ketacustom.util.dwz.Page)	
 	 */
 	@Override

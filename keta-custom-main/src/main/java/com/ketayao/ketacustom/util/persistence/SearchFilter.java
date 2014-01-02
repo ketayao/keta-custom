@@ -1,11 +1,10 @@
 package com.ketayao.ketacustom.util.persistence;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
-
-import com.google.common.collect.Maps;
 
 /**
  * 动态查询对象
@@ -32,7 +31,7 @@ public class SearchFilter {
 	 * searchParams中key的格式为OPERATOR_FIELDNAME
 	 */
 	public static Map<String, SearchFilter> parse(Map<String, Object> searchParams) {
-		Map<String, SearchFilter> filters = Maps.newHashMap();
+		Map<String, SearchFilter> filters = new HashMap<String, SearchFilter>();
 
 		for (Entry<String, Object> entry : searchParams.entrySet()) {
 			// 过滤掉空值

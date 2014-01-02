@@ -12,8 +12,6 @@ import com.ketayao.ketacustom.util.dwz.Page;
 
 public interface DataControlService {
 	DataControl get(Long id);
-	
-	DataControl getByName(String name);
 
 	void saveOrUpdate(DataControl dataControl);
 

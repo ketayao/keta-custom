@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import com.ketayao.ketacustom.entity.main.DataControl;
 
 public interface DataControlDAO extends JpaRepository<DataControl, Long>, JpaSpecificationExecutor<DataControl> {
-	DataControl getByName(String name);
+
 }

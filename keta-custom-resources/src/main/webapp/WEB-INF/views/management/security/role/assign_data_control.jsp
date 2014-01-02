@@ -73,13 +73,13 @@ function assignDC() {
 	<dl>
 		<dt>角色名称：</dt>
 		<dd>
-			<input type="text" name="name" class="validate[required,maxSize[32] required" size="30" maxlength="32" alt="请输入角色名称" value="${role.name }" readonly="readonly"/>
+			<input type="text" name="name" class="input-medium validate[required,maxSize[64] required" maxlength="64" value="${role.name }" readonly="readonly"/>
 		</dd>
 	</dl>
 	<dl>
 		<dt>描述：</dt>
 		<dd>
-			<input type="text" name="description" class="validate[maxSize[255]" size="30" maxlength="255" alt="请输入描述" value="${role.description }" readonly="readonly"/>
+			<input type="text" name="description" class="input-medium validate[maxSize[256]" maxlength="256" value="${role.description }" readonly="readonly"/>
 		</dd>
 	</dl>	
 	<div class="divider"></div>
@@ -89,6 +89,11 @@ function assignDC() {
 		        <td width="50">操作</td>
 		        <td>数据权限</td>
 		    </tr>
+			<c:if test="${fn:length(mpMap) < 1 }">
+			<tr>
+				<td colspan="3" style="color: red;text-align: center;">还未给角色授权！</td>
+			</tr>
+			</c:if>		    
 		    <c:set var="index" value="0"></c:set>
 			<c:forEach var="item" items="${mpMap }">
 			<tr id="${item.key.id }">

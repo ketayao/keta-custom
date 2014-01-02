@@ -60,8 +60,8 @@ public class ${className} implements Idable<Long>{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
 	<#list columns as column>
+	
 	/**
 	 * @param ${column.fieldName} the ${column.fieldName} to set
 	 */

@@ -29,65 +29,69 @@ public class ShiroUser implements Serializable {
 		
 	}
 	
-	/**  
-	 * 构造函数
-	 * @param id
-	 * @param loginName
-	 * @param email
-	 * @param createTime
-	 * @param status  
-	 */ 
-	public ShiroUser(Long id, String loginName, User user) {
+	public ShiroUser(String loginName) {
+		this.loginName = loginName;
+	}
+	
+	public ShiroUser(Long id, String loginName) {
 		this.id = id;
 		this.loginName = loginName;
-		this.user = user;
 	}
-
-	/**  
-	 * 返回 id 的值   
-	 * @return id  
+	
+	/**
+	 * @return the id
 	 */
 	public Long getId() {
 		return id;
 	}
 
-	/**  
-	 * 返回 loginName 的值   
-	 * @return loginName  
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the loginName
 	 */
 	public String getLoginName() {
 		return loginName;
 	}
-	
+
+	/**
+	 * @param loginName the loginName to set
+	 */
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	/**
+	 * @return the ipAddress
+	 */
 	public String getIpAddress() {
 		return ipAddress;
 	}
 
+	/**
+	 * @param ipAddress the ipAddress to set
+	 */
 	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
 	}
 
-	/**  
-	 * 返回 user 的值   
-	 * @return user  
+	/**
+	 * @return the user
 	 */
 	public User getUser() {
 		return user;
 	}
-	
+
 	/**
 	 * @param user the user to set
 	 */
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	/**
-	 * 本函数输出将作为默认的<shiro:principal/>输出.
-	 */
-	@Override
-	public String toString() {
-		return loginName;
 	}
 
 	/**
@@ -98,10 +102,31 @@ public class ShiroUser implements Serializable {
 	}
 
 	/**
+	 * @param hasDataControls the hasDataControls to set
+	 */
+	public void setHasDataControls(Map<String, DataControl> hasDataControls) {
+		this.hasDataControls = hasDataControls;
+	}
+
+	/**
 	 * @return the hasModules
 	 */
 	public Map<String, Module> getHasModules() {
 		return hasModules;
 	}
-	
+
+	/**
+	 * @param hasModules the hasModules to set
+	 */
+	public void setHasModules(Map<String, Module> hasModules) {
+		this.hasModules = hasModules;
+	}
+
+	/**
+	 * 本函数输出将作为默认的<shiro:principal/>输出.
+	 */
+	@Override
+	public String toString() {
+		return loginName;
+	}
 }

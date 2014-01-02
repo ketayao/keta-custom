@@ -2,6 +2,7 @@ package com.ketayao.ketacustom.util.persistence;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -23,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.SecurityConstants;
 import com.ketayao.utils.Exceptions;
 import com.ketayao.utils.ServletUtils;
@@ -72,7 +72,7 @@ public class DynamicSpecifications {
 	@SuppressWarnings("unchecked")
 	public static <T> Specification<T> bySearchFilter(final Class<T> entityClazz, final Collection<SearchFilter> searchFilters) {
 		final Set<SearchFilter> filterSet = new HashSet<SearchFilter>();
-		HttpServletRequest request = getRequest();
+		ServletRequest request = getRequest();
 		if (request != null) {
 			// 数据权限中的filter
 			Collection<SearchFilter> nestFilters = 
@@ -94,7 +94,7 @@ public class DynamicSpecifications {
 			@Override
 			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 				if (filterSet != null && !filterSet.isEmpty()) {
-					List<Predicate> predicates = Lists.newArrayList();
+					List<Predicate> predicates = new ArrayList<Predicate>();
 					for (SearchFilter filter : filterSet) {
 						// nested path translate, 如Task的名为"user.name"的filedName, 转换为Task.user.name属性
 						String[] names = StringUtils.split(filter.getFieldName(), ".");

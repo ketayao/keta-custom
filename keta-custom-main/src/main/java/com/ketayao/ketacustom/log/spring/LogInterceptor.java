@@ -30,7 +30,7 @@ import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.log.LogAPI;
 import com.ketayao.ketacustom.log.LogLevel;
 import com.ketayao.ketacustom.log.LogMessageObject;
-import com.ketayao.ketacustom.log.impl.LogUitl;
+import com.ketayao.ketacustom.log.impl.LogUitls;
 import com.ketayao.utils.Exceptions;
 
 /** 
@@ -57,7 +57,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		LogUitl.putRequest(request);
+		LogUitls.putRequest(request);
 		return true;
 	}
 
@@ -76,7 +76,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 		final Log log = method.getAnnotation(Log.class);
 		if (log != null) {
 			// 得到LogMessageObject
-			final LogMessageObject logMessageObject = LogUitl.getArgs();
+			final LogMessageObject logMessageObject = LogUitls.getArgs();
 			// 另起线程异步操作
 			new Thread(new Runnable() {
 				
@@ -139,7 +139,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		LogUitl.removeRequest();
+		LogUitls.removeRequest();
 	}
 
 	public void setLogAPI(LogAPI logAPI) {

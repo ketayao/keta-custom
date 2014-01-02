@@ -1,113 +1,42 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ketayao.ketacustom.service.impl.OrganizationServiceImpl.java
- * Class:			OrganizationServiceImpl
- * Date:			2012-8-27
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          1.1.0
- * Description:		
- *
- * </pre>
- **/
- 
-package com.ketayao.ketacustom.service.impl;
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
+package	com.ketayao.ketacustom.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ketayao.ketacustom.dao.OrganizationDAO;
 import com.ketayao.ketacustom.dao.UserDAO;
 import com.ketayao.ketacustom.entity.main.Organization;
-import com.ketayao.ketacustom.exception.ServiceException;
+import com.ketayao.ketacustom.exception.NotDeletedException;
+import com.ketayao.ketacustom.exception.NotExistedException;
 import com.ketayao.ketacustom.service.OrganizationService;
 import com.ketayao.ketacustom.util.dwz.Page;
 import com.ketayao.ketacustom.util.dwz.PageUtils;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  1.1.0
- * @since   2012-8-27 下午3:56:46 
- */
 @Service
 @Transactional
 public class OrganizationServiceImpl implements OrganizationService {
 	
 	@Autowired
-	private UserDAO userDAO;
-	
-	@Autowired
 	private OrganizationDAO organizationDAO;
 	
-	@Override
-	public void save(Organization organization) {
-		organizationDAO.save(organization);
-	}
+	@Autowired
+	private UserDAO userDAO;
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.OrganizationService#get(java.lang.Long)  
+	 */ 
 	@Override
 	public Organization get(Long id) {
 		return organizationDAO.findOne(id);
-	}
-
-	@Override
-	public void update(Organization organization) {
-		organizationDAO.save(organization);
-	}
-
-	/**   
-	 * @param id
-	 * @throws ServiceException  
-	 * @see com.ketayao.ketacustom.service.OrganizationService#delete(java.lang.Long)  
-	 */
-	public void delete(Long id) throws ServiceException {
-		if (isRoot(id)) {
-			throw new ServiceException("不允许删除根组织。");
-		}
-		
-		Organization organization = this.get(id);
-		
-		//先判断是否存在子模块，如果存在子模块，则不允许删除
-		if(organization.getChildren().size() > 0){
-			throw new ServiceException(organization.getName() + "组织下存在子组织，不允许删除。");
-		}
-		
-		if (userDAO.findByOrganizationId(id).size() > 0) {
-			throw new ServiceException(organization.getName() + "组织下存在用户，不允许删除。");
-		}
-		
-		organizationDAO.delete(organization);
-	}
-
-	/**   
-	 * @param parentId
-	 * @param page
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.OrganizationService#find(java.lang.Long, com.ketayao.ketacustom.util.dwz.Page)  
-	 */
-	public List<Organization> find(Long parentId, Page page) {
-		org.springframework.data.domain.Page<Organization> springDataPage = 
-				organizationDAO.findByParentId(parentId, PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
-		return springDataPage.getContent();
-	}
-
-	/**   
-	 * @param parentId
-	 * @param name
-	 * @param page
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.OrganizationService#find(java.lang.Long, java.lang.String, com.ketayao.ketacustom.util.dwz.Page)  
-	 */
-	public List<Organization> find(Long parentId, String name, Page page) {
-		org.springframework.data.domain.Page<Organization> springDataPage = 
-				organizationDAO.findByParentIdAndNameContaining(parentId, name, PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
-		return springDataPage.getContent();
 	}
 	
 	/* (non-Javadoc)
@@ -118,18 +47,77 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return organizationDAO.getByName(name);
 	}
 
-	/**
-	 * 判断是否是根组织.
+	/*
+	 * (non-Javadoc) 
+	 * @see com.ketayao.ketacustom.service.OrganizationService#saveOrUpdate(com.ketayao.ketacustom.entity.main.Organization)  
 	 */
-	private boolean isRoot(Long id) {
-		return id == 1;
+	@Override
+	public void saveOrUpdate(Organization organization) {
+		if (organization.getId() == null) {
+			Organization parentOrganization = organizationDAO.findOne(organization.getParent().getId());
+			if (parentOrganization == null) {
+				throw new NotExistedException("id=" + organization.getParent().getId() + "父组织不存在！");
+			}
+			
+			if (organizationDAO.getByName(organization.getName()) != null) {
+				throw new NotExistedException(organization.getName() + "已存在！");
+			}
+		}
+		
+		organizationDAO.save(organization);
 	}
 
-	/**
-	 * 
-	 * @return  
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.OrganizationService#delete(java.lang.Long)  
+	 */
+	@Override
+	public void delete(Long id) {
+		if (isRoot(id)) {
+			throw new NotDeletedException("不允许删除根组织。");
+		}
+		
+		Organization organization = this.get(id);
+		
+		//先判断是否存在子模块，如果存在子模块，则不允许删除
+		if(organization.getChildren().size() > 0){
+			throw new NotDeletedException(organization.getName() + "组织下存在子组织，不允许删除。");
+		}
+		
+		if (userDAO.findByOrganizationId(id).size() > 0) {
+			throw new NotDeletedException(organization.getName() + "组织下存在用户，不允许删除。");
+		}
+		
+		organizationDAO.delete(organization);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.OrganizationService#findAll(com.ketayao.ketacustom.util.dwz.Page)  
+	 */
+	@Override
+	public List<Organization> findAll(Page page) {
+		org.springframework.data.domain.Page<Organization> springDataPage = organizationDAO.findAll(PageUtils.createPageable(page));
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.OrganizationService#findByExample(org.springframework.data.jpa.domain.Specification, com.ketayao.ketacustom.util.dwz.Page)	
+	 */
+	@Override
+	public List<Organization> findByExample(
+			Specification<Organization> specification, Page page) {
+		org.springframework.data.domain.Page<Organization> springDataPage = organizationDAO.findAll(specification, PageUtils.createPageable(page));
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
+	}
+
+	/* (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.OrganizationService#getTree()
 	 */
+	@Override
 	public Organization getTree() {
 		List<Organization> list = organizationDAO.findAllWithCache();
 		
@@ -137,7 +125,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 				
 		return rootList.get(0);
 	}
-
+	
+	/**
+	 * 判断是否是根组织.
+	 */
+	private boolean isRoot(Long id) {
+		return id == 1;
+	}
+	
 	private List<Organization> makeTree(List<Organization> list) {
 		List<Organization> parent = new ArrayList<Organization>();
 		// get parentId = null;

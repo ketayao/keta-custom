@@ -24,7 +24,7 @@ import com.ketayao.ketacustom.entity.Idable;
  * @since   2013-5-6 下午2:29:52
  */
 @Entity
-@Table(name="security_user_role")
+@Table(name="keta_user_role")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.UserRole")
 public class UserRole implements Idable<Long> {
 	@Id
@@ -35,9 +35,9 @@ public class UserRole implements Idable<Long> {
 	 * 值越小，优先级越高
 	 */
 	@NotNull
-	@Range(min=1, max=99)
-	@Column(length=2, nullable=false)
-	private Integer priority = 99;
+	@Range(min=1, max=999)
+	@Column(length=3, nullable=false)
+	private Integer priority = 999;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="roleId")
@@ -102,5 +102,4 @@ public class UserRole implements Idable<Long> {
 	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
-	
 }

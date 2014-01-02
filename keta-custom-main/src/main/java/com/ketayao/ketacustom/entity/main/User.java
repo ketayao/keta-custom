@@ -13,12 +13,14 @@
  
 package com.ketayao.ketacustom.entity.main;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,13 +33,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.entity.Idable;
 
 /** 
@@ -47,31 +49,34 @@ import com.ketayao.ketacustom.entity.Idable;
  * @since   2012-8-2 下午2:44:58 
  */
 @Entity
-@Table(name="security_user")
-//默认的缓存策略.
+@Table(name="keta_user")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.User")
 public class User implements Idable<Long> {
+	
+	public static final String STATUS_DISABLED = "disabled";
+	public static final String STATUS_ENABLED = "enabled";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@NotBlank
-	@Length(min=1, max=32)
-	@Column(nullable=false, length=32, updatable=false)
+	@Length(max=32)
+	@Column(length=32, nullable=false)
 	private String realname;
 
 	@NotBlank
-	@Length(min=1, max=32)
-	@Column(nullable=false, length=32, unique=true, updatable=false)
+	@Length(max=32)
+	@Column(length=32, nullable=false, unique=true, updatable=false)
 	private String username;
 	
-	@Column(nullable=false, length=64)
+	@Column(length=64, nullable=false)
 	private String password;
 	
 	@Transient
 	private String plainPassword;
 	
-	@Column(nullable=false, length=32)
+	@Column(length=32, nullable=false)
 	private String salt;
 	
 	@Length(max=32)
@@ -84,26 +89,26 @@ public class User implements Idable<Long> {
 	private String email;
 	
 	/**
+	 * 使用状态disabled，enabled
+	 */
+	@NotBlank
+	@Length(max=16)
+	@Column(length=16, nullable=false)
+	private String status = STATUS_ENABLED;
+	
+	/**
 	 * 帐号创建时间
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(updatable=false)
 	private Date createTime;
 	
-	/**
-	 * 使用状态disabled，enabled
-	 */
-	@NotBlank
-	@Length(max=16)
-	@Column(nullable=false, length=16)
-	private String status = "enabled";
-	
 	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
 	@OrderBy("priority ASC")
-	private List<UserRole> userRoles = Lists.newArrayList();
+	private List<UserRole> userRoles = new ArrayList<UserRole>();
 	
-	@ManyToOne
-	@JoinColumn(name="orgId")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="organizationId")
 	private Organization organization;
 	
 	public Long getId() {
@@ -241,7 +246,7 @@ public class User implements Idable<Long> {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	/**  
 	 * 返回 userRoles 的值   
 	 * @return userRoles  
@@ -290,9 +295,8 @@ public class User implements Idable<Long> {
 		this.organization = organization;
 	}
 	
-// 在做debug测试时，可能hibernate默认会调用toString方法，该方法包装了集合的样式，在未打开sessionInView时会造成延迟加载错误，
-//	@Override
-//	public String toString() {
-//		return ToStringBuilder.reflectionToString(this);
-//	}
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 }

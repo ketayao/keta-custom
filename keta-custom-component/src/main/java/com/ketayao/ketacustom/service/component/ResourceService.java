@@ -15,6 +15,8 @@ package com.ketayao.ketacustom.service.component;
 
 import java.util.List;
 
+import org.springframework.data.jpa.domain.Specification;
+
 import com.ketayao.ketacustom.entity.component.Resource;
 import com.ketayao.ketacustom.util.dwz.Page;
 
@@ -26,19 +28,15 @@ import com.ketayao.ketacustom.util.dwz.Page;
  */
 
 public interface ResourceService {
-	void save(Resource resource);
-	
-	void update(Resource resource);
-	
-	void delete(Long id);
-	
 	Resource get(Long id);
-	
-	Resource get(String uuid);
+
+	void saveOrUpdate(Resource resource);
+
+	void delete(Long id);
 	
 	List<Resource> findAll(Page page);
 	
-	List<Resource> findByName(Page page, String name);
+	List<Resource> findByExample(Specification<Resource> specification, Page page);
 	
-	List<Resource> find(Page page);
+	Resource getByUuid(String uuid);
 }

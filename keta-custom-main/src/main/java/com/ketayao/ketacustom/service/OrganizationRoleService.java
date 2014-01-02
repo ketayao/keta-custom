@@ -1,31 +1,25 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.ketacustom.service.OrganizationRoleService.java
- * Class:			OrganizationRoleService
- * Date:			2013-4-15
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          2.0.0
- * Description:		
- *
- * </pre>
- **/
- 
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
 package com.ketayao.ketacustom.service;
 
 import java.util.List;
 
-import com.ketayao.ketacustom.entity.main.OrganizationRole;
+import org.springframework.data.jpa.domain.Specification;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  2.0.0
- * @since   2013-4-15 下午4:14:43 
- */
+import com.ketayao.ketacustom.entity.main.OrganizationRole;
+import com.ketayao.ketacustom.util.dwz.Page;
 
 public interface OrganizationRoleService {
 	OrganizationRole get(Long id);
+
+	void saveOrUpdate(OrganizationRole organizationRole);
+
+	void delete(Long id);
+	
+	List<OrganizationRole> findAll(Page page);
+	
+	List<OrganizationRole> findByExample(Specification<OrganizationRole> specification, Page page);
 	
 	/**
 	 * 根据organizationId，找到已分配的角色。
@@ -33,9 +27,5 @@ public interface OrganizationRoleService {
 	 * @param organizationId
 	 * @return
 	 */
-	List<OrganizationRole> find(Long organizationId);
-
-	void save(OrganizationRole organizationRole);
-
-	void delete(Long organizationRoleId);
+	List<OrganizationRole> findByOrganizationId(Long organizationId);
 }

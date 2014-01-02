@@ -78,13 +78,13 @@ $(document).ready(function(){
 	<dl>
 		<dt>名称：</dt>
 		<dd>
-			<input type="text" name="name" class="required" size="30" value="${role.name }" readonly="readonly"/>
+			<input type="text" name="name" class="input-medium required" value="${role.name }" readonly="readonly"/>
 		</dd>
 	</dl>
 	<dl>
 		<dt>名称：</dt>
 		<dd>
-			<input type="text" name="description" size="30" value="${role.description }" readonly="readonly"/>
+			<input type="text" name="description" class="input-medium" value="${role.description }" readonly="readonly"/>
 		</dd>
 	</dl>	
 	<div class="divider"></div>

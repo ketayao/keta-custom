@@ -13,8 +13,6 @@ import org.eclipse.jetty.util.resource.ResourceCollection;
 import org.eclipse.jetty.webapp.WebAppClassLoader;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-import com.google.common.collect.Lists;
-
 public class JettyServer {
 
 	private static final String DEFAULT_WEBAPP_PATH = "src/main/webapp";
@@ -133,7 +131,10 @@ public class JettyServer {
 	 * jar名称不需要版本号，如sitemesh, shiro-web
 	 */
 	public void setTldJarNames(String... jarNames) {
-		List<String> jarNameExprssions = Lists.newArrayList(".*/jstl-[^/]*\\.jar$", ".*/.*taglibs[^/]*\\.jar$");
+		List<String> jarNameExprssions = new ArrayList<String>();
+		jarNameExprssions.add(".*/jstl-[^/]*\\.jar$");
+		jarNameExprssions.add(".*/.*taglibs[^/]*\\.jar$");
+		
 		for (String jarName : jarNames) {
 			jarNameExprssions.add(".*/" + jarName + "-[^/]*\\.jar$");
 		}

@@ -23,15 +23,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -48,10 +49,11 @@ import com.ketayao.ketacustom.entity.component.Resource;
 import com.ketayao.ketacustom.entity.component.StoreType;
 import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.log.LogMessageObject;
-import com.ketayao.ketacustom.log.impl.LogUitl;
+import com.ketayao.ketacustom.log.impl.LogUitls;
 import com.ketayao.ketacustom.service.component.ResourceService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.persistence.DynamicSpecifications;
 import com.ketayao.utils.Exceptions;
 import com.ketayao.utils.FileUtils;
 import com.ketayao.utils.Identities;
@@ -85,17 +87,12 @@ public class ResourceController {
 	
 	@RequiresPermissions("Resource:view")
 	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(Page page, String name, Map<String, Object> map) {
-		List<Resource> resources = null;
-		if (StringUtils.isNotBlank(name)) {
-			resources = resourceService.findByName(page, name);
-		} else {
-			resources = resourceService.find(page);
-		}
+	public String list(ServletRequest request, Page page, Map<String, Object> map) {
+		Specification<Resource> specification = DynamicSpecifications.bySearchFilter(request, Resource.class);
+		List<Resource> resources = resourceService.findByExample(specification, page);
 		
 		map.put("page", page);
 		map.put("resources", resources);
-		map.put("name", name);
 
 		return LIST;
 	}
@@ -146,8 +143,8 @@ public class ResourceController {
 			resource.setUuid(uuid);
 			resource.setStoreType(StoreType.FILE);
 			
-			resourceService.save(resource);
-			LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{resource.getName()}));
+			resourceService.saveOrUpdate(resource);
+			LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{resource.getName()}));
 		} catch (Exception e) {
 			if (uploadedFile.exists()) {
 				uploadedFile.delete();
@@ -169,9 +166,9 @@ public class ResourceController {
 		
 		try {
 			resource.setFile(file.getBytes());
-			resourceService.save(resource);
+			resourceService.saveOrUpdate(resource);
 			
-			LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{resource.getName()}));
+			LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{resource.getName()}));
 		} catch (Exception e) {
 			LOG.error(Exceptions.getStackTraceAsString(e));
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -184,7 +181,7 @@ public class ResourceController {
 	@RequestMapping(value = "/download/{storeType}/{uuid}", method = RequestMethod.GET)
 	public @ResponseBody String download(HttpServletRequest request, HttpServletResponse response, 
 			@PathVariable StoreType storeType, @PathVariable String uuid) {
-		Resource resource = resourceService.get(uuid);
+		Resource resource = resourceService.getByUuid(uuid);
 		if (resource == null) {
 			return "找不到" + uuid + "文件或已被删除。";
 		}
@@ -267,7 +264,7 @@ public class ResourceController {
 			resourceService.delete(id);
 		}
 		
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{ids.length}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{ids.length}));
 		ajaxObject.setCallbackType("");
 		return ajaxObject.toString();
 	}
@@ -291,8 +288,8 @@ public class ResourceController {
 		// 不能修改文件类型
 		oldResource.setName(resource.getName() + "." + FileUtils.getFileExt(oldName));
 		
-		resourceService.save(oldResource);
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldName, oldResource.getName()}));
+		resourceService.saveOrUpdate(oldResource);
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{oldName, oldResource.getName()}));
 		return AjaxObject.newOk("修改资源成功！").toString();
 	}
 	

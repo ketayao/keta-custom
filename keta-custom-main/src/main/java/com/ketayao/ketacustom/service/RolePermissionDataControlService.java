@@ -20,12 +20,20 @@ public interface RolePermissionDataControlService {
 	List<RolePermissionDataControl> findAll(Page page);
 	
 	List<RolePermissionDataControl> findByExample(Specification<RolePermissionDataControl> specification, Page page);
-	
-	void save(Iterable<RolePermissionDataControl> entities);
-	
-	void delete(Iterable<RolePermissionDataControl> entities);
 
-	List<RolePermissionDataControl> findByRolePermissionId(Long rolePermissionId);
-	
-	List<RolePermissionDataControl> findByRoleId(Long roleId);
+	/**
+	 * @param newRList
+	 */
+	void save(List<RolePermissionDataControl> newRList);
+
+	/**
+	 * @param delRList
+	 */
+	void delete(List<RolePermissionDataControl> delRList);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	List<RolePermissionDataControl> findByRolePermissionRoleId(Long id);
 }

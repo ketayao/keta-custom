@@ -15,14 +15,14 @@ package com.ketayao.ketacustom.log.impl;
 
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.collect.Maps;
-import com.ketayao.ketacustom.entity.main.LogEntity;
+import com.ketayao.ketacustom.entity.main.LogInfo;
 import com.ketayao.ketacustom.log.LogLevel;
-import com.ketayao.ketacustom.service.LogEntityService;
+import com.ketayao.ketacustom.service.LogInfoService;
 import com.ketayao.ketacustom.shiro.ShiroUser;
 import com.ketayao.utils.SecurityUtils;
 
@@ -36,9 +36,9 @@ public class Log4JDBCImpl extends LogAdapter {
 	
 	private LogLevel rootLogLevel = LogLevel.ERROR;
 	
-	private LogEntityService logEntityService;
+	private LogInfoService logInfoService;
 	
-	private Map<String, LogLevel> customLogLevel = Maps.newHashMap();
+	private Map<String, LogLevel> customLogLevel = new HashMap<String, LogLevel>();
 
 	/**
 	 * 
@@ -61,15 +61,15 @@ public class Log4JDBCImpl extends LogAdapter {
 		
 		//result = shiroUser.toString() + ":" + result;
 		
-		LogEntity logEntity = new LogEntity();
-		logEntity.setCreateTime(new Date());
+		LogInfo logInfo = new LogInfo();
+		logInfo.setCreateTime(new Date());
 		
-		logEntity.setUsername(shiroUser.getLoginName());
-		logEntity.setMessage(result);
-		logEntity.setIpAddress(shiroUser.getIpAddress());
-		logEntity.setLogLevel(logLevel);
+		logInfo.setUsername(shiroUser.getLoginName());
+		logInfo.setMessage(result);
+		logInfo.setIpAddress(shiroUser.getIpAddress());
+		logInfo.setLogLevel(logLevel);
 		
-		logEntityService.save(logEntity);
+		logInfoService.saveOrUpdate(logInfo);
 	}
 
 	public void setRootLogLevel(LogLevel rootLogLevel) {
@@ -95,8 +95,8 @@ public class Log4JDBCImpl extends LogAdapter {
 		return customLogLevel;
 	}
 
-	public void setLogEntityService(LogEntityService logEntityService) {
-		this.logEntityService = logEntityService;
+	public void setLogInfoService(LogInfoService logInfoService) {
+		this.logInfoService = logInfoService;
 	}
 	
 }

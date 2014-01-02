@@ -13,11 +13,13 @@
  
 package com.ketayao.ketacustom.entity.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,14 +30,13 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.entity.Idable;
 
 /** 
@@ -45,7 +46,7 @@ import com.ketayao.ketacustom.entity.Idable;
  * @since   2012-8-2 下午5:36:39 
  */
 @Entity
-@Table(name="security_module")
+@Table(name="keta_module")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.Module")
 public class Module implements Comparable<Module>, Idable<Long> {
 	@Id
@@ -53,58 +54,58 @@ public class Module implements Comparable<Module>, Idable<Long> {
 	private Long id;
 	
 	@NotBlank
-	@Length(min=1, max=32)
-	@Column(nullable=false, length=32)
+	@Length(max=64)
+	@Column(length=64, nullable=false)
 	private String name;
 	
 	/**
 	 * 对应的模块全类名
 	 */
-	@Column(length=128)
+	@Column(length=256)
 	private String className;
 	
 	/**
 	 * 模块的入口地址
 	 */
 	@NotBlank
-	@Length(min=1, max=255)
-	@Column(nullable=false, length=255)
+	@Length(max=256)
+	@Column(length=256, nullable=false)
 	private String url;
 	
-	@Length(max=255)
-	@Column(length=255)
+	@Length(max=256)
+	@Column(length=256)
 	private String description;
 	
 	/**
 	 * 标志符，用于授权名称（类似module:save）
 	 */
 	@NotBlank
-	@Length(min=1, max=32)
-	@Column(nullable=false, length=32, unique=true, updatable=false)
+	@Length(max=32)
+	@Column(length=32, nullable=false, unique=true)
 	private String sn;
 	
 	/**
 	 * 模块的排序号,越小优先级越高
 	 */
 	@NotNull
-	@Range(min=1, max=99)
-	@Column(length=2)
-	private Integer priority = 99;
+	@Range(min=1, max=999)
+	@Column(length=3, nullable=false)
+	private Integer priority = 999;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="parentId")
 	private Module parent;
 	
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="parent")
+	@OneToMany(mappedBy="parent", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@OrderBy("priority ASC")
-	private List<Module> children = Lists.newArrayList();
+	private List<Module> children = new ArrayList<Module>();
 	
 	/**
 	 *	因为hibernate更新使用的是merge方法，会自动新增关联的瞬时对象，如果再次配置CascadeType.MERGE，会插入两条数据。<br/>
 	 *  详见我的博客：<a href="ketayao.com">ketayao.com</a> 
 	 */
 	@OneToMany(mappedBy="module", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
-	private List<Permission> permissions = Lists.newArrayList();
+	private List<Permission> permissions = new ArrayList<Permission>();
 	
 	public Long getId() {
 		return id;
@@ -276,11 +277,6 @@ public class Module implements Comparable<Module>, Idable<Long> {
 	
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this)
-				.addValue(id)
-				.addValue(name)
-				.addValue(parent == null ? null:parent.getName())
-				.addValue(children.size())
-				.toString();
+		return ToStringBuilder.reflectionToString(this);
 	}
 }

@@ -79,13 +79,13 @@ $(document).ready(function(){
 	<dl>
 		<dt>角色名称：</dt>
 		<dd>
-			<input type="text" name="name" class="validate[required,maxSize[32] required" size="30" maxlength="32" alt="请输入角色名称" value="${role.name }"/>
+			<input type="text" name="name" class="input-medium validate[required,maxSize[64] required" maxlength="64" value="${role.name }"/>
 		</dd>
 	</dl>
 	<dl>
 		<dt>描述：</dt>
 		<dd>
-			<input type="text" name="description" class="validate[maxSize[255]" size="30" maxlength="255" alt="请输入描述" value="${role.description }"/>
+			<input type="text" name="description" class="input-medium validate[maxSize[256]" maxlength="256" value="${role.description }"/>
 		</dd>
 	</dl>	
 	<div class="divider"></div>

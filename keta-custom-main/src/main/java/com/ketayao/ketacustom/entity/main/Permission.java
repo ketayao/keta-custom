@@ -13,6 +13,7 @@
  
 package com.ketayao.ketacustom.entity.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,13 +28,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.entity.Idable;
 
 /** 
@@ -43,7 +44,7 @@ import com.ketayao.ketacustom.entity.Idable;
  * @since   2013-4-16 下午1:34:54 
  */
 @Entity
-@Table(name="security_permission")
+@Table(name="keta_permission")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.Permission")
 public class Permission implements Idable<Long> {
 	/**
@@ -65,17 +66,17 @@ public class Permission implements Idable<Long> {
 	private Long id;
 	
 	@NotBlank
-	@Length(min=1, max=32)
-	@Column(nullable=false, length=32)
+	@Length(max=64)
+	@Column(length=64, nullable=false)
 	private String name;
 
 	@NotBlank
-	@Length(min=1, max=16)
-	@Column(nullable=false, length=16)
-	private String shortName;
+	@Length(max=16)
+	@Column(length=16, nullable=false)
+	private String sn;
 	
-	@Length(max=255)
-	@Column(length=255)
+	@Length(max=256)
+	@Column(length=256)
 	private String description;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -83,7 +84,7 @@ public class Permission implements Idable<Long> {
 	private Module module;
 	
 	@OneToMany(mappedBy="permission", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
-	private List<RolePermission> rolePermissiones = Lists.newArrayList();
+	private List<RolePermission> rolePermissiones = new ArrayList<RolePermission>();
 
 	public Long getId() {
 		return id;
@@ -157,22 +158,20 @@ public class Permission implements Idable<Long> {
 		this.rolePermissiones = rolePermissiones;
 	}
 
-	/**  
-	 * 返回 shortName 的值   
-	 * @return shortName  
+	/**
+	 * @return the sn
 	 */
-	public String getShortName() {
-		return shortName;
+	public String getSn() {
+		return sn;
 	}
 
-	/**  
-	 * 设置 shortName 的值  
-	 * @param shortName
+	/**
+	 * @param sn the sn to set
 	 */
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
+	public void setSn(String sn) {
+		this.sn = sn;
 	}
-	
+
 	/**   
 	 * @param arg0
 	 * @return  
@@ -180,22 +179,7 @@ public class Permission implements Idable<Long> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		
-		if (obj == this) {
-			return true;
-		}
-		
-		if (obj instanceof Permission) { 
-			Permission that = (Permission) obj; 
-            return Objects.equal(id, that.getId()) 
-                    && Objects.equal(name, that.getName())
-                    && Objects.equal(shortName, that.getShortName());
-        } 
-
-        return false; 
+		return EqualsBuilder.reflectionEquals(this, obj, false);
 	}
 
 	/**   
@@ -204,7 +188,7 @@ public class Permission implements Idable<Long> {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(id, name);
+		return HashCodeBuilder.reflectionHashCode(this, false);
 	}
 	
 }

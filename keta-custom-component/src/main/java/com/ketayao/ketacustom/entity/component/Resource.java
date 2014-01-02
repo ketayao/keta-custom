@@ -40,7 +40,7 @@ import com.ketayao.utils.FileUtils;
  * @since   2013-6-28 上午9:20:21 
  */
 @Entity
-@Table(name = "component_resource")
+@Table(name = "keta_component_resource")
 public class Resource implements Idable<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

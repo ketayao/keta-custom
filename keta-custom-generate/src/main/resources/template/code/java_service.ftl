@@ -19,7 +19,5 @@ public interface ${className}Service {
 	
 	List<${className}> findAll(Page page);
 	
-	List<${className}> findBy${indexName?cap_first}(Page page, String ${indexName});
-	
 	List<${className}> findByExample(Specification<${className}> specification, Page page);
 }

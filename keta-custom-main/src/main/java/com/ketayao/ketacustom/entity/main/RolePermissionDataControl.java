@@ -4,6 +4,7 @@
 package com.ketayao.ketacustom.entity.main;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,18 +22,18 @@ import com.ketayao.ketacustom.entity.Idable;
  *
  */
 @Entity
-@Table(name="security_role_permission_data_control")
+@Table(name="keta_role_permission_data_control")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.RolePermissionDataControl")
 public class RolePermissionDataControl implements Idable<Long>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="rolePermissionId")
 	private RolePermission rolePermission;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="dataControlId")
 	private DataControl dataControl;
 	

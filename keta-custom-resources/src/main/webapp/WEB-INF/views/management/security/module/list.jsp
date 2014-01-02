@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 <a id="refreshJbsxBox2moduleTree" rel="jbsxBox2moduleTree" target="ajax" href="${contextPath}/management/security/module/tree" style="display:none;"></a>
 <dwz:paginationForm action="${contextPath}/management/security/module/list/${parentModuleId}" page="${page }" onsubmit="return divSearch(this, 'jbsxBox2moduleList');">
-	<input type="hidden" name="keywords" value="${keywords}"/>
+	<input type="hidden" name=search_LIKE_name value="${param.search_LIKE_name }"/>
 </dwz:paginationForm>
 
 <form method="post" action="${contextPath }/management/security/module/list/${parentModuleId}" onsubmit="return divSearch(this, 'jbsxBox2moduleList');">
@@ -11,7 +11,7 @@
 			<ul class="searchContent">
 				<li>
 					<label>模块名称：</label>
-					<input type="text" name="keywords" value="${keywords}"/>
+					<input type="text" name=search_LIKE_name value="${param.search_LIKE_name }"/>
 				</li>
 			</ul>
 			<div class="subBar">
@@ -27,13 +27,13 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 		<shiro:hasPermission name="Module:view">
-			<li><a iconClass="magnifier" target="dialog" width="540" height="500" mask="true" href="${contextPath }/management/security/module/view/{slt_uid}" title="查看模块"><span>查看模块</span></a></li>
+			<li><a iconClass="magnifier" target="dialog" width="540" height="550" mask="true" href="${contextPath }/management/security/module/view/{slt_uid}"><span>查看模块</span></a></li>
 		</shiro:hasPermission>		
 		<shiro:hasPermission name="Module:save">
-			<li><a iconClass="application_add" target="dialog" width="540" height="500" mask="true" href="${contextPath }/management/security/module/create/${parentModuleId}" title="添加模块"><span>添加模块</span></a></li>
+			<li><a iconClass="application_add" target="dialog" width="540" height="550" mask="true" href="${contextPath }/management/security/module/create/${parentModuleId}"><span>添加模块</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Module:edit">
-			<li><a iconClass="application_edit" target="dialog" rel="lookupParent2module_edit" width="540" height="530" mask="true" href="${contextPath }/management/security/module/update/{slt_uid}" title="编辑模块"><span>编辑模块</span></a></li>
+			<li><a iconClass="application_edit" target="dialog" rel="lookupParent2module_edit" width="540" height="550" mask="true" href="${contextPath }/management/security/module/update/{slt_uid}"><span>编辑模块</span></a></li>
 		</shiro:hasPermission>
 		<shiro:hasPermission name="Module:delete">
 			<li><a iconClass="application_delete" target="ajaxTodo" callback="dialogReloadRel2Module" href="${contextPath }/management/security/module/delete/{slt_uid}" title="确认要删除该模块?"><span>删除模块</span></a></li>

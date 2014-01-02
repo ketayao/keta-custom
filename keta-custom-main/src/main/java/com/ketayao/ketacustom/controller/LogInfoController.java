@@ -1,16 +1,6 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ketayao.ketacustom.controller.LogEntityController.java
- * Class:			LogEntityController
- * Date:			2013-5-26
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          2.1.0
- * Description:		
- *
- * </pre>
- **/
- 
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
 package com.ketayao.ketacustom.controller;
 
 import java.text.DateFormat;
@@ -32,29 +22,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ketayao.ketacustom.entity.main.LogEntity;
+import com.ketayao.ketacustom.entity.main.LogInfo;
 import com.ketayao.ketacustom.log.Log;
-import com.ketayao.ketacustom.log.LogLevel;
 import com.ketayao.ketacustom.log.LogMessageObject;
-import com.ketayao.ketacustom.log.impl.LogUitl;
-import com.ketayao.ketacustom.service.LogEntityService;
+import com.ketayao.ketacustom.log.impl.LogUitls;
+import com.ketayao.ketacustom.service.LogInfoService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 import com.ketayao.ketacustom.util.dwz.Page;
 import com.ketayao.ketacustom.util.persistence.DynamicSpecifications;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  2.1.0
- * @since   2013-5-26 下午1:54:30 
- */
 @Controller
-@RequestMapping("/management/security/logEntity")
-public class LogEntityController {
+@RequestMapping("/management/security/logInfo")
+public class LogInfoController {
+
 	@Autowired
-	private LogEntityService logEntityService;
+	private LogInfoService logInfoService;
 	
-	private static final String LIST = "management/security/logEntity/list";
+	private static final String LIST = "management/security/logInfo/list";
 	
 	@InitBinder
 	public void dataBinder(WebDataBinder dataBinder) {
@@ -63,31 +47,29 @@ public class LogEntityController {
 				new CustomDateEditor(df, true));
 	}
 	
-	@RequiresPermissions("LogEntity:view")
-	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(Page page, ServletRequest request, Map<String, Object> map) {
-		Specification<LogEntity> spec = DynamicSpecifications.bySearchFilter(request, LogEntity.class);
-		
-		List<LogEntity> logEntities = logEntityService.findByExample(spec, page); 
-		
-		map.put("page", page);
-		map.put("logEntities", logEntities);
-		map.put("logLevels", LogLevel.values());
-		
-		return LIST;
-	}
-	
 	@Log(message="删除了{0}条日志。")
-	@RequiresPermissions("LogEntity:delete")
+	@RequiresPermissions("LogInfo:delete")
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public @ResponseBody String deleteMany(Long[] ids) {
 		AjaxObject ajaxObject = new AjaxObject("删除日志成功！");
 		for (Long id : ids) {
-			logEntityService.delete(id);
+			logInfoService.delete(id);
 		}
 		
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{ids.length}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{ids.length}));
 		ajaxObject.setCallbackType("");
 		return ajaxObject.toString();
+	}
+
+	@RequiresPermissions("LogInfo:view")
+	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
+	public String list(ServletRequest request, Page page, Map<String, Object> map) {
+		Specification<LogInfo> specification = DynamicSpecifications.bySearchFilter(request, LogInfo.class);
+		List<LogInfo> logInfos = logInfoService.findByExample(specification, page);
+		
+		map.put("page", page);
+		map.put("logInfos", logInfos);
+
+		return LIST;
 	}
 }

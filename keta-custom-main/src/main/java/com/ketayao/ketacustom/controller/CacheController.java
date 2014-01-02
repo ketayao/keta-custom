@@ -13,6 +13,7 @@
  
 package com.ketayao.ketacustom.controller;
 
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,21 +32,21 @@ import com.ketayao.ketacustom.util.dwz.AjaxObject;
  * @since   2012-9-14 上午11:08:15 
  */
 @Controller
-@RequestMapping("/management/security/cacheManage")
-public class CacheManageController {
+@RequestMapping("/management/security/cache")
+public class CacheController {
 	@Autowired
 	private CacheService cacheService;
 	
-	private static final String INDEX = "management/security/cacheManage/index";
+	private static final String INDEX = "management/security/cache/index";
 	
-	@RequiresPermissions("CacheManage:view")
+	@RequiresPermissions("Cache:view")
 	@RequestMapping(value="/index", method=RequestMethod.GET)
 	public String index() {
 		return INDEX;
 	}
 	
 	@Log(message="进行了缓存清理。")
-	@RequiresPermissions("CacheManage:edit")
+	@RequiresPermissions(value={"Cache:edit", "Cache:delete"}, logical=Logical.OR)
 	@RequestMapping(value="/clear", method=RequestMethod.POST)
 	public @ResponseBody String clear() {
 		cacheService.clearAllCache();

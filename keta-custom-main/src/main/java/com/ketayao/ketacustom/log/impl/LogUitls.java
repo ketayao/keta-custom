@@ -25,7 +25,7 @@ import com.ketayao.ketacustom.log.LogMessageObject;
  * @since   2013-5-28 上午8:54:47 
  */
 
-public abstract class LogUitl {
+public abstract class LogUitls {
 	// 用于存储每个线程的request请求
 	private static final ThreadLocal<HttpServletRequest> LOCAL_REQUEST = new ThreadLocal<HttpServletRequest>();
 	

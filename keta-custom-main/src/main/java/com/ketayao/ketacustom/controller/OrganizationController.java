@@ -1,53 +1,41 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ketayao.ketacustom.controller.OrganizationController.java
- * Class:			OrganizationController
- * Date:			2012-8-27
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          1.1.0
- * Description:		
- *
- * </pre>
- **/
- 
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
 package com.ketayao.ketacustom.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.entity.main.Organization;
 import com.ketayao.ketacustom.entity.main.OrganizationRole;
 import com.ketayao.ketacustom.entity.main.Role;
 import com.ketayao.ketacustom.exception.ServiceException;
 import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.log.LogMessageObject;
-import com.ketayao.ketacustom.log.impl.LogUitl;
+import com.ketayao.ketacustom.log.impl.LogUitls;
 import com.ketayao.ketacustom.service.OrganizationRoleService;
 import com.ketayao.ketacustom.service.OrganizationService;
 import com.ketayao.ketacustom.service.RoleService;
 import com.ketayao.ketacustom.util.dwz.AjaxObject;
 import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.persistence.DynamicSpecifications;
+import com.ketayao.ketacustom.util.persistence.SearchFilter;
+import com.ketayao.ketacustom.util.persistence.SearchFilter.Operator;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  1.1.0
- * @since   2012-8-27 下午4:10:26 
- */
 @Controller
 @RequestMapping("/management/security/organization")
 public class OrganizationController {
@@ -82,18 +70,12 @@ public class OrganizationController {
 	@RequiresPermissions("Organization:save")
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public @ResponseBody String create(@Valid Organization organization) {
-		Organization parentOrganization = organizationService.get(organization.getParent().getId());
-		if (parentOrganization == null) {
-			return AjaxObject.newError("添加组织失败：id=" + organization.getParent().getId() + "的父组织不存在！").toString();
+		try {
+			organizationService.saveOrUpdate(organization);
+		} catch (ServiceException e) {
+			return AjaxObject.newError("添加组织失败：" + e.getMessage()).toString();
 		}
-		
-		if (organizationService.getByName(organization.getName()) != null) {
-			return AjaxObject.newError("添加组织失败：" + organization.getName() + "已存在！").toString();
-		}
-		
-		organizationService.save(organization);
-		
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));
 		return AjaxObject.newOk("添加组织成功！").toString();
 	}
 	
@@ -110,9 +92,9 @@ public class OrganizationController {
 	@RequiresPermissions("Organization:edit")
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public @ResponseBody String update(@Valid Organization organization) {
-		organizationService.update(organization);
+		organizationService.saveOrUpdate(organization);
 		
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));
 		return AjaxObject.newOk("修改组织成功！").toString();
 	}
 	
@@ -127,7 +109,7 @@ public class OrganizationController {
 			return AjaxObject.newError("删除组织失败：" + e.getMessage()).setCallbackType("").toString();
 		}
 		
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));
 		return AjaxObject.newOk("删除组织成功！").setCallbackType("").toString();
 	}
 	
@@ -148,18 +130,14 @@ public class OrganizationController {
 	
 	@RequiresPermissions("Organization:view")
 	@RequestMapping(value="/list/{parentOrganizationId}", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(Page page, @PathVariable Long parentOrganizationId, String keywords, 
+	public String list(ServletRequest request, Page page, @PathVariable Long parentOrganizationId, 
 			Map<String, Object> map) {
-		List<Organization> organizations = null;
-		if (StringUtils.isNotBlank(keywords)) {
-			organizations = organizationService.find(parentOrganizationId, keywords, page);
-		} else {
-			organizations = organizationService.find(parentOrganizationId, page);
-		}
+		Specification<Organization> specification = DynamicSpecifications.bySearchFilter(request, Organization.class,
+				new SearchFilter("parent.id", Operator.EQ, parentOrganizationId));
+		List<Organization> organizations = organizationService.findByExample(specification, page);
 		
 		map.put("page", page);
 		map.put("organizations", organizations);
-		map.put("keywords", keywords);
 		map.put("parentOrganizationId", parentOrganizationId);
 
 		return LIST;
@@ -174,11 +152,11 @@ public class OrganizationController {
 	@RequiresPermissions("Organization:assign")
 	@RequestMapping(value="/create/organizationRole", method={RequestMethod.POST})
 	public @ResponseBody void assignRole(OrganizationRole organizationRole) {
-		organizationRoleService.save(organizationRole);
+		organizationRoleService.saveOrUpdate(organizationRole);
 		
 		Organization organization = organizationService.get(organizationRole.getOrganization().getId());
 		Role role = roleService.get(organizationRole.getRole().getId());
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName(), role.getName()}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName(), role.getName()}));
 	}
 	
 	/**
@@ -194,10 +172,10 @@ public class OrganizationController {
 		Page page = new Page();
 		page.setNumPerPage(Integer.MAX_VALUE);
 		
-		List<OrganizationRole> organizationRoles = organizationRoleService.find(organizationId);
+		List<OrganizationRole> organizationRoles = organizationRoleService.findByOrganizationId(organizationId);
 		List<Role> roles = roleService.findAll(page);
 		
-		List<Role> rentList = Lists.newArrayList();
+		List<Role> rentList = new ArrayList<Role>();
 		// 删除已分配roles
 		for (Role role : roles) {
 			boolean isHas = false;
@@ -229,7 +207,7 @@ public class OrganizationController {
 	@RequiresPermissions("Organization:assign")
 	@RequestMapping(value="/lookup2delete/organizationRole/{organizationId}", method={RequestMethod.GET, RequestMethod.POST})
 	public String listOrganizationRole(Map<String, Object> map, @PathVariable Long organizationId) {
-		List<OrganizationRole> organizationRoles = organizationRoleService.find(organizationId);
+		List<OrganizationRole> organizationRoles = organizationRoleService.findByOrganizationId(organizationId);
 		map.put("organizationRoles", organizationRoles);
 		return LOOK_ORGANIZATION_ROLE;
 	}
@@ -244,7 +222,7 @@ public class OrganizationController {
 	@RequestMapping(value="/delete/organizationRole/{organizationRoleId}", method={RequestMethod.POST})
 	public @ResponseBody void deleteOrganizationRole(@PathVariable Long organizationRoleId) {
 		OrganizationRole organizationRole = organizationRoleService.get(organizationRoleId);
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organizationRole.getOrganization().getName(), organizationRole.getRole().getName()}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organizationRole.getOrganization().getName(), organizationRole.getRole().getName()}));
 		
 		organizationRoleService.delete(organizationRoleId);
 	}

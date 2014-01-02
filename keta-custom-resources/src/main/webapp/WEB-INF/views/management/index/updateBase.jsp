@@ -5,19 +5,19 @@
 	<div class="pageFormContent" layoutH="58">
 		<p>
 			<label>登录账号：</label>
-			<input type="text" name="username" size="30" class="readonly" readonly="readonly" value="${login_user.username }"/>
+			<input type="text" name="username" class="input-medium readonly" readonly="readonly" value="${login_user.username }"/>
 		</p>
 		<p>
 			<label>真是姓名：</label>
-			<input type="text" name="realname" size="30" class="readonly" readonly="readonly" value="${login_user.realname }"/>
+			<input type="text" name="realname" class="input-medium readonly" readonly="readonly" value="${login_user.realname }"/>
 		</p>
 		<p>
 			<label>电话：</label>
-			<input type="text" name="phone" class="validate[custom[phone],maxSize[32]]" size="30" maxlength="32" value="${login_user.phone }"/>
+			<input type="text" name="phone" class="input-medium validate[custom[phone],maxSize[32]]" maxlength="32" value="${login_user.phone }"/>
 		</p>
 		<p>
 			<label>用户邮箱：</label>
-			<input type="text" name="email" class="validate[custom[email],maxSize[128]]" size="30" maxlength="128" value="${login_user.email }"/>
+			<input type="text" name="email" class="input-medium validate[custom[email],maxSize[128]]" maxlength="128" value="${login_user.email }"/>
 		</p>	
 	</div>
 			

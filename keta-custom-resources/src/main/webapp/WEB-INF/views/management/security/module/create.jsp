@@ -7,16 +7,16 @@ jQuery(document).ready(function(){
 	var $fieldset = $("#newPermissonInput");
     
     var $name = $("input[name=_name]",$fieldset);
-    var $shortName = $("input[name=_shortName]",$fieldset);
+    var $sn = $("input[name=_sn]",$fieldset);
     var $description = $("input[name=_description]",$fieldset);
     
     $("#newPermission").click(function(event){
         var nameValidate = !$name.validationEngine('validate');
-        var shortNameValidate = !$shortName.validationEngine('validate');
+        var snValidate = !$sn.validationEngine('validate');
         var descriptionValidate = !$description.validationEngine('validate');
         
      	// 验证
-        if (!nameValidate || !shortNameValidate || !descriptionValidate) {
+        if (!nameValidate || !snValidate || !descriptionValidate) {
         	return false;
         }
         
@@ -27,12 +27,12 @@ jQuery(document).ready(function(){
         	maxId = parseInt($("input:last", $toNewPermission).attr("rel")) + 1;	
         }
         
-        $toNewPermission.append($name.val() + '(' + $shortName.val() + ')' + '<input type="checkbox" name="permissions[' + maxId + '].shortName" value="' + $shortName.val() + '" checked="checked" rel="' + maxId + '"/>&nbsp;&nbsp;'); 
+        $toNewPermission.append($name.val() + '(' + $sn.val() + ')' + '<input type="checkbox" name="permissions[' + maxId + '].sn" value="' + $sn.val() + '" checked="checked" rel="' + maxId + '"/>&nbsp;&nbsp;'); 
         $toNewPermission.append('<input type="hidden" name="permissions[' + maxId + '].name" value="' + $name.val() + '" rel="' + maxId + '"/>');
         $toNewPermission.append('<input type="hidden" name="permissions[' + maxId + '].description" value="' + $description.val() + '" rel="' + maxId + '"/>');
     
     	$name.val("");
-    	$shortName.val("");
+    	$sn.val("");
     	$description.val("");
     	
     	event.preventDefault();
@@ -44,16 +44,16 @@ jQuery(document).ready(function(){
     	 event.stopPropagation();
 		
     	 var _nameClass = $name.attr("class");
-    	 var _shortNameClass = $shortName.attr("class");
+    	 var _snClass = $sn.attr("class");
     	 var _descriptionClass = $description.attr("class");
     	 
     	 $name.attr("class", "required");
-    	 $shortName.attr("class", "required");
+    	 $sn.attr("class", "required");
     	 
      	 var result = validateCallback(this, dialogReloadRel2Module);
      	 if (!result) {
      		$name.attr("class", _nameClass);
-     		$shortName.attr("class", _shortNameClass);
+     		$sn.attr("class", _snClass);
      		$description.attr("class", _descriptionClass);
      	 }
     	 return result;
@@ -70,42 +70,42 @@ jQuery(document).ready(function(){
 		<legend>模块信息</legend>	
 		<p>
 			<label>名称：</label>
-			<input type="text" name="name" class="validate[required,maxSize[32]] required" size="32" maxlength="32" alt="请输入模块名称"/>
+			<input type="text" name="name" class="input-medium validate[required,maxSize[64]] required" maxlength="64"/>
 		</p>	
 		<p>
 			<label>优先级：</label>
-			<input type="text" name="priority" class="validate[required,custom[integer],min[1],max[99]] required" size="2" value="99" maxlength="2"/>
-			<span class="info">&nbsp;&nbsp;默认:99</span>
+			<input type="text" name="priority" class="validate[required,custom[integer],min[1],max[999]] required" value="999" maxlength="3" style="width: 80px;"/>
+			<span class="info">（越小越靠前）</span>
 		</p>		
 		<p>
 			<label>URL：</label>
-			<input type="text" name="url" class="validate[required,maxSize[255]] required" size="32" maxlength="255" alt="以#、/或者http开头"/>
+			<input type="text" name="url" class="input-medium validate[required,maxSize[256]] required" maxlength="256" alt="以#、/或者http开头"/>
 		</p>		
 		<p>
 			<label>授权名称：</label>
-			<input type="text" name="sn" class="validate[required,maxSize[32]] required" size="32" maxlength="32" alt="授权名称"/>
+			<input type="text" name="sn" class="input-medium validate[required,maxSize[32]] required" maxlength="32"/>
 		</p>
 		<p>
 			<label>模块类名：</label>
-			<input type="text" name="className" size="32" maxlength="128" alt="模块类名"/>
+			<input type="text" name="className" class="input-medium" maxlength="256"/>
 		</p>				
-		<p>
+		<p class="nowrap">
 			<label>描述：</label>
-			<input type="text" name="description" class="validate[maxSize[255]]" size="32" maxlength="255" alt="描述"/>
+			<textarea name="description" cols="29" rows="3" maxlength="256" class="input-medium textarea-scroll"></textarea>
 		</p>		
 		</fieldset>
 		<fieldset>
 		<legend>自定义授权</legend>
 			<div class="toNewPermission">
-			看(show)<input type="checkbox" name="permissions[0].shortName" value="show" checked="checked" rel="0"/>&nbsp;&nbsp;
+			看(show)<input type="checkbox" name="permissions[0].sn" value="show" checked="checked" rel="0"/>&nbsp;&nbsp;
 	         <input type="hidden" name="permissions[0].name" value="看" rel="0"/>			
-			增(save)<input type="checkbox" name="permissions[1].shortName" value="save" checked="checked" rel="1"/>&nbsp;&nbsp;
+			增(save)<input type="checkbox" name="permissions[1].sn" value="save" checked="checked" rel="1"/>&nbsp;&nbsp;
 	         <input type="hidden" name="permissions[1].name" value="增" rel="1"/>
-			删(delete)<input type="checkbox" name="permissions[2].shortName" value="delete" checked="checked" rel="2"/>&nbsp;&nbsp;
+			删(delete)<input type="checkbox" name="permissions[2].sn" value="delete" checked="checked" rel="2"/>&nbsp;&nbsp;
 			<input type="hidden" name="permissions[2].name" value="删" rel="2"/>
-			查(view)<input type="checkbox" name="permissions[3].shortName" value="view" checked="checked" rel="3"/>&nbsp;&nbsp;
+			查(view)<input type="checkbox" name="permissions[3].sn" value="view" checked="checked" rel="3"/>&nbsp;&nbsp;
 			<input type="hidden" name="permissions[3].name" value="查" rel="3"/>
-			改(edit)<input type="checkbox" name="permissions[4].shortName" value="edit" checked="checked" rel="4"/>&nbsp;&nbsp;
+			改(edit)<input type="checkbox" name="permissions[4].sn" value="edit" checked="checked" rel="4"/>&nbsp;&nbsp;
 			<input type="hidden" name="permissions[4].name" value="改" rel="4"/>
 			</div>		
 		</fieldset>
@@ -113,17 +113,16 @@ jQuery(document).ready(function(){
 		<legend>动态新增</legend>
 			<p>
 				<label>名称：</label>
-				<input type="text" name="_name" class="validate[required,maxSize[32]] required" size="32" maxlength="32" alt="请输入名称"/>
+				<input type="text" name="_name" class="input-medium validate[required,maxSize[64]] required" maxlength="64"/>
 			</p>
 			<p>
-				<label>短名：</label>
-				<input type="text" name="_shortName" class="validate[required,maxSize[16]] required" size="16" maxlength="16" alt="请输入短名"/>
-				<span class="info">&nbsp;&nbsp;用作授权验证</span>
+				<label>操作名称：</label>
+				<input type="text" name="_sn" class="input-medium validate[required,maxSize[32]] required" maxlength="32"/>
 			</p>
 			<p>
 				<label>描述：</label>
-				<input type="text" name="_description" size="32" class="validate[maxSize[255]]" maxlength="255" alt="描述"/>
-			</p>
+				<input type="text" name="_description" class="input-medium" maxlength="256"/>
+			</p>				
 			<div class="button"><div class="buttonContent"><button id="newPermission">新增</button></div></div>		
 		</fieldset>
 	</div>

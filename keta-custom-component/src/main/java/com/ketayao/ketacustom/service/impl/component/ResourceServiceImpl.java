@@ -16,6 +16,7 @@ package com.ketayao.ketacustom.service.impl.component;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,90 +39,56 @@ public class ResourceServiceImpl implements ResourceService {
 	@Autowired
 	private ResourceDAO resourceDAO;
 
-	/**   
-	 * @param resource  
-	 * @see com.ketayao.ketacustom.service.component.ResourceService#save(com.ketayao.ketacustom.entity.component.Resource)  
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.component.ResourceService#get(java.lang.Long)
 	 */
 	@Override
-	public void save(Resource resource) {
+	public Resource get(Long id) {
+		return resourceDAO.findOne(id);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.component.ResourceService#saveOrUpdate(com.ketayao.ketacustom.entity.component.Resource)
+	 */
+	@Override
+	public void saveOrUpdate(Resource resource) {
 		resourceDAO.save(resource);
 	}
 
-	/**   
-	 * @param resource  
-	 * @see com.ketayao.ketacustom.service.component.ResourceService#update(com.ketayao.ketacustom.entity.component.Resource)  
-	 */
-	@Override
-	public void update(Resource resource) {
-		resourceDAO.save(resource);
-	}
-
-	/**   
-	 * @param id  
-	 * @see com.ketayao.ketacustom.service.component.ResourceService#delete(java.lang.Long)  
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.component.ResourceService#delete(java.lang.Long)
 	 */
 	@Override
 	public void delete(Long id) {
 		resourceDAO.delete(id);
 	}
 
-	/**   
-	 * @param id
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.component.ResourceService#get(java.lang.Long)  
-	 */
-	@Override
-	public Resource get(Long id) {
-		return resourceDAO.findOne(id);
-	}
-	
-	/**   
-	 * @param uuid
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.component.ResourceService#get(java.lang.String)  
-	 */
-	@Override
-	public Resource get(String uuid) {
-		return resourceDAO.getByUuid(uuid);
-	}
-
-	/**   
-	 * @param page
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.component.ResourceService#findAll(com.ketayao.ketacustom.util.dwz.Page)  
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.component.ResourceService#findAll(com.ketayao.ketacustom.util.dwz.Page)
 	 */
 	@Override
 	public List<Resource> findAll(Page page) {
-		org.springframework.data.domain.Page<Resource> springDataPage = resourceDAO.findAll(PageUtils.createPageable(page)); 
-		page.setTotalCount(springDataPage.getTotalElements());
-		return springDataPage.getContent();
-	}
-	
-	/**
-	 * 
-	 * @param page
-	 * @param name
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.component.ResourceService#findByName(com.ketayao.ketacustom.util.dwz.Page, java.lang.String)
-	 */
-	@Override
-	public List<Resource> findByName(Page page, String name) {
-		org.springframework.data.domain.Page<Resource> springDataPage = resourceDAO.findByNameContaining(PageUtils.createPageable(page), name); 
+		org.springframework.data.domain.Page<Resource> springDataPage = resourceDAO.findAll(PageUtils.createPageable(page));
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
-	/**
-	 * 
-	 * @param page
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.component.ResourceService#find(com.ketayao.ketacustom.util.dwz.Page)
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.component.ResourceService#findByExample(org.springframework.data.jpa.domain.Specification, com.ketayao.ketacustom.util.dwz.Page)
 	 */
 	@Override
-	public List<Resource> find(Page page) {
-		org.springframework.data.domain.Page<Resource> springDataPage = resourceDAO.findAll(PageUtils.createPageable(page)); 
+	public List<Resource> findByExample(Specification<Resource> specification,
+			Page page) {
+		org.springframework.data.domain.Page<Resource> springDataPage = resourceDAO.findAll(specification, PageUtils.createPageable(page));
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.component.ResourceService#getByUuid(java.lang.String)
+	 */
+	@Override
+	public Resource getByUuid(String uuid) {
+		return resourceDAO.getByUuid(uuid);
+	}
 }

@@ -13,11 +13,13 @@
  
 package com.ketayao.ketacustom.entity.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,14 +28,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.Lists;
 import com.ketayao.ketacustom.entity.Idable;
 
 /** 
@@ -43,35 +46,44 @@ import com.ketayao.ketacustom.entity.Idable;
  * @since   2012-8-27 下午3:25:15 
  */
 @Entity
-@Table(name = "security_organization")
+@Table(name = "keta_organization")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.Organization")
-public class Organization implements Idable<Long> {
+public class Organization implements Comparable<Organization>, Idable<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@NotBlank
-	@Length(min=1, max=64)
-	@Column(nullable=false, length=64, unique=true)
+	@Length(max=64)
+	@Column(length=64, nullable=false, unique=true)
 	private String name;
 	
-	@Length(max=255)
-	@Column(length=255)
+	/**
+	 * 越小优先级越高
+	 */
+	@NotNull
+	@Range(min=1, max=999)
+	@Column(length=3, nullable=false)
+	private Integer priority = 999;
+	
+	@Length(max=256)
+	@Column(length=256)
 	private String description;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="parentId")
 	private Organization parent;
 	
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="parent")
-	private List<Organization> children = Lists.newArrayList();
+	@OneToMany(mappedBy="parent", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@OrderBy("priority ASC")
+	private List<Organization> children = new ArrayList<Organization>();
 	
-	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="organization")
-	private List<User> users = Lists.newArrayList();
+	@OneToMany(mappedBy="organization", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+	private List<User> users = new ArrayList<User>();
 	
 	@OneToMany(mappedBy="organization", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
 	@OrderBy("priority ASC")
-	private List<OrganizationRole> organizationRoles = Lists.newArrayList();
+	private List<OrganizationRole> organizationRoles = new ArrayList<OrganizationRole>();
 	
 	public Long getId() {
 		return id;
@@ -95,6 +107,20 @@ public class Organization implements Idable<Long> {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * @return the priority
+	 */
+	public Integer getPriority() {
+		return priority;
+	}
+
+	/**
+	 * @param priority the priority to set
+	 */
+	public void setPriority(Integer priority) {
+		this.priority = priority;
 	}
 
 	/**  
@@ -168,14 +194,27 @@ public class Organization implements Idable<Long> {
 	public void setOrganizationRoles(List<OrganizationRole> organizationRoles) {
 		this.organizationRoles = organizationRoles;
 	}
+	
+	/*
+	 * 
+	 */
+	@Override
+	public int compareTo(Organization org) {
+		if (org == null) {
+			return -1;
+		} else if (org == this) {
+			return 0;
+		} else if (this.priority < org.getPriority()) {
+			return -1;
+		} else if (this.priority > org.getPriority()) {
+			return 1;
+		}
+
+		return 0;	
+	}
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this)
-				.addValue(id)
-				.addValue(name)
-				.addValue(parent == null ? null:parent.getName())
-				//.addValue(children.size())
-				.toString();
+		return ToStringBuilder.reflectionToString(this);
 	}
 }

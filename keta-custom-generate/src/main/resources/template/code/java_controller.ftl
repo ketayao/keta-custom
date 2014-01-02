@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 </#if>
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletRequest;
 
 import javax.validation.Valid;
 
@@ -37,7 +37,7 @@ import com.ketayao.ketacustom.util.dwz.Page;
 import com.ketayao.ketacustom.util.persistence.DynamicSpecifications;
 import com.ketayao.ketacustom.log.Log;
 import com.ketayao.ketacustom.log.LogMessageObject;
-import com.ketayao.ketacustom.log.impl.LogUitl;
+import com.ketayao.ketacustom.log.impl.LogUitls;
 import ${pknEntity}.${className};
 import ${pknService}.${className}Service;
 
@@ -60,8 +60,8 @@ public class ${className}Controller {
 		dataBinder.registerCustomEditor(Date.class, 
 				new CustomDateEditor(df, true));
 	}
-	</#if>
 	
+	</#if>
 	@RequiresPermissions("${className}:save")
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public String preCreate(Map<String, Object> map) {
@@ -74,7 +74,7 @@ public class ${className}Controller {
 	public @ResponseBody String create(@Valid ${className} ${instanceName}) {
 		${instanceName}Service.saveOrUpdate(${instanceName});
 
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{${instanceName}.getId()}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{${instanceName}.getId()}));
 		return AjaxObject.newOk("${functionName}添加成功！").toString();
 	}
 	
@@ -101,7 +101,7 @@ public class ${className}Controller {
 	public @ResponseBody String update(@Valid @ModelAttribute("preload${className}")${className} ${instanceName}) {
 		${instanceName}Service.saveOrUpdate(${instanceName});
 
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{${instanceName}.getId()}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{${instanceName}.getId()}));
 		return AjaxObject.newOk("${functionName}修改成功！").toString();
 	}
 
@@ -111,7 +111,7 @@ public class ${className}Controller {
 	public @ResponseBody String delete(@PathVariable Long id) {
 		${instanceName}Service.delete(id);
 
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{id}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{id}));
 		return AjaxObject.newOk("${functionName}删除成功！").setCallbackType("").toString();
 	}
 	
@@ -124,13 +124,13 @@ public class ${className}Controller {
 			${instanceName}Service.delete(${instanceName}.getId());
 		}
 		
-		LogUitl.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{Arrays.toString(ids)}));
+		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{Arrays.toString(ids)}));
 		return AjaxObject.newOk("${functionName}删除成功！").setCallbackType("").toString();
 	}
 
 	@RequiresPermissions("${className}:view")
 	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(HttpServletRequest request, Page page, Map<String, Object> map) {
+	public String list(ServletRequest request, Page page, Map<String, Object> map) {
 		Specification<${className}> specification = DynamicSpecifications.bySearchFilter(request, ${className}.class);
 		List<${className}> ${instanceName}s = ${instanceName}Service.findByExample(specification, page);
 		

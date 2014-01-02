@@ -1,16 +1,6 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Filename:		com.ketayao.ketacustom.service.UserService.java
- * Class:			UserService
- * Date:			2012-8-7
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          1.1.0
- * Description:		
- *
- * </pre>
- **/
- 
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
 package com.ketayao.ketacustom.service;
 
 import java.util.List;
@@ -18,36 +8,22 @@ import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.ketayao.ketacustom.entity.main.User;
-import com.ketayao.ketacustom.exception.ExistedException;
-import com.ketayao.ketacustom.exception.ServiceException;
 import com.ketayao.ketacustom.util.dwz.Page;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  1.1.0
- * @since   2012-8-7 下午3:03:59 
- */
-
 public interface UserService {
-	
-	User get(String username);
-	
-	List<User> find(Page page, String name);
-
-	void update(User user);
-	
-	void updatePwd(User user, String newPwd) throws ServiceException;
-	
-	void resetPwd(User user, String newPwd);
-
-	void save(User user) throws ExistedException;
-
 	User get(Long id);
 
-	void delete(Long id) throws ServiceException;
+	void saveOrUpdate(User user);
 
+	void delete(Long id);
+	
 	List<User> findAll(Page page);
-
+	
 	List<User> findByExample(Specification<User> specification, Page page);
+	
+	void updatePwd(User user, String newPwd);
+	
+	void resetPwd(User user, String newPwd);
+	
+	User getByUsername(String username);
 }

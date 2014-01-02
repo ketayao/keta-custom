@@ -37,7 +37,7 @@ import com.ketayao.ketacustom.entity.Idable;
  * @since   2013-4-15 下午4:01:34 
  */
 @Entity
-@Table(name="security_organization_role")
+@Table(name="keta_organization_role")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.ketacustom.entity.main.OrganizationRole")
 public class OrganizationRole implements Idable<Long> {
 	@Id
@@ -48,9 +48,9 @@ public class OrganizationRole implements Idable<Long> {
 	 * 值越小，优先级越高
 	 */
 	@NotNull
-	@Range(min=1, max=99)
-	@Column(length=2, nullable=false)
-	private Integer priority = 99;
+	@Range(min=1, max=999)
+	@Column(length=3, nullable=false)
+	private Integer priority = 999;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="roleId")

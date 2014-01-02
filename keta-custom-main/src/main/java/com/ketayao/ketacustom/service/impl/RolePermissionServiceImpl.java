@@ -1,34 +1,21 @@
 /**
- * <pre>
- * Copyright:		Copyright(C) 2012-2013, ketayao.com
- * Filename:		com.ketayao.ketacustom.service.impl.RolePermissionServiceImpl.java
- * Class:			RolePermissionServiceImpl
- * Date:			2013-4-16
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          2.0.0
- * Description:		
- *
- * </pre>
- **/
- 
-package com.ketayao.ketacustom.service.impl;
+ * There are <a href="https://github.com/ketayao/keta-custom">keta-custom</a> code generation
+ */
+package	com.ketayao.ketacustom.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ketayao.ketacustom.dao.RolePermissionDAO;
+import com.ketayao.ketacustom.util.dwz.Page;
+import com.ketayao.ketacustom.util.dwz.PageUtils;
 import com.ketayao.ketacustom.entity.main.RolePermission;
+import com.ketayao.ketacustom.dao.RolePermissionDAO;
 import com.ketayao.ketacustom.service.RolePermissionService;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  2.0.0
- * @since   2013-4-16 下午2:14:10 
- */
 @Service
 @Transactional
 public class RolePermissionServiceImpl implements RolePermissionService {
@@ -36,67 +23,77 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	@Autowired
 	private RolePermissionDAO rolePermissionDAO;
 
-	/**   
-	 * @param rolePermission  
-	 * @see com.ketayao.ketacustom.service.RolePermissionService#save(com.ketayao.ketacustom.entity.main.RolePermission)  
-	 */
-	@Override
-	public void save(RolePermission rolePermission) {
-		rolePermissionDAO.save(rolePermission);
-	}
-
-	/**   
-	 * @param id
-	 * @return  
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.RolePermissionService#get(java.lang.Long)  
-	 */
+	 */ 
 	@Override
 	public RolePermission get(Long id) {
 		return rolePermissionDAO.findOne(id);
 	}
 
-	/**   
-	 * @param rolePermission  
-	 * @see com.ketayao.ketacustom.service.RolePermissionService#update(com.ketayao.ketacustom.entity.main.RolePermission)  
+	/*
+	 * (non-Javadoc) 
+	 * @see com.ketayao.ketacustom.service.RolePermissionService#saveOrUpdate(com.ketayao.ketacustom.entity.main.RolePermission)  
 	 */
 	@Override
-	public void update(RolePermission rolePermission) {
+	public void saveOrUpdate(RolePermission rolePermission) {
 		rolePermissionDAO.save(rolePermission);
 	}
 
-	/**   
-	 * @param id  
+	/*
+	 * (non-Javadoc)
 	 * @see com.ketayao.ketacustom.service.RolePermissionService#delete(java.lang.Long)  
 	 */
 	@Override
 	public void delete(Long id) {
 		rolePermissionDAO.delete(id);
 	}
-
-	/**   
-	 * @param roleId
-	 * @return  
-	 * @see com.ketayao.ketacustom.service.RolePermissionService#findByRoleId(java.lang.Long)  
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.RolePermissionService#findAll(com.ketayao.ketacustom.util.dwz.Page)  
 	 */
 	@Override
-	public List<RolePermission> findByRoleId(Long roleId) {
-		return rolePermissionDAO.findByRoleId(roleId);
+	public List<RolePermission> findAll(Page page) {
+		org.springframework.data.domain.Page<RolePermission> springDataPage = rolePermissionDAO.findAll(PageUtils.createPageable(page));
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.RolePermissionService#findByExample(org.springframework.data.jpa.domain.Specification, com.ketayao.ketacustom.util.dwz.Page)	
+	 */
+	@Override
+	public List<RolePermission> findByExample(
+			Specification<RolePermission> specification, Page page) {
+		org.springframework.data.domain.Page<RolePermission> springDataPage = rolePermissionDAO.findAll(specification, PageUtils.createPageable(page));
+		page.setTotalCount(springDataPage.getTotalElements());
+		return springDataPage.getContent();
 	}
 
 	/* (non-Javadoc)
-	 * @see com.ketayao.ketacustom.service.RolePermissionService#save(java.lang.Iterable)
+	 * @see com.ketayao.ketacustom.service.RolePermissionService#findByRoleId(java.lang.Long)
 	 */
 	@Override
-	public void save(Iterable<RolePermission> entities) {
-		rolePermissionDAO.save(entities);
+	public List<RolePermission> findByRoleId(Long id) {
+		return rolePermissionDAO.findByRoleId(id);
 	}
-	
+
 	/* (non-Javadoc)
-	 * @see com.ketayao.ketacustom.service.RolePermissionService#delete(java.lang.Iterable)
+	 * @see com.ketayao.ketacustom.service.RolePermissionService#save(java.util.List)
 	 */
 	@Override
-	public void delete(Iterable<RolePermission> entities) {
-		rolePermissionDAO.delete(entities);
+	public void save(List<RolePermission> newRList) {
+		rolePermissionDAO.save(newRList);
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see com.ketayao.ketacustom.service.RolePermissionService#delete(java.util.List)
+	 */
+	@Override
+	public void delete(List<RolePermission> delRList) {
+		rolePermissionDAO.delete(delRList);
+	}
 }

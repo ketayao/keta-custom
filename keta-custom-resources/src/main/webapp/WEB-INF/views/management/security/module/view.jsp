@@ -6,25 +6,25 @@
 		<legend>模块信息</legend>	
 		<p>
 			<label>名称：</label>
-			<input type="text" name="name" class="required" size="32" value="${module.name }" readOnly=readOnly/>
+			<input type="text" name="name" class="input-medium required" value="${module.name }" readOnly=readOnly/>
 		</p>	
 		<p>
 			<label>优先级：</label>
-			<input type="text" name="priority" class="required" size="2" value="${module.priority }" readOnly=readOnly/>
-			<span class="info">&nbsp;&nbsp;默认:99</span>
+			<input type="text" name="priority" class="required" value="${module.priority }" readOnly=readOnly  style="width: 80px;"/>
+			<span class="info">（越小越靠前）</span>
 		</p>		
 		<p>
 			<label>URL：</label>
-			<input type="text" name="url" class="required" size="32" value="${module.url }" readOnly=readOnly/>
+			<input type="text" name="url" class="input-medium required" value="${module.url }" readOnly=readOnly/>
 		</p>		
 		<p>
 			<label>授权名称：</label>
-			<input type="text" name="sn" class="required" size="32" value="${module.sn }" readOnly=readOnly/>
-		</p>		
-		<p>
+			<input type="text" name="sn" class="input-medium required" value="${module.sn }" readOnly=readOnly/>
+		</p>
+		<p class="nowrap">
 			<label>描述：</label>
-			<input type="text" name="description" size="32" value="${module.description }" readOnly=readOnly/>
-		</p>		
+			<textarea name="description" cols="29" rows="3" maxlength="256" class="input-medium textarea-scroll" readOnly=readOnly>${module.description }</textarea>
+		</p>				
 		</fieldset>
 		<fieldset>
 		<legend>自定义授权</legend>
@@ -33,16 +33,15 @@
 				<legend>${s.count }.${p.name }</legend>
 					<p>
 						<label>名称：</label>
-						<input type="text" name="_name" class="required" size="32" value="${p.name }" readOnly=readOnly/>
+						<input type="text" name="_name" class="input-medium required" value="${p.name }" readOnly=readOnly/>
 					</p>
 					<p>
-						<label>短名：</label>
-						<input type="text" name="_shortName" class="required" size="16" value="${p.shortName }" readOnly=readOnly/>
-						<span class="info">&nbsp;&nbsp;用作授权验证</span>
+						<label>操作名称：</label>
+						<input type="text" name="_sn" class="input-medium required" value="${p.sn }" readOnly=readOnly/>
 					</p>
 					<p>
 						<label>描述：</label>
-						<input type="text" name="_description" size="32" value="${p.description }" readOnly=readOnly/>
+						<input type="text" name="_description" class="input-medium" value="${p.description }" readOnly=readOnly/>
 					</p>
 				</fieldset>			
 			</c:forEach>		

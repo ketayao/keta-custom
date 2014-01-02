@@ -11,7 +11,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import com.ketayao.ketacustom.entity.main.RolePermissionDataControl;
 
 public interface RolePermissionDataControlDAO extends JpaRepository<RolePermissionDataControl, Long>, JpaSpecificationExecutor<RolePermissionDataControl> {
-	List<RolePermissionDataControl> findByRolePermissionId(Long rolePermissionId);
-	
-	List<RolePermissionDataControl> findByRolePermissionRoleId(Long roleId);
+	List<RolePermissionDataControl> findByRolePermissionRoleId(Long id);
 }

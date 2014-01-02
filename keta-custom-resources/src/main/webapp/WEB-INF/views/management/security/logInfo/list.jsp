@@ -2,21 +2,21 @@
 <%@page import="java.util.Date"%>
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
 
-<dwz:paginationForm action="${contextPath }/management/security/logEntity/list" page="${page }">
-	<input type="hidden" name="search_LIKE_username" value="${param.search_LIKE_username }"/>
+<dwz:paginationForm action="${contextPath }/management/security/logInfo/list" page="${page }">
+	<input type="hidden" name="search_EQ_username" value="${param.search_EQ_username }"/>
 	<input type="hidden" name="search_EQ_ipAddress" value="${param.search_EQ_ipAddress }"/>
 	<input type="hidden" name="search_EQ_logLevel" value="${param.search_EQ_logLevel }"/>
 	<input type="hidden" name="search_GTE_createTime" value="${param.search_GTE_createTime}"/>
 	<input type="hidden" name="search_LTE_createTime" value="${param.search_LTE_createTime}"/>
 </dwz:paginationForm>
 
-<form method="post" action="${contextPath}/management/security/logEntity/list" onsubmit="return navTabSearch(this)">
+<form method="post" action="${contextPath}/management/security/logInfo/list" onsubmit="return navTabSearch(this)">
 	<div class="pageHeader">
 		<div class="searchBar">
 			<ul class="searchContent">
 				<li>
 					<label style="width: 100px;">登录名称：</label>
-					<input type="text" name="search_LIKE_username" value="${param.search_LIKE_username }"/>
+					<input type="text" name="search_EQ_username" value="${param.search_EQ_username }"/>
 				</li>	
 				<li>
 					<label style="width: 100px;">登录IP：</label>
@@ -57,8 +57,8 @@
 
 	<div class="panelBar">
 		<ul class="toolBar">
-			<shiro:hasPermission name="LogEntity:delete">
-				<li><a class="delete" target="selectedTodo" rel="ids" href="${contextPath}/management/security/logEntity/delete" title="确认要删除?"><span>删除日志</span></a></li>
+			<shiro:hasPermission name="LogInfo:delete">
+				<li><a class="delete" target="selectedTodo" rel="ids" href="${contextPath}/management/security/logInfo/delete" title="确认要删除?"><span>删除日志</span></a></li>
 			</shiro:hasPermission>
 		</ul>
 	</div>
@@ -75,7 +75,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="item" items="${logEntities}">
+			<c:forEach var="item" items="${logInfos}">
 			<tr target="slt_uid" rel="${item.id}">
 				<td><input name="ids" value="${item.id}" type="checkbox"></td>
 				<td>${item.username}</td>
