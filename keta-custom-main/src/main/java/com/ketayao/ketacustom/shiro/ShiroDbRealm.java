@@ -155,14 +155,53 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		List<OrganizationRole> organizationRoles = organizationRoleService
 				.findByOrganizationId(shiroUser.getUser().getOrganization().getId());
 		
+		Collection<Role> roles = getUserRoles(userRoles, organizationRoles);
+		
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.addStringPermissions(makePermissions(userRoles, organizationRoles, shiroUser));
+		info.addRoles(makeRoles(roles, shiroUser));
+		info.addStringPermissions(makePermissions(roles, shiroUser));
 		
 		return info;
 	}
 	
-	private Collection<String> makePermissions(List<UserRole> userRoles, List<OrganizationRole> organizationRoles, 
-			ShiroUser shiroUser) {
+	private Collection<Role> getUserRoles(List<UserRole> userRoles, List<OrganizationRole> organizationRoles) {
+		Set<Role> roles = new HashSet<Role>();
+		for (UserRole userRole : userRoles) {
+			roles.add(userRole.getRole());
+		}
+		
+		for (OrganizationRole organizationRole : organizationRoles) {
+			roles.add(organizationRole.getRole());
+		}
+		
+		return roles;
+	}
+	
+	/**
+	 * 组装角色权限
+	 * @param roles
+	 * @param shiroUser
+	 * @return
+	 */
+	private Collection<String> makeRoles(Collection<Role> roles, ShiroUser shiroUser) {
+		Collection<String> hasRoles = new HashSet<String>();
+		for (Role role : roles) {
+			hasRoles.add(role.getName());
+		}
+
+		if (log.isInfoEnabled()) {
+			log.info(shiroUser.getLoginName() + "拥有的角色:" + hasRoles);
+		}
+		return hasRoles;
+	}
+	
+	/**
+	 * 组装资源操作权限
+	 * @param roles
+	 * @param shiroUser
+	 * @return
+	 */
+	private Collection<String> makePermissions(Collection<Role> roles, ShiroUser shiroUser) {
 		// 清空shiroUser中map
 		shiroUser.getHasDataControls().clear();
 		shiroUser.getHasModules().clear();
@@ -189,15 +228,6 @@ public class ShiroDbRealm extends AuthorizingRealm {
 				}
 				return stringPermissions;
 			}
-		}
-		
-		Set<Role> roles = new HashSet<Role>();
-		for (UserRole userRole : userRoles) {
-			roles.add(userRole.getRole());
-		}
-		
-		for (OrganizationRole organizationRole : organizationRoles) {
-			roles.add(organizationRole.getRole());
 		}
 		
 		Collection<String> stringPermissions = new ArrayList<String>();
