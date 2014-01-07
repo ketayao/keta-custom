@@ -12,6 +12,7 @@
 <dwz:paginationForm action="${contextPath }/management/system/icon/list" page="${page }">
 </dwz:paginationForm>
 
+<form method="post" action="${contextPath }/management/system/icon/reload" onsubmit="return navTabSearch(this)">
 <div class="pageHeader">
 	<div class="searchBar">
 		<h1 style="line-height: 30px;color: red;">
@@ -25,6 +26,7 @@
 		</div>
 	</div>
 </div>
+</form>
 
 <div class="pageContent">
 

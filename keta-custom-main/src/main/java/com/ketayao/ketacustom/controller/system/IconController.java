@@ -1,6 +1,7 @@
 package com.ketayao.ketacustom.controller.system;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,19 +43,32 @@ public class IconController {
 	private static final String UPLOAD = "management/system/icon/upload";
 	
 	private static final String IMG_PATH = "/styles/dwz/themes/css/images/icons";
+	private static String IMG_DIR;
 	private static final int IMG_SIZE = 1024;
 	
 	private static List<String> ALL_ICONS = null;
 	
 	@RequiresPermissions("Icon:view")
 	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(HttpServletRequest request, Page page, Map<String, Object> map) {
-		if (ALL_ICONS == null) {
+	public String list(HttpServletRequest request, Page page, Map<String, Object> map) throws FileNotFoundException {
+		if (IMG_DIR == null) {
 			String webPath = request.getSession().getServletContext().getRealPath("/");
-			String imgPath = webPath + IMG_PATH;
-			
-			File dir = new File(imgPath);
+			IMG_DIR = webPath + IMG_PATH;
+		}
+		
+		if (ALL_ICONS == null) {
+			File dir = new File(IMG_DIR);
 			File[] files = dir.listFiles();
+			
+			if (files == null) {
+				dir = new File(getDefaultIconPath(IMG_DIR));
+				IMG_DIR = dir.getAbsolutePath();
+				
+				files = dir.listFiles();
+				if (files == null) {
+					throw new FileNotFoundException("没有找到" + dir.getAbsolutePath() + "系统图标路径！");
+				}
+			}
 			
 			ALL_ICONS = new ArrayList<String>();
 			for (File file : files) {
@@ -84,8 +98,8 @@ public class IconController {
 	@Log(message="上传了{0}的图标。")
 	@RequiresPermissions("Icon:upload")
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public ResponseEntity<String> upload(HttpServletRequest request, @RequestParam MultipartFile[] files) {
-		String uploadPath = getFileStorePath(request);
+	public ResponseEntity<String> upload(@RequestParam MultipartFile[] files) {
+		String uploadPath = IMG_DIR;
 		for (MultipartFile file : files) {
 			String fileExt = FileUtils.getFileExt(file.getOriginalFilename());
 			if (!fileExt.equalsIgnoreCase("png")) {
@@ -117,8 +131,8 @@ public class IconController {
 	@Log(message="删除了{0}图标。")
 	@RequiresPermissions("Icon:delete")
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public @ResponseBody String delete(HttpServletRequest request, String name) {
-		File img = new File(getFileStorePath(request), name + ".png");
+	public @ResponseBody String delete(String name) {
+		File img = new File(IMG_DIR, name + ".png");
 		org.apache.commons.io.FileUtils.deleteQuietly(img);
 		
 		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{name}));
@@ -127,12 +141,18 @@ public class IconController {
 	
 	@RequiresPermissions("Icon:view")
 	@RequestMapping(value="/reload", method={RequestMethod.GET, RequestMethod.POST})
-	public String reload(HttpServletRequest request, Map<String, Object> map) {
+	public String reload(HttpServletRequest request, Map<String, Object> map) throws FileNotFoundException {
 		ALL_ICONS = null;
 		return list(request, new Page(), map);
 	}
 	
-	private String getFileStorePath(HttpServletRequest request) {
-		return request.getSession().getServletContext().getRealPath("/") + IMG_PATH;
+	private String getDefaultIconPath(String path) {
+		File projectPath = new File(path);
+		while (!new File(projectPath + File.separator + "pom.xml").exists()) {
+			projectPath = projectPath.getParentFile();
+		}
+		
+		return projectPath.getParentFile().getAbsolutePath() + File.separator + 
+				"keta-custom-resources/src/main/webapp/styles/dwz/themes/css/images/icons";
 	}
 }
