@@ -51,7 +51,7 @@ public class Role implements Idable<Long> {
 	
 	@NotBlank
 	@Length(max=64)
-	@Column(length=64, nullable=false)
+	@Column(length=64, nullable=false, unique=true)
 	private String name;
 	
 	@Length(max=256)
