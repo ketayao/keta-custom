@@ -41,7 +41,7 @@ public class IconController {
 	private static final String LIST = "management/system/icon/list";
 	private static final String UPLOAD = "management/system/icon/upload";
 	
-	private static final String IMG_PATH = "/styles/dwz/themes/css/images/toolbar_icons16";
+	private static final String IMG_PATH = "/styles/dwz/themes/css/images/icons";
 	private static final int IMG_SIZE = 1024;
 	
 	private static List<String> ALL_ICONS = null;

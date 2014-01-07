@@ -280,7 +280,7 @@ function readyToolbarCSS() {
 		if ($span.length == 0) {
 			// 用作<td>中的<a>
 			$(this).css({
-				"background":"url(../styles/dwz/themes/css/images/toolbar_icons16/" + imageName + ".png) no-repeat",
+				"background":"url(../styles/dwz/themes/css/images/icons/" + imageName + ".png) no-repeat",
 				"background-position":"50% 50%",
 				"width":"22px",
 				"height":"20px",
@@ -292,7 +292,7 @@ function readyToolbarCSS() {
 		} else {
 			// 用作panelBar toolBar中的<span>
 			$span.css({
-				"background-image":"url(../styles/dwz/themes/css/images/toolbar_icons16/" + imageName + ".png)",
+				"background-image":"url(../styles/dwz/themes/css/images/icons/" + imageName + ".png)",
 				"background-position": "0 3px"
 			});						
 		}
