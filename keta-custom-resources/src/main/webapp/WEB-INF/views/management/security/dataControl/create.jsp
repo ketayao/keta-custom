@@ -8,15 +8,15 @@
 	<div class="pageFormContent" layoutH="58">
 	<p>
 		<label>名称：</label>
-		<input type="text" name="name" size="32" maxlength="32" alt="请输入名称" class="required validate[required]"/>
+		<input type="text" name="name" maxlength="32" class="input-medium required validate[required]"/>
 	</p>	
 	<p class="nowrap">
 		<label>条件：</label>
-		<textarea name="control" cols="29" rows="3" maxlength="255" class="required validate[required]"></textarea>
+		<textarea name="control" rows="3" maxlength="256" class="input-medium textarea-scroll required validate[required]"></textarea>
 	</p>	
 	<p class="nowrap">
 		<label>描述：</label>
-		<textarea name="description" cols="29" rows="3" maxlength="255"></textarea>
+		<textarea name="description" rows="3" maxlength="256" class="input-medium textarea-scroll"></textarea>
 	</p>	
 	</div>
 	
