@@ -1,5 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/WEB-INF/views/include.inc.jsp"%>
+<style>
+<!--
+.priority_input {
+	border:none;border-bottom:1px solid gray;background:none;width:50px;height:22px;padding: 0px;float: left;margin-right: 10px;
+}
+-->
+</style>
 <script type="text/javascript">
 <!--
 // top
@@ -8,7 +15,12 @@ jQuery(document).ready(function(){
     $(".assignRole").click(function(){
     	var roleId = $(this).attr("id").split("submit_")[1];
     	var $roleRow = $("#userRoleRow_" + roleId);
-    	var priority = $("#priority_" + roleId).val();
+    	var priority = parseInt($("#priority_" + roleId).val());
+    	
+    	if (isNaN(priority) || priority > 999 || priority < 1) {
+			alert("请输入1-999的数字!");
+			return false;
+    	} 
     
     	jQuery.ajax({
             type: 'POST',
@@ -66,12 +78,7 @@ jQuery(document).ready(function(){
 				<tr id="userRoleRow_${item.id}">
 					<td>${item.name}</td>
 					<td>
-						<select id="priority_${item.id}" name="priority" class="required combox">
-							<c:forEach begin="1" end="998" step="1" varStatus="s">
-								<option value="${s.index}">${s.index}</option>
-							</c:forEach>
-							<option value="999" selected>999</option>
-						</select>
+						<input type="text" id="priority_${item.id}" name="priority" value="999" maxlength="3" class="priority_input">
 						<div class="button"><div class="buttonContent"><button id="submit_${item.id}" class="assignRole">分配</button></div></div>
 					</td>
 				</tr>	
