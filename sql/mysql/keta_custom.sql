@@ -504,3 +504,33 @@ INSERT INTO `keta_user_role` VALUES ('2', '999', '1', '1');
 INSERT INTO `keta_user_role` VALUES ('3', '999', '10', '5');
 INSERT INTO `keta_user_role` VALUES ('4', '999', '8', '5');
 INSERT INTO `keta_user_role` VALUES ('5', '999', '9', '5');
+
+-- ----------------------------
+-- Table structure for keta_dictionary
+-- ----------------------------
+DROP TABLE IF EXISTS `keta_dictionary`;
+CREATE TABLE `keta_dictionary` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `priority` int(11) NOT NULL,
+  `type` varchar(16) DEFAULT NULL,
+  `value` varchar(128) DEFAULT NULL,
+  `parent_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK468568E35EF052B` (`parent_id`),
+  CONSTRAINT `FK468568E35EF052B` FOREIGN KEY (`parent_id`) REFERENCES `keta_dictionary` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of keta_dictionary
+-- ----------------------------
+INSERT INTO `keta_dictionary` VALUES ('1', '学历', '999', 'THEME', '就是学历呀', null);
+INSERT INTO `keta_dictionary` VALUES ('2', '等级', '999', 'THEME', '就是级别的意思。', null);
+INSERT INTO `keta_dictionary` VALUES ('6', '高中', '999', 'ITEM', '高中', '2');
+INSERT INTO `keta_dictionary` VALUES ('7', '初中', '999', 'ITEM', '初中', '2');
+INSERT INTO `keta_dictionary` VALUES ('8', '小学', '999', 'ITEM', '小学', '2');
+INSERT INTO `keta_dictionary` VALUES ('9', '大学', '999', 'ITEM', '大学', '2');
+INSERT INTO `keta_dictionary` VALUES ('10', '博士', '999', 'ITEM', '博士', '2');
+INSERT INTO `keta_dictionary` VALUES ('11', '硕士', '999', 'ITEM', '硕士', '2');
+INSERT INTO `keta_dictionary` VALUES ('12', '高级', '999', 'ITEM', '高级', '3');
+INSERT INTO `keta_dictionary` VALUES ('23', '低级', '999', 'ITEM', '低级', '3');
