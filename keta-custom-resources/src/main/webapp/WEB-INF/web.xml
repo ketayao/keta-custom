@@ -8,8 +8,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:/applicationContext.xml,
-			classpath:/applicationContext-shiro.xml,
-			classpath:/captcha-context.xml
+			classpath:/applicationContext-shiro.xml		
 		</param-value>
 	</context-param>
 	<context-param>
@@ -74,10 +73,10 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
-	<!-- Jcaptcha -->
+	<!-- 验证码 -->
 	<servlet>
 		<servlet-name>Captcha</servlet-name>
-		<servlet-class>com.ketayao.ketacustom.shiro.JcaptchaServlet</servlet-class>
+		<servlet-class>com.ketayao.ketacustom.shiro.PatchcaServlet</servlet-class>		
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Captcha</servlet-name>

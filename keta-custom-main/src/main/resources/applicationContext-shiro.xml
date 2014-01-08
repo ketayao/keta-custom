@@ -12,12 +12,11 @@
 	</bean>
 
 	<!-- 項目自定义的Realm -->
-	<bean id="shiroDbRealm" class="com.ketayao.ketacustom.shiro.ShiroDbRealm" depends-on="userDAO, userRoleDAO, moduleDAO, organizationRoleDAO, captchaService">
+	<bean id="shiroDbRealm" class="com.ketayao.ketacustom.shiro.ShiroDbRealm" depends-on="userDAO, userRoleDAO, moduleDAO, organizationRoleDAO">
 		<property name="userService" ref="userServiceImpl"/>
 		<property name="userRoleService" ref="userRoleServiceImpl"/>
 		<property name="moduleService" ref="moduleServiceImpl"/>
 		<property name="organizationRoleService" ref="organizationRoleServiceImpl"/>
-		<property name="imageCaptchaService" ref="captchaService"/>
 		<!-- 是否使用验证码 -->
 		<property name="useCaptcha" value="true"/>
 		<!-- 是否激活超级用户，生成环境建议关闭该功能 -->

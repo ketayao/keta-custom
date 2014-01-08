@@ -20,7 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -54,7 +53,6 @@ import com.ketayao.ketacustom.service.UserRoleService;
 import com.ketayao.ketacustom.service.UserService;
 import com.ketayao.utils.Digests;
 import com.ketayao.utils.Encodes;
-import com.octo.captcha.service.image.ImageCaptchaService;
 
 /**
  * 
@@ -83,8 +81,6 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	
 	protected ModuleService moduleService;
 	
-	protected ImageCaptchaService imageCaptchaService; 
-	
 	/**
 	 * 给ShiroDbRealm提供编码信息，用于密码密码比对
 	 * 描述
@@ -106,13 +102,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		if (useCaptcha) {
 			CaptchaUsernamePasswordToken token = (CaptchaUsernamePasswordToken) authcToken;
 			String parm = token.getCaptcha();
-			try {
-				if (!imageCaptchaService.validateResponseForID(SecurityUtils
-						.getSubject().getSession().getId().toString(), parm.toLowerCase())) {//忽略大小写。
-					throw new IncorrectCaptchaException("验证码错误！");
-				}
-			} catch (Exception e) {
-				// session如果没有刷新，validateResponseForID会抛出com.octo.captcha.service.CaptchaServiceException的异常
+			
+			if (!PatchcaServlet.validate(SecurityUtils
+					.getSubject().getSession().getId().toString(), parm.toLowerCase())) {//忽略大小写。
 				throw new IncorrectCaptchaException("验证码错误！");
 			}
 		} 
@@ -143,7 +135,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		Collection<?> collection = principals.fromRealm(getName());
-		if (CollectionUtils.isEmpty(collection)) {
+		if (collection == null || collection.isEmpty()) {
 			return null;
 		}
 		
@@ -371,9 +363,5 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	public void setOrganizationRoleService(
 			OrganizationRoleService organizationRoleService) {
 		this.organizationRoleService = organizationRoleService;
-	}
-
-	public void setImageCaptchaService(ImageCaptchaService imageCaptchaService) {
-		this.imageCaptchaService = imageCaptchaService;
 	}
 }
