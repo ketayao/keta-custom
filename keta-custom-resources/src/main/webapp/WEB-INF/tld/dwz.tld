@@ -85,4 +85,36 @@
 			<fragment>true</fragment>
 		</attribute>   
     </tag>
+    
+    <tag>
+		<description>数据字典标签</description>
+        <name>dic</name>
+		<tag-class>com.ketayao.ketacustom.tag.dwz.DictionaryTag</tag-class>
+		<body-content>scriptless</body-content>
+ 		<attribute>
+			<name>themeName</name>
+			<required>true</required>
+			<fragment>true</fragment>
+		</attribute>
+		<attribute>
+			<name>selectedName</name>
+			<required>false</required>
+			<fragment>true</fragment>
+		</attribute> 
+ 		<attribute>
+			<name>paramName</name>
+			<required>true</required>
+			<fragment>true</fragment>
+		</attribute>
+		<attribute>
+			<name>className</name>
+			<required>false</required>
+			<fragment>true</fragment>
+		</attribute>
+		<attribute>
+			<name>page</name>
+			<required>false</required>
+			<fragment>true</fragment>
+		</attribute>				  
+    </tag>    
 </taglib>

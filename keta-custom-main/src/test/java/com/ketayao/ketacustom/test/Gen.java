@@ -15,7 +15,7 @@ public class Gen {
 		GenerateFactory factory = new GenerateFactory();
 		
 		factory.genJavaTemplate();
-		//factory.genJspTemplate();
+		factory.genJspTemplate();
 		//factory.genSettings();
 		//factory.genServer();
 	}
