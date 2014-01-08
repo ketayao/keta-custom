@@ -132,6 +132,7 @@ INSERT INTO `keta_module` VALUES ('13', null, '上传系统资源。', '资源�
 INSERT INTO `keta_module` VALUES ('14', '', '', '打开外部链接', '999', 'OutUrl', 'http://www.baidu.com', '12');
 INSERT INTO `keta_module` VALUES ('15', null, '一个开发使用的简单示例。', '开发实例', '999', 'Sample', '#', '1');
 INSERT INTO `keta_module` VALUES ('16', null, null, '简单任务实例', '999', 'Task', '/management/demo/task/list', '15');
+INSERT INTO `keta_module` VALUES ('17', NULL, NULL, '字典管理', '999', 'Dictionary', '/management/system/dictionary/list', '10');
 
 -- ----------------------------
 -- Table structure for keta_organization
@@ -254,6 +255,11 @@ INSERT INTO `keta_permission` VALUES ('52', null, '增', 'save', '16');
 INSERT INTO `keta_permission` VALUES ('53', null, '删', 'delete', '16');
 INSERT INTO `keta_permission` VALUES ('54', null, '查', 'view', '16');
 INSERT INTO `keta_permission` VALUES ('55', null, '改', 'edit', '16');
+INSERT INTO `keta_permission` VALUES ('56', NULL, '看', 'show', '17');
+INSERT INTO `keta_permission` VALUES ('57', NULL, '增', 'save', '17');
+INSERT INTO `keta_permission` VALUES ('58', NULL, '删', 'delete', '17');
+INSERT INTO `keta_permission` VALUES ('59', NULL, '查', 'view', '17');
+INSERT INTO `keta_permission` VALUES ('60', NULL, '改', 'edit', '17');
 
 -- ----------------------------
 -- Table structure for keta_role
