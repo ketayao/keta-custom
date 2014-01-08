@@ -23,6 +23,16 @@
 			<artifactId>keta-custom-main</artifactId>
 			<version>3.2</version>
 		</dependency>
+		
+		<!-- j2ee web spec -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>		
 
 		<!-- PERSISTENCE begin -->
 		<!-- jdbc driver -->
