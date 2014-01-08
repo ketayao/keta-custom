@@ -49,8 +49,10 @@ import com.ketayao.ketacustom.entity.main.User;
 import com.ketayao.ketacustom.entity.main.UserRole;
 import com.ketayao.ketacustom.service.ModuleService;
 import com.ketayao.ketacustom.service.OrganizationRoleService;
+import com.ketayao.ketacustom.service.RoleService;
 import com.ketayao.ketacustom.service.UserRoleService;
 import com.ketayao.ketacustom.service.UserService;
+import com.ketayao.ketacustom.util.dwz.Page;
 import com.ketayao.utils.Digests;
 import com.ketayao.utils.Encodes;
 
@@ -74,6 +76,8 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	protected boolean useCaptcha = false;
 	
 	protected UserService userService;
+	
+	protected RoleService roleService;
 	
 	protected UserRoleService userRoleService;
 	
@@ -142,16 +146,53 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		ShiroUser shiroUser = (ShiroUser) collection.iterator().next();
 		// 设置、更新User
 		shiroUser.setUser(userService.get(shiroUser.getId()));
+		return newAuthorizationInfo(shiroUser);
+	}
+	
+	private SimpleAuthorizationInfo newAuthorizationInfo(ShiroUser shiroUser) {
+		Collection<String> hasPermissions = null;
+		Collection<String> hasRoles = null;
 		
-		List<UserRole> userRoles = userRoleService.findByUserId(shiroUser.getId());
-		List<OrganizationRole> organizationRoles = organizationRoleService
-				.findByOrganizationId(shiroUser.getUser().getOrganization().getId());
-		
-		Collection<Role> roles = getUserRoles(userRoles, organizationRoles);
+		// 是否启用超级管理员 && id==1为超级管理员，构造所有权限 
+		if (activeRoot && shiroUser.getId() == 1) {
+			hasRoles = new HashSet<String>();
+			Page page = new Page();
+			page.setNumPerPage(Integer.MAX_VALUE);
+			List<Role> roles = roleService.findAll(page);
+			
+			for (Role role : roles) {
+				hasRoles.add(role.getName());
+			}
+			
+			hasPermissions = new HashSet<String>();
+			List<Module> modules = moduleService.findAll();
+			StringBuilder builder = new StringBuilder();
+			for (Module module : modules) {
+				builder.append(module.getSn() + ",");
+			}
+			
+			if (builder.length() > 0) {
+				hasPermissions.add(builder.substring(0, builder.length() - 1));
+			}
+			
+			if (log.isInfoEnabled()) {
+				log.info("使用了" + shiroUser.getLoginName() + "的超级管理员权限:" + "。At " + new Date());
+				log.info(shiroUser.getLoginName() + "拥有的角色:" + hasRoles);
+				log.info(shiroUser.getLoginName() + "拥有的权限:" + hasPermissions);
+			}
+		} else {
+			List<UserRole> userRoles = userRoleService.findByUserId(shiroUser.getId());
+			List<OrganizationRole> organizationRoles = organizationRoleService
+					.findByOrganizationId(shiroUser.getUser().getOrganization().getId());
+			
+			Collection<Role> roles = getUserRoles(userRoles, organizationRoles);
+			hasRoles = makeRoles(roles, shiroUser);
+			hasPermissions = makePermissions(roles, shiroUser);
+		}
 		
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.addRoles(makeRoles(roles, shiroUser));
-		info.addStringPermissions(makePermissions(roles, shiroUser));
+		info.addRoles(hasRoles);
+		info.addStringPermissions(hasPermissions);
 		
 		return info;
 	}
@@ -197,30 +238,6 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		// 清空shiroUser中map
 		shiroUser.getHasDataControls().clear();
 		shiroUser.getHasModules().clear();
-		
-		// 是否启用超级管理员 
-		if (activeRoot) {
-			// id==1为超级管理员，构造所有权限 
-			if (shiroUser.getId() == 1) {
-				Collection<String> stringPermissions = new HashSet<String>();
-				
-				List<Module> modules = moduleService.findAll();
-				StringBuilder builder = new StringBuilder();
-				for (Module module : modules) {
-					builder.append(module.getSn() + ",");
-				}
-				
-				if (builder.length() > 0) {
-					stringPermissions.add(builder.substring(0, builder.length() - 1));
-				}
-				
-				if (log.isInfoEnabled()) {
-					log.info("使用了" + shiroUser.getLoginName() + "的超级管理员权限:" + "。At " + new Date());
-					log.info(shiroUser.getLoginName() + "拥有的权限:" + stringPermissions);
-				}
-				return stringPermissions;
-			}
-		}
 		
 		Collection<String> stringPermissions = new ArrayList<String>();
 		for (Role role : roles) {
@@ -363,5 +380,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	public void setOrganizationRoleService(
 			OrganizationRoleService organizationRoleService) {
 		this.organizationRoleService = organizationRoleService;
+	}
+
+	/**
+	 * @param roleService the roleService to set
+	 */
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
 	}
 }
