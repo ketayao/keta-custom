@@ -525,18 +525,40 @@ CREATE TABLE `keta_dictionary` (
   PRIMARY KEY (`id`),
   KEY `FK468568E35EF052B` (`parent_id`),
   CONSTRAINT `FK468568E35EF052B` FOREIGN KEY (`parent_id`) REFERENCES `keta_dictionary` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of keta_dictionary
 -- ----------------------------
 INSERT INTO `keta_dictionary` VALUES ('1', '学历', '999', 'THEME', '就是学历呀', null);
-INSERT INTO `keta_dictionary` VALUES ('2', '等级', '999', 'THEME', '就是级别的意思。', null);
-INSERT INTO `keta_dictionary` VALUES ('6', '高中', '999', 'ITEM', '高中', '2');
-INSERT INTO `keta_dictionary` VALUES ('7', '初中', '999', 'ITEM', '初中', '2');
-INSERT INTO `keta_dictionary` VALUES ('8', '小学', '999', 'ITEM', '小学', '2');
-INSERT INTO `keta_dictionary` VALUES ('9', '大学', '999', 'ITEM', '大学', '2');
-INSERT INTO `keta_dictionary` VALUES ('10', '博士', '999', 'ITEM', '博士', '2');
-INSERT INTO `keta_dictionary` VALUES ('11', '硕士', '999', 'ITEM', '硕士', '2');
-INSERT INTO `keta_dictionary` VALUES ('12', '高级', '999', 'ITEM', '高级', '3');
-INSERT INTO `keta_dictionary` VALUES ('23', '低级', '999', 'ITEM', '低级', '3');
+INSERT INTO `keta_dictionary` VALUES ('2', '小学', '999', 'ITEM', '小学', '1');
+INSERT INTO `keta_dictionary` VALUES ('3', '初中', '999', 'ITEM', '初中', '1');
+INSERT INTO `keta_dictionary` VALUES ('4', '高中', '999', 'ITEM', '高中', '1');
+INSERT INTO `keta_dictionary` VALUES ('5', '大学', '999', 'ITEM', '大学', '1');
+INSERT INTO `keta_dictionary` VALUES ('6', '硕士', '999', 'ITEM', '硕士', '1');
+INSERT INTO `keta_dictionary` VALUES ('7', '博士', '999', 'ITEM', '博士', '1');
+INSERT INTO `keta_dictionary` VALUES ('8', '等级', '999', 'THEME', '就是级别的意思。', null);
+INSERT INTO `keta_dictionary` VALUES ('9', '高级', '999', 'ITEM', '高级', '8');
+INSERT INTO `keta_dictionary` VALUES ('10', '中级', '999', 'ITEM', '中级', '8');
+INSERT INTO `keta_dictionary` VALUES ('11', '低级', '999', 'ITEM', '低级', '8');
+
+-- ----------------------------
+-- Table structure for sample_task
+-- ----------------------------
+DROP TABLE IF EXISTS `sample_task`;
+CREATE TABLE `sample_task` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(64) NOT NULL COMMENT '标题',
+  `content` varchar(256) DEFAULT NULL COMMENT '内容',
+  `level` varchar(64) NOT NULL COMMENT '等级',
+  `user_id` bigint(20) NOT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `sample_task_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `keta_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sample_task
+-- ----------------------------
+INSERT INTO `sample_task` VALUES ('1', '开发任务', '开发keta-custom', '中级', '1', '2014-01-09 00:00:00');
