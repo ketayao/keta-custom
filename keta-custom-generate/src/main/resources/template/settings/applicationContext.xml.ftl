@@ -30,9 +30,6 @@
 		<property name="packagesToScan" value="com.ketayao,${packageName}"/>
 		<property name="jpaProperties">
 			<props>
-				 
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				
 				<prop key="hibernate.current_session_context_class">thread</prop>
 				
 				<!-- 抓取策略 -->
@@ -52,14 +49,11 @@
 				
 				<!-- 用于调试的属性 -->
 				<!-- 
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
-				 -->
-				<!-- 
+				<prop key="hibernate.format_sql">true</prop> 
 				<prop key="hibernate.generate_statistics">true</prop>
 				<prop key="hibernate.use_sql_comments">true</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
 				-->
 				<!-- end 用于调试的属性 -->			
 			</props>

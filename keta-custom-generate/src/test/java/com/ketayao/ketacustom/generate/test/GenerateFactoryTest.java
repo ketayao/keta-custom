@@ -18,6 +18,7 @@ public class GenerateFactoryTest {
 		factory.genJspTemplate();
 		factory.genSettings();
 		factory.genServer();
+		factory.copyCommons();
 	}
 
 }

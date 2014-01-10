@@ -1,14 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<#if hasDate == true>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-</#if>
-<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
-<%@ taglib prefix="dwz" uri="http://www.ketayao.com/dwz"%>
-
-<c:set var="contextPath" value="${r"${pageContext.request.contextPath}"}"/>
-
+<%@ include file="/WEB-INF/views/include.inc.jsp"%>
 <dwz:paginationForm action="${r"${contextPath }"}/${requestMapping}/list" page="${r"${page }"}">
 	<input type="hidden" name="search_LIKE_${indexName}" value="${r"${param.search_LIKE_"}${indexName}}"/>
 </dwz:paginationForm>

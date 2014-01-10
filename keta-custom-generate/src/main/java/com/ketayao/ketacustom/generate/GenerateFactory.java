@@ -84,6 +84,14 @@ public class GenerateFactory {
 		}
 	}
 	
+	public void copyCommons() {
+		try {
+			new CopyCommonFile().copy();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void genServer() {
 		try {
 			new GenerateServer().generate();

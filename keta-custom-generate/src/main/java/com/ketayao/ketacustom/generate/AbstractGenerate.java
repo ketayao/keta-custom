@@ -34,6 +34,9 @@ public abstract class AbstractGenerate {
 	
 	protected String separator;
 	
+	// 工程文件
+	protected File projectFile;
+	
 	protected Map<String, Object> model;
 	
 	public AbstractGenerate() {
@@ -46,21 +49,23 @@ public abstract class AbstractGenerate {
 			separator = File.separator;
 
 			// 获取工程路径
-			File projectPath = new DefaultResourceLoader().getResource("").getFile();
+			projectFile = new DefaultResourceLoader().getResource("").getFile();
 			
 //			while (!new File(projectPath.getPath() + separator + "src" + separator + "main").exists()) {
 //				projectPath = projectPath.getParentFile();
 //			}
 			
-			while (!new File(projectPath.getPath() + separator + "pom.xml").exists()) {
-				projectPath = projectPath.getParentFile();
+			while (!new File(projectFile.getPath() + separator + "pom.xml").exists()) {
+				projectFile = projectFile.getParentFile();
 			}
+			
+			String projectPath = projectFile.getAbsolutePath();
 			
 			logger.info("Project Path: {}", projectPath);
 			
 			// 项目名称
 			projectName = StringUtils.substring(projectPath.toString(), projectPath.toString().lastIndexOf(separator) + 1);
-			logger.info("projectName : {}", tplPath);
+			logger.info("projectName : {}", projectName);
 			
 			// 模板文件路径
 			//tplPath = StringUtils.replace(projectPath + "/src/main/resources/template", "/", separator);

@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<#if hasDate == true>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-</#if>
-
-<c:set var="contextPath" value="${r"${pageContext.request.contextPath}"}"/>
+<%@ include file="/WEB-INF/views/include.inc.jsp"%>
 <div class="pageContent">
 <form method="post" action="${r"${contextPath }"}/${requestMapping}/update" class="required-validate pageForm" onsubmit="return validateCallback(this, dialogReloadNavTab);">
 	<input type="hidden" name="id" value="${r"${"}${instanceName}.id}"/>

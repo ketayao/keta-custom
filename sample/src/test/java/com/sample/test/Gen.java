@@ -18,6 +18,7 @@ public class Gen {
 		factory.genJspTemplate();
 		factory.genSettings();
 		factory.genServer();
+		factory.copyCommons();
 	}
 
 }
