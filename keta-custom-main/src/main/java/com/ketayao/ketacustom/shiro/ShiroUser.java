@@ -25,6 +25,11 @@ public class ShiroUser implements Serializable {
 	private Map<String, DataControl> hasDataControls = new HashMap<String, DataControl>();
 	private Map<String, Module> hasModules = new HashMap<String, Module>();
 	
+	/**
+	 * 加入更多的自定义参数
+	 */
+	private Map<String, Object> attribute = new HashMap<String, Object>();
+	
 	public ShiroUser() {
 		
 	}
@@ -120,6 +125,23 @@ public class ShiroUser implements Serializable {
 	 */
 	public void setHasModules(Map<String, Module> hasModules) {
 		this.hasModules = hasModules;
+	}
+	
+	public void setAttribute(String name, Object value) {
+		attribute.put(name, value);
+	}
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Object getAttribute(String name) {
+		return attribute.get(name);
+	}
+	
+	public Object removeAttribute(String name) {
+		return attribute.remove(name);
 	}
 
 	/**
