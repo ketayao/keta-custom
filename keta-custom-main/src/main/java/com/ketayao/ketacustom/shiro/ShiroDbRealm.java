@@ -39,7 +39,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ketayao.ketacustom.entity.main.DataControl;
-import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.entity.main.OrganizationRole;
 import com.ketayao.ketacustom.entity.main.Permission;
 import com.ketayao.ketacustom.entity.main.Role;
@@ -47,7 +46,6 @@ import com.ketayao.ketacustom.entity.main.RolePermission;
 import com.ketayao.ketacustom.entity.main.RolePermissionDataControl;
 import com.ketayao.ketacustom.entity.main.User;
 import com.ketayao.ketacustom.entity.main.UserRole;
-import com.ketayao.ketacustom.service.ModuleService;
 import com.ketayao.ketacustom.service.OrganizationRoleService;
 import com.ketayao.ketacustom.service.RoleService;
 import com.ketayao.ketacustom.service.UserRoleService;
@@ -82,8 +80,6 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	protected UserRoleService userRoleService;
 	
 	protected OrganizationRoleService organizationRoleService;
-	
-	protected ModuleService moduleService;
 	
 	/**
 	 * 给ShiroDbRealm提供编码信息，用于密码密码比对
@@ -165,15 +161,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 			}
 			
 			hasPermissions = new HashSet<String>();
-			List<Module> modules = moduleService.findAll();
-			StringBuilder builder = new StringBuilder();
-			for (Module module : modules) {
-				builder.append(module.getSn() + ",");
-			}
-			
-			if (builder.length() > 0) {
-				hasPermissions.add(builder.substring(0, builder.length() - 1));
-			}
+			hasPermissions.add("*");
 			
 			if (log.isInfoEnabled()) {
 				log.info("使用了" + shiroUser.getLoginName() + "的超级管理员权限:" + "。At " + new Date());
@@ -363,14 +351,6 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	 */
 	public void setUserRoleService(UserRoleService userRoleService) {
 		this.userRoleService = userRoleService;
-	}
-	
-	/**  
-	 * 设置 moduleService 的值  
-	 * @param moduleService
-	 */
-	public void setModuleService(ModuleService moduleService) {
-		this.moduleService = moduleService;
 	}
 
 	/**  
