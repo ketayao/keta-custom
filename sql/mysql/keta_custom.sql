@@ -29,7 +29,7 @@ CREATE TABLE `keta_component_resource` (
   `uuid` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_uuid` (`uuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf-8;
 
 -- ----------------------------
 -- Records of keta_component_resource
