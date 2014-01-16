@@ -15,9 +15,11 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ketayao.ketacustom.entity.main.Organization;
@@ -79,6 +81,16 @@ public class OrganizationController {
 		return AjaxObject.newOk("添加组织成功！").toString();
 	}
 	
+	@ModelAttribute("preloadOrg")
+	public Organization preload(@RequestParam(value = "id", required = false) Long id) {
+		if (id != null) {
+			Organization organization = organizationService.get(id);
+			organization.setParent(null);
+			return organization;
+		}
+		return null;
+	}
+	
 	@RequiresPermissions("Organization:edit")
 	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
 	public String preUpdate(@PathVariable Long id, Map<String, Object> map) {
@@ -91,7 +103,7 @@ public class OrganizationController {
 	@Log(message="修改了{0}组织的信息。")
 	@RequiresPermissions("Organization:edit")
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public @ResponseBody String update(@Valid Organization organization) {
+	public @ResponseBody String update(@Valid @ModelAttribute("preloadOrg")Organization organization) {
 		organizationService.saveOrUpdate(organization);
 		
 		LogUitls.putArgs(LogMessageObject.newWrite().setObjects(new Object[]{organization.getName()}));
