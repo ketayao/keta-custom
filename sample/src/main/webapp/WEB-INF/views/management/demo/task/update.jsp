@@ -15,7 +15,7 @@
 	</p>
 	<p>
 		<label>等级：</label>
-		<dwz:dic themeName="等级" paramName="level" className="required validate[required]" selectedName="${task.level }">
+		<dwz:dic themeName="等级" paramName="level" className="required validate[required]" selectedValue="${task.level }">
 			<option value="">--请选择等级--</option>
 		</dwz:dic>		
 	</p>

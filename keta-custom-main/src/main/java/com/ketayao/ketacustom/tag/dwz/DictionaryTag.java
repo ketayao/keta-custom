@@ -24,7 +24,7 @@ public class DictionaryTag extends SimpleTagSupport implements ApplicationContex
 	// 字典主题名称
 	private String themeName;
 	// 选中的名称
-	private String selectedName;
+	private String selectedValue;
 	// 变量名称
 	private String paramName;
 	// class名称
@@ -63,7 +63,7 @@ public class DictionaryTag extends SimpleTagSupport implements ApplicationContex
         
         builder = new StringBuilder();
 		for (Dictionary dictionary : dictionaries) {
-			if (dictionary.getName().equals(selectedName)) {
+			if (dictionary.getValue().equals(selectedValue)) {
 				builder.append("<option value=\"" + dictionary.getValue() + "\" selected=\"selected\">" + dictionary.getName() + "</option>\n");
 			} else {
 				builder.append("<option value=\"" + dictionary.getValue() + "\">" + dictionary.getName() + "</option>\n");
@@ -82,10 +82,10 @@ public class DictionaryTag extends SimpleTagSupport implements ApplicationContex
 	}
 
 	/**
-	 * @param selectedName the selectedName to set
+	 * @param selectedValue the selectedValue to set
 	 */
-	public void setSelectedName(String selectedName) {
-		this.selectedName = selectedName;
+	public void setSelectedValue(String selectedValue) {
+		this.selectedValue = selectedValue;
 	}
 
 	/**
