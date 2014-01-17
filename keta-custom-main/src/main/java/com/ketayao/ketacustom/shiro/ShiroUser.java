@@ -143,6 +143,10 @@ public class ShiroUser implements Serializable {
 	public Object removeAttribute(String name) {
 		return attribute.remove(name);
 	}
+	
+	public Map<String, Object> getAttributes() {
+		return this.attribute;
+	}
 
 	/**
 	 * 本函数输出将作为默认的<shiro:principal/>输出.

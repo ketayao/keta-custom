@@ -5,20 +5,20 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <div class="pageContent">
-<form method="post" action="${contextPath }/management/security/dataControl/update" class="required-validate pageForm" onsubmit="return validateCallback(this, dialogReloadNavTab);">
+<form method="post" action="${contextPath }/management/security/dataControl/update" class="required-validate pageForm" onsubmit="return validateCallback(this, navTabReloadParent);">
 	<input type="hidden" name="id" value="${dataControl.id}"/>
-	<div class="pageFormContent" layoutH="58">
+	<div class="pageFormContent" layoutH="56">
 	<p>
 		<label>名称：</label>
-		<input type="text" name="name" maxlength="32" class="input-medium required validate[required]" value="${dataControl.name }" readonly="readonly"/>
+		<input type="text" name="name" maxlength="32" class="input-large required validate[required]" value="${dataControl.name }" readonly="readonly"/>
 	</p>
 	<p class="nowrap">
 		<label>条件：</label>
-		<textarea name="control" rows="3" maxlength="256" class="input-medium textarea-scroll required validate[required]">${dataControl.control }</textarea>
+		<textarea name="control" rows="20" maxlength="10240" class="textarea-scroll required validate[required]" style="width: 800px;">${dataControl.control }</textarea>
 	</p>	
 	<p class="nowrap">
 		<label>描述：</label>
-		<textarea name="description" rows="3" maxlength="256" class="input-medium textarea-scroll">${dataControl.description }</textarea>
+		<textarea name="description" rows="3" maxlength="256" class="textarea-scroll" style="width: 800px;">${dataControl.description }</textarea>
 	</p>	
 	</div>
 	

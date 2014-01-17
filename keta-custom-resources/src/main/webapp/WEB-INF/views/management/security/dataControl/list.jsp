@@ -34,13 +34,13 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<shiro:hasPermission name="DataControl:view">
-				<li><a iconClass="database" target="dialog" mask="true" width="530" height="280" href="${contextPath }/management/security/dataControl/view/{slt_uid}"><span>查看数据权限</span></a></li>
+				<li><a iconClass="database" target="navTab" rel="DataControl_view" href="${contextPath }/management/security/dataControl/view/{slt_uid}"><span>查看数据权限</span></a></li>
 			</shiro:hasPermission>		
 			<shiro:hasPermission name="DataControl:save">
-				<li><a iconClass="database_add" target="dialog" mask="true" width="530" height="280" href="${contextPath }/management/security/dataControl/create"><span>添加数据权限</span></a></li>
+				<li><a iconClass="database_add" target="navTab" rel="DataControl_add" href="${contextPath }/management/security/dataControl/create"><span>添加数据权限</span></a></li>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="DataControl:edit">
-				<li><a iconClass="database_edit" target="dialog" mask="true" width="530" height="280" href="${contextPath }/management/security/dataControl/update/{slt_uid}"><span>编辑数据权限</span></a></li>
+				<li><a iconClass="database_edit" target="navTab" rel="DataControl_edit" href="${contextPath }/management/security/dataControl/update/{slt_uid}"><span>编辑数据权限</span></a></li>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="DataControl:delete">
 				<li><a iconClass="database_delete" target="selectedTodo" rel="ids" href="${contextPath }/management/security/dataControl/delete" title="确认要删除选定数据权限?"><span>删除数据权限</span></a></li>

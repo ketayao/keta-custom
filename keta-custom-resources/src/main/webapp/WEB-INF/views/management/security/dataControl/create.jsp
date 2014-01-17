@@ -4,19 +4,19 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>    
 <div class="pageContent">
-<form method="post" action="${contextPath }/management/security/dataControl/create" class="required-validate pageForm" onsubmit="return validateCallback(this, dialogReloadNavTab);">
-	<div class="pageFormContent" layoutH="58">
+<form method="post" action="${contextPath }/management/security/dataControl/create" class="required-validate pageForm" onsubmit="return validateCallback(this, navTabReloadParent);">
+	<div class="pageFormContent" layoutH="56">
 	<p>
 		<label>名称：</label>
-		<input type="text" name="name" maxlength="32" class="input-medium required validate[required]"/>
+		<input type="text" name="name" maxlength="32" class="input-large required validate[required]"/>
 	</p>	
 	<p class="nowrap">
 		<label>条件：</label>
-		<textarea name="control" rows="3" maxlength="256" class="input-medium textarea-scroll required validate[required]"></textarea>
+		<textarea name="control" rows="20" maxlength="10240" class="textarea-scroll required validate[required]" style="width: 800px;"></textarea>
 	</p>	
 	<p class="nowrap">
 		<label>描述：</label>
-		<textarea name="description" rows="3" maxlength="256" class="input-medium textarea-scroll"></textarea>
+		<textarea name="description" rows="3" maxlength="256" class="textarea-scroll" style="width: 800px;"></textarea>
 	</p>	
 	</div>
 	

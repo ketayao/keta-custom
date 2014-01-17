@@ -3,6 +3,7 @@
  */
 package com.ketayao.ketacustom.spring;
 
+import java.io.StringReader;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,6 +20,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,11 +39,11 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ketayao.ketacustom.SecurityConstants;
 import com.ketayao.ketacustom.entity.main.DataControl;
 import com.ketayao.ketacustom.entity.main.Module;
 import com.ketayao.ketacustom.entity.main.User;
+import com.ketayao.ketacustom.spring.DataControlXML.Condition;
 import com.ketayao.ketacustom.util.persistence.DynamicSpecifications;
 import com.ketayao.ketacustom.util.persistence.SearchFilter;
 import com.ketayao.ketacustom.util.persistence.SearchFilter.Operator;
@@ -67,14 +69,20 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 	protected static final String SINGLE_KEY = "id";
 	protected static final String MANY_KEY = "ids";
 	
-	private static Pattern FREEMARKER_PATTERN = Pattern.compile("^ftl(.*)$");
-	
 	@PersistenceContext
 	private EntityManager em;
 	
-	private ObjectMapper objectMapper = new ObjectMapper();
+	private static Unmarshaller unmarshaller;
 	
-	private FreeMarkerParse freeMarkerParse = new FreeMarkerParse();
+	static {
+		try {
+			unmarshaller = JAXBContext.newInstance(DataControlXML.class).createUnmarshaller(); 
+		} catch (JAXBException e) {
+			logger.error("DataControlXML JAXB初始化错误：" + Exceptions.getStackTraceAsString(e));
+		}
+	}
+	
+	private static FreeMarkerParse freeMarkerParse = new FreeMarkerParse();
 	
 	/**
 	 * @param request
@@ -157,7 +165,6 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 		DynamicSpecifications.removeRequest();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public boolean check(HttpServletRequest request, HttpServletResponse response, Method method,
 			String moduleString, String dataControlString) {
 		String[] m = moduleString.split(PERMISSION_DIVIDER_TOKEN);
@@ -172,9 +179,12 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 				
 				// EQ_user.id=#userId, EQ_user.id_OR=2, id=#id
 				String control = dataControl.getControl();
-				Map<String, Object> controlMap = null;
+				Map<String, Object> controlMap = new HashMap<String, Object>();
 				try {
-					controlMap = objectMapper.readValue(control, Map.class);
+					DataControlXML xml = (DataControlXML)unmarshaller.unmarshal(new StringReader(control));
+					for (Condition c : xml.getItems()) {
+						controlMap.put(c.getName(), c.getContent());
+					}
 				} catch (Exception e) {
 					throw new IllegalArgumentException("数据权限条件格式错误：" + control, e);
 				}
@@ -182,14 +192,8 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 				Set<Entry<String, Object>> set = controlMap.entrySet();
 				for (Entry<String, Object> entry : set) {
 					String value = (String)entry.getValue();
-					Matcher matcher = FREEMARKER_PATTERN.matcher(value);
 					try {
-						if (matcher.find()) {
-							value = value.substring(matcher.start() + 4, matcher.end() - 1);
-							entry.setValue(parseValue(request, response, control));
-						} else {
-							entry.setValue(parseValue(request, value));
-						}
+						entry.setValue(parseValue(request, response, control));
 					} catch (Exception e) {
 						throw new IllegalArgumentException("数据权限参数解析错误：" + value, e);
 					}
@@ -320,6 +324,7 @@ public class DataControlInterceptor extends HandlerInterceptorAdapter {
 			String control) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("user", SecurityUtils.getLoginUser());
+		model.putAll(SecurityUtils.getShiroUser().getAttributes());
 		
 		WebApplicationContext context = RequestContextUtils.getWebApplicationContext(request);
 		SimpleHash simpleHash = freeMarkerParse.buildTemplateModel(model, context.getServletContext(), request, response);

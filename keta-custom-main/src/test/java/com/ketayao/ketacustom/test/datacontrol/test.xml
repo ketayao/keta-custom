@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataControlTemplate>
+    <items>
+        <condition>
+            <content>条件内容1</content>
+            <name>条件标题1</name>
+        </condition>
+        <condition>
+            <content>条件内容2</content>
+            <name>条件标题2</name>
+        </condition>
+    </items>
+</dataControlTemplate>
