@@ -74,7 +74,7 @@ jQuery(document).ready(function(){
 		</p>	
 		<p>
 			<label>优先级：</label>
-			<input type="text" name="priority" class="validate[required,custom[integer],min[1],max[999]] required" value="999" maxlength="3" style="width: 80px;" value="${module.priority }"/>
+			<input type="text" name="priority" class="validate[required,custom[integer],min[1],max[999]] required" maxlength="3" style="width: 80px;" value="${module.priority }"/>
 			<span class="info">（越小越靠前）</span>
 		</p>		
 		<p>
