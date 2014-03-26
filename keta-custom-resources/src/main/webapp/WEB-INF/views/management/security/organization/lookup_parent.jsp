@@ -13,7 +13,7 @@
 		for(Organization m : organization.getChildren()) {
 			// 不显示自己及子元素
 			if (organizationId.equals(m.getId())) {
-				break;
+				continue;
 			}
 			buffer.append("<li><a href=\"javascript:\" onclick=\"$.bringBack({id:'" + m.getId() + "', name:'" + m.getName() + "'})\">" + m.getName() + "</a>" + "\n");
 			buffer.append(tree(m, organizationId));
